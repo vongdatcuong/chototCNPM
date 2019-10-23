@@ -1,0 +1,1 @@
+﻿const testConstant = 69;
