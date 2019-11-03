@@ -32,7 +32,8 @@ namespace ChoTot
                       "~/Content/user.css",
                       "~/Content/item.css",
                       "~/Content/post-item.css",
-                      "~/Content/approve.css"));
+                      "~/Content/approve.css",
+                      "~/Content/responsive.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/homeScripts").Include(
                       "~/Scripts/Home/home.js"));

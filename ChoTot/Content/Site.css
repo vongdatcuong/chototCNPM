@@ -1,4 +1,7 @@
-﻿body {
+﻿* {
+    box-sizing: border-box;
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -21,4 +24,90 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+img {
+    max-width: 100%;
+}
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+/*Header*/
+.my-navbar {
+    background-color: #FF9900;
+    padding: 15px 0 5px 0;
+}
+.my-navbar .container {
+    
+}
+.navbar-header {
+
+}
+.navbar-header .logo-wrapper{
+    width: 70px;
+}
+.navbar-search {
+}
+.navbar-search .input-group {
+    width: 100%;
+    padding: 5px 20px;
+}
+.navbar-search .search {
+    max-width: 100%;
+    border-radius: 20px;
+}
+.navbar-search .input-group-btn button {
+    border-radius: 0 20px 20px 0;
+}
+.navbar-user {
+    margin-top: -5px;
+    float: right;
+}
+.navbar-user .navbar-nav li {
+    padding: 0 5px;
+   
+}
+.navbar-user .navbar-nav li a {
+    color: #ffffff;
+    border-radius: 5px;
+}
+.navbar-user .navbar-nav li a:hover {
+    background-color: deepskyblue;
+}
+.my-navbar .row:nth-child(2) {
+    margin-top: 10px;
+    padding: 0;
+}
+.my-navbar .row:nth-child(2) .form-group {
+    padding-left: 0;
+    margin: 0;
+}
+.navbar-hashtag {
+    display: flex;
+    float: right;
+}
+.navbar-hashtag div{
+    padding: 7px 20px;
+   
+}
+/*Footer*/
+footer {
+    background-color: #FF9900;
+    color: #FFFFFF;
+    padding: 20px 0;
+}
+footer h3 {
+    padding-bottom: 10px;
+} 
+footer ul li {
+    padding: 10px 0;
+}
+footer .logo-wrapper {
+    margin-top: 15px;
+}
+footer p {
+    padding: 20px 0;
+}
+.copy-right {
+    margin: 0 auto;
 }

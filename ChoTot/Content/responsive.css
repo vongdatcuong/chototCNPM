@@ -1,0 +1,28 @@
+﻿/*Tablet*/
+@media screen and (max-width: 768px) {
+    /*Header*/
+    .navbar-search .input-group {
+        padding: 10px 20px;
+    }
+    .my-navbar .row:nth-child(2) .form-group select{
+        margin: 10px auto;
+    }
+    .navbar-hashtag {
+        display: flex;
+        float: none;
+    }
+}
+/*Mobile*/
+@media screen and (max-width: 360px) {
+    /*Header*/
+    .navbar-search .input-group {
+        padding: 10px 20px;
+    }
+    .my-navbar .row:nth-child(2) .form-group select {
+        margin: 10px auto;
+    }
+    .navbar-hashtag {
+        display: flex;
+        float: none;
+    }
+}
