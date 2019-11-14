@@ -35,6 +35,9 @@ namespace ChoTot
                       "~/Content/approve.css",
                       "~/Content/responsive.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/sharedScripts").Include(
+                      "~/Scripts/sharedScript.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/homeScripts").Include(
                       "~/Scripts/Home/home.js"));
 

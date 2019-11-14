@@ -90,6 +90,55 @@ ul {
     padding: 7px 20px;
    
 }
+/*Login Modal*/
+.myModal {
+}
+.myModal .modal-dialog {
+    width: 400px !important;
+}
+.myModal .modal-content .modal-header {
+    text-align: center;
+}
+    .myModal .modal-content .modal-header h4 {
+        color: #FF6633;
+        font-size: 2em;
+        font-weight: 600;
+    }
+.myModal .modal-content .modal-body .form-group {
+    margin-left: 0;
+    margin-right: 0;
+    color: #FF6633;
+}
+.myModal .modal-content .modal-body .form-group input {
+    width: 100%;
+    max-width: none;
+    border-radius: 20px;
+}
+.myModal .modal-content .modal-body .form-group .checkbox {
+    margin-left: 5px;
+    font-weight: 600;
+}
+    .myModal .modal-content .modal-body .form-group .checkbox input {
+        width: 15px;
+        height: 15px;
+    }
+#loginBtn, #registerBtn {
+width: 100%;
+color: #FFFFFF;
+background-color: #FF9900;
+}
+#loginBtn:hover, #registerBtn:hover {
+color: #FF9900;
+background-color: #FFFFFF;
+}
+.myModal .modal-content .modal-body .form-group:last-child {
+text-align: right;
+margin: 10px 0 5px 0;
+}
+.myModal .modal-content .modal-body .form-group:last-child a {
+    color: #FF6633;
+    text-decoration: underline;
+}
 /*Footer*/
 footer {
     background-color: #FF9900;
