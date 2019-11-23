@@ -2,7 +2,9 @@
     ViewBag.Title = "Approve Pageeeeeeeee";
 }
 <h1>@ViewBag.Title</h1>
-<button id="testClick">Click me</button>
 @section Scripts {
+    <script type="text/javascript">
+        userJs = '@Html.Raw(ViewBag.gUserStr)';
+    </script>
     @Scripts.Render("~/bundles/approveScripts")
 }

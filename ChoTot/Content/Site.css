@@ -36,6 +36,7 @@ ul {
 .my-navbar {
     background-color: #FF9900;
     padding: 15px 0 5px 0;
+    z-index: 999;
 }
 .my-navbar .container {
     
@@ -46,6 +47,9 @@ ul {
 .navbar-header .logo-wrapper{
     width: 70px;
 }
+.logo-wrapper a:hover {
+    cursor: pointer;
+}
 .navbar-search {
 }
 .navbar-search .input-group {
@@ -54,20 +58,32 @@ ul {
 }
 .navbar-search .search {
     max-width: 100%;
-    border-radius: 20px;
+    border-radius: 5px;
 }
-.navbar-search .input-group-btn button {
-    border-radius: 0 20px 20px 0;
+.navbar-search .input-group-prepend .input-group-text {
+    padding: 0 20px;
+    border-radius: 0 5px 5px 0 !important;
+    color: #ffffff;
+    background-color: #ff6633 !important;
+    border: none;   
+    outline: none;
+}
+.navbar-search .input-group-prepend .input-group-text:hover {
+    cursor: pointer;
 }
 .navbar-user {
-    margin-top: -5px;
+    margin-top: 5px;
+}
+.navbar-user ul {
+    flex-direction: row;
     float: right;
 }
 .navbar-user .navbar-nav li {
     padding: 0 5px;
-   
 }
 .navbar-user .navbar-nav li a {
+    padding-left: 20px;
+    padding-right: 20px;
     color: #ffffff;
     border-radius: 5px;
 }
@@ -97,13 +113,13 @@ ul {
     width: 400px !important;
 }
 .myModal .modal-content .modal-header {
-    text-align: center;
+    justify-content: center;
 }
-    .myModal .modal-content .modal-header h4 {
-        color: #FF6633;
-        font-size: 2em;
-        font-weight: 600;
-    }
+.myModal .modal-content .modal-header h4 {
+    color: #FF6633;
+    font-size: 2em;
+    font-weight: 600;
+}
 .myModal .modal-content .modal-body .form-group {
     margin-left: 0;
     margin-right: 0;
@@ -112,7 +128,7 @@ ul {
 .myModal .modal-content .modal-body .form-group input {
     width: 100%;
     max-width: none;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 .myModal .modal-content .modal-body .form-group .checkbox {
     margin-left: 5px;
@@ -139,6 +155,10 @@ margin: 10px 0 5px 0;
     color: #FF6633;
     text-decoration: underline;
 }
+.modal-header .close {
+    position: absolute;
+    right: 10px;
+}
 /*Footer*/
 footer {
     background-color: #FF9900;
@@ -154,9 +174,78 @@ footer ul li {
 footer .logo-wrapper {
     margin-top: 15px;
 }
+footer .logo-wrapper:hover {
+    margin-top: 15px;
+}
 footer p {
     padding: 20px 0;
 }
 .copy-right {
     margin: 0 auto;
+}
+
+/* Loading */
+.spinner {
+    display: block;
+    margin: 0 auto;
+    padding: 45vh 0;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    font-size: 10px;
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.spinner > div {
+    background-color: #ffffff;
+    height: 70px;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+    0%, 40%, 100% {
+        -webkit-transform: scaleY(0.4)
+    }
+
+    20% {
+        -webkit-transform: scaleY(1.0)
+    }
+}
+
+@keyframes sk-stretchdelay {
+    0%, 40%, 100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }
+
+    20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
 }

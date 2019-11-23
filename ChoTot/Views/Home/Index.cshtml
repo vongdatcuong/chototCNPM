@@ -1,9 +1,13 @@
 ﻿@{
     ViewBag.Title = "Flash Buy";
 }
-<h1>@ViewBag.Title</h1>
-<button id="testClick">Click me</button>
-
+<h1>Hello</h1>
 @section Scripts{
+    <script type="text/javascript">
+        if ('@ViewBag.isLoggingIn') {
+            isLoggingIn = ('@ViewBag.isLoggingIn'.toLowerCase() == 'true') ? true : false;
+        }
+        userJs = '@Html.Raw(ViewBag.gUserStr)';
+    </script>
     @Scripts.Render("~/bundles/homeScripts")
 }

@@ -52,6 +52,9 @@ namespace ChoTot
 
             bundles.Add(new ScriptBundle("~/bundles/approveScripts").Include(
                       "~/Scripts/Approve/approve.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/serviceScripts").Include(
+                      "~/Scripts/Service/Utils.js"));
         }
     }
 }
