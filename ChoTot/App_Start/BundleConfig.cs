@@ -20,6 +20,8 @@ namespace ChoTot
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/umd/popper-utils.min.js",
+                      "~/Scripts/umd/popper.min.js",
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/constants").Include(

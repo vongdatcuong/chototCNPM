@@ -3,4 +3,4 @@
         gUser = JSON.parse(userJs).Table[0];
         displayNav(true);
     }
-}
+})

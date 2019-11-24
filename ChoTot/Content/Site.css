@@ -89,6 +89,35 @@ ul {
 }
 .navbar-user .navbar-nav li a:hover {
     background-color: deepskyblue;
+    cursor: pointer;
+}
+.navbar-user .navbar-nav li a span{
+    padding-left: 15px;
+    padding-right: 5px;
+}
+.dropdown:hover {
+    color: #666666;
+}
+.dropdown-menu {
+    padding: 0;
+}
+.navbar-user .navbar-nav li .dropdown-menu a {
+    color: #666666;
+    border-radius: 0;
+    border-bottom: 1px solid #CCCCCC;
+    margin: 5px 0;
+}
+.navbar-user .navbar-nav li .dropdown-menu a:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+.navbar-user .navbar-nav li .dropdown-menu a:hover {
+    background-color: #FF9900;
+    cursor: pointer;
+}
+.navbar-user .navbar-nav li .dropdown-menu a i {
+    float: right;
+    margin-top: 5px;
 }
 .my-navbar .row:nth-child(2) {
     margin-top: 10px;
@@ -110,7 +139,7 @@ ul {
 .myModal {
 }
 .myModal .modal-dialog {
-    width: 400px !important;
+    max-width: 400px !important;
 }
 .myModal .modal-content .modal-header {
     justify-content: center;

@@ -28,10 +28,20 @@
                 </div>
                 <div class="navbar-user navbar-collapse col-md-5">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a id="loginLink" href="#" data-toggle="modal" data-target="#loginModal" class="nav-link">Đăng nhập</a></li>
-                        <li class="nav-item"><a id="registerLink" href="#" data-toggle="modal" data-target="#registerModal" class="nav-link">Đăng ký</a></li>
-                        <li class="nav-item"><a id="profileLink" href="#" class="nav-link" style="display: none">Chào</a></li>
-                        <li class="nav-item"><a id="sellLink" href="#" class="nav-link" style="display: none">Đăng bán</a></li>
+                        <li class="nav-item"><a id="loginLink" data-toggle="modal" data-target="#loginModal" class="nav-link"><i class="fas fa-sign-in-alt"></i><span>Đăng nhập</span></a></li>
+                        <li class="nav-item"><a id="registerLink" data-toggle="modal" data-target="#registerModal" class="nav-link"><i class="fab fa-accusoft"></i><span>Đăng ký</span></a></li>
+                        <li class="nav-item dropdown show">
+                            <a id="profileDropdown" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: none">
+                                <i class="fas fa-user-cog"></i><span></span>
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="profileLink ">
+                                <a id="profileLink" class="dropdown-item" >Hồ sơ <i class="fas fa-clipboard-check"></i></a>
+                                <a id="approveLink" class="dropdown-item" >Kiểm duyệt <i class="fas fa-user-circle"></i></a>
+                                <a id="logoutLink" class="dropdown-item" >Đăng xuất <i class="fas fa-sign-out-alt"></i></a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a id="sellLink" class="nav-link" style="display: none"><i class="fas fa-coins"></i><span>Đăng bán</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -78,7 +88,7 @@
                         </div>
                         <button type="submit" id="loginBtn" class="btn btn-default">ĐĂNG NHẬP</button>
                         <div class="form-group">
-                            <a href="#" data-toggle="modal" data-target="#registerModal">Đăng ký ngay</a>
+                            <a id="registerInLogin" href="#" data-toggle="modal" data-target="#registerModal">Đăng ký ngay</a>
                         </div>
                     </form>
                 </div>
@@ -115,7 +125,7 @@
                         </div>
                         <button type="submit" id="registerBtn" class="btn btn-default">ĐĂNG KÝ</button>
                         <div class="form-group">
-                            <a href="#" data-toggle="modal" data-target="#loginModal">Đăng nhập</a>
+                            <a id="loginInRegister" href="#" data-toggle="modal" data-target="#loginModal">Đăng nhập</a>
                         </div>
                     </form>
                 </div>

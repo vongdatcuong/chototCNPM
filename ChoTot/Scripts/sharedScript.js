@@ -1,10 +1,15 @@
 ﻿$(document).ready(function () {
     const $loginModal = $('#loginModal');
     const $registerModal = $('#registerModal');
+    const $registerInLogin = $('#registerInLogin');
+    const $loginInRegister = $('#loginInRegister');
     const $loginLink = $('#loginLink');
     const $registerLink = $('#registerLink');
-    const $profileLink = $('#profileLink');
+    const $profileDropdown = $('#profileDropdown');
     const $sellLink = $('#sellLink');
+    const $profileLink = $('#profileLink');
+    const $approveLink = $('#approveLink');
+    const $logoutLink = $('#logoutLink');
 
     //Sessions work
     if (isLoggingIn)
@@ -13,6 +18,28 @@
         gUser = JSON.parse(userJs).Table[0];
         displayNav(true);
     }
+    //End Sessions
+
+    //Modal
+    $registerInLogin.on('click', (e) => {
+        $loginModal.modal('hide');
+        $registerModal.modal('show');
+    })
+
+    $loginInRegister.on('click', (e) => {
+        $loginModal.modal('show');
+        $registerModal.modal('hide');
+    })
+
+    $loginModal.on('shown.bs.modal', (e) => {
+        $loginModal.find('#login_username').focus();
+    });
+
+    $registerModal.on('shown.bs.modal', (e) => {
+        $registerModal.find('#register_username').focus();
+    });
+
+    //End Modal
 
     $('#loginBtn').on('click', async (e) => {
         //login(document.loginForm.username.value, document.loginForm.password.value, );
@@ -28,6 +55,16 @@
         }
         hideLoading();
         return false;
+    })
+    $logoutLink.on('click', async (e) => {
+        try {
+            showLoading();
+            const result = await logout();
+            displayNav(false);
+            hideLoading();
+        } catch (e) {
+            console.log(e);
+        }
     })
 
     function checkLogin(username, pass, rememberMe) {
@@ -49,19 +86,31 @@
             });
         })
     }
+    function logout() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: "/Account/Logout",
+                type: "GET",
+            }).done((result) => {
+                resolve(result);
+            }).fail((err) => {
+                reject(err);
+            });
+        })
+    }
 
     function displayNav(isLoggingIn) {
         if (isLoggingIn) {
             $loginLink.hide();
             $registerLink.hide();
-            $profileLink.show();
+            $profileDropdown.show();
             $sellLink.show();
 
-            $profileLink.text("Chào " + gUser.firstName);
+            $profileDropdown.find('span').text(gUser.firstName);
         } else {
             $loginLink.show();
             $registerLink.show();
-            $profileLink.hide();
+            $profileDropdown.hide();
             $sellLink.hide();
         }
     }

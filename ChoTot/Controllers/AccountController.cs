@@ -78,17 +78,25 @@ namespace ChoTot.Controllers
 
         }
 
-        public ActionResult Logout(string currentUrl)
+        [HttpGet]
+        public bool Logout()
         {
             FormsAuthentication.SignOut();
             Session.Clear();
-            string[] myCookies = Request.Cookies.AllKeys;
+            if (Request.Cookies["ChoTotUser"] != null)
+            {
+                var cookie = new HttpCookie("ChoTotUser");
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookie);
+            }
+            /*string[] myCookies = Request.Cookies.AllKeys;
             foreach (string cookie in myCookies)
             {
                 Response.Cookies[cookie].Expires = DateTime.Now.AddDays(-1);
-            }
-            return View("currentUrl");
+            }*/
+            return true;
         }
+
         #region end code PassWord with SHA1
 
         public static string endcode(string str)
