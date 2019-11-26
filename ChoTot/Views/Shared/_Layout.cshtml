@@ -36,9 +36,9 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="profileLink ">
-                                <a id="profileLink" class="dropdown-item" >Hồ sơ <i class="fas fa-clipboard-check"></i></a>
-                                <a id="approveLink" class="dropdown-item" >Kiểm duyệt <i class="fas fa-user-circle"></i></a>
-                                <a id="logoutLink" class="dropdown-item" >Đăng xuất <i class="fas fa-sign-out-alt"></i></a>
+                                <a id="profileLink" class="dropdown-item">Hồ sơ <i class="fas fa-user-circle"></i></a>
+                                <a id="approveLink" class="dropdown-item">Kiểm duyệt <i class="fas fa-clipboard-check"></i></a>
+                                <a id="logoutLink" class="dropdown-item">Đăng xuất <i class="fas fa-sign-out-alt"></i></a>
                             </div>
                         </li>
                         <li class="nav-item"><a id="sellLink" class="nav-link" style="display: none"><i class="fas fa-coins"></i><span>Đăng bán</span></a></li>
@@ -80,6 +80,7 @@
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" id="login_password" name="password" placeholder="Mật khẩu">
+                            <label id="login_error" class="error" style="text-align: center; display: none;">Tên đăng nhập hoặc mật khẩu không đúng !!!</label>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
@@ -107,21 +108,22 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" action="" method="post">
+                    <form class="form-horizontal" name="registerForm" method="post">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="register_username" placeholder="Tài khoản">
+                            <input type="text" class="form-control" id="register_username" name="username" placeholder="Tài khoản">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="register_password" placeholder="Mật khẩu">
+                            <input type="password" class="form-control" id="register_password" name="password" placeholder="Mật khẩu">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="confirm-password" placeholder="Xác nhận mật khẩu">
+                            <input type="password" class="form-control" id="register_re-password" name="re-password" placeholder="Xác nhận mật khẩu">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" id="email" placeholder="Email">
+                            <input type="email" class="form-control" id="register_email" name="email" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="tel" class="form-control" id="phone" placeholder="Số điện thoai">
+                            <input type="tel" class="form-control" id="register_phone" name="phone" placeholder="Số điện thoai">
+                            <label id="register_msg" class="error" style="text-align: center; display: none;"></label>
                         </div>
                         <button type="submit" id="registerBtn" class="btn btn-default">ĐĂNG KÝ</button>
                         <div class="form-group">
@@ -178,6 +180,7 @@
         <div class="rect5"></div>
     </div>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/constants")
     @Scripts.Render("~/bundles/serviceScripts")

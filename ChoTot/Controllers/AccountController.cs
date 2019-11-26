@@ -31,7 +31,7 @@ namespace ChoTot.Controllers
             {
                 storeName = string.Format("sp_login");
                 SqlParameter[] par = new SqlParameter[2];
-                par[0] = new SqlParameter("@username", username);
+                par[0] = new SqlParameter("@userName", username);
                 par[1] = new SqlParameter("@pass", endcode(password));
 
                 //Execute store
@@ -105,5 +105,37 @@ namespace ChoTot.Controllers
         }
 
         #endregion
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public JsonResult Register(string username, string password, string email, string phone)
+        {
+            Session.Clear();
+            try
+            {
+                storeName = string.Format("sp_register");
+                SqlParameter[] par = new SqlParameter[5];
+                par[0] = new SqlParameter("@userName", username);
+                par[1] = new SqlParameter("@password", endcode(password));
+                par[2] = new SqlParameter("@email", email);
+                par[3] = new SqlParameter("@phone", phone);
+                par[4] = new SqlParameter("@createdDate", DateTime.Now);
+                //Execute store
+                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

@@ -10,6 +10,10 @@
     const $profileLink = $('#profileLink');
     const $approveLink = $('#approveLink');
     const $logoutLink = $('#logoutLink');
+    const $loginForm = $(document.loginForm);
+    const $registerForm = $(document.registerForm);
+    const $loginErrMsg = $('#login_error');
+    const $registerMsg = $('#register_msg');
 
     //Sessions work
     if (isLoggingIn)
@@ -34,24 +38,40 @@
     $loginModal.on('shown.bs.modal', (e) => {
         $loginModal.find('#login_username').focus();
     });
+    $loginModal.on('hide.bs.modal', (e) => {
+        hideLoginErrorMsg();
+    })
 
     $registerModal.on('shown.bs.modal', (e) => {
         $registerModal.find('#register_username').focus();
     });
-
+    $registerModal.on('hide.bs.modal', (e) => {
+        hideRegisterMsg();
+    })
     //End Modal
 
     $('#loginBtn').on('click', async (e) => {
-        //login(document.loginForm.username.value, document.loginForm.password.value, );
+        if (!$loginForm.valid())
+            return;
         e.preventDefault();
         showLoading();
-        const result = await checkLogin(document.loginForm.username.value, document.loginForm.password.value, document.loginForm.keepIn.checked);
-        const user = JSON.parse(result);
-        if (user.Table.length > 0) {
-            gUser = Object.assign(user.Table[0]);
-            displayNav(true);
-            $loginModal.modal('hide');
-            document.loginForm.reset();
+        try {
+            const result = await checkLogin(document.loginForm.username.value, document.loginForm.password.value, document.loginForm.keepIn.checked);
+            const user = JSON.parse(result);
+            if (user.Table.length > 0) {
+                //Login success
+                gUser = Object.assign(user.Table[0]);
+                displayNav(true);
+                $loginModal.modal('hide');
+                document.loginForm.reset();
+                $loginErrMsg.hide();
+            }
+            else {
+                //Login failed
+                showLoginErrorMsg();
+            }
+        } catch (e) {
+            console.log(e);
         }
         hideLoading();
         return false;
@@ -66,7 +86,94 @@
             console.log(e);
         }
     })
+    $('#registerBtn').on('click', async (e) => {
+        if (!$registerForm.valid())
+            return;
+        e.preventDefault();
+        showLoading();
+        try {
+            const result = await register(document.registerForm.username.value, document.registerForm.password.value, document.registerForm.email.value, document.registerForm.phone.value);
+            const resultJs = JSON.parse(result);
+            if (resultJs.Table.length > 0 && resultJs.Table[0].isSuccess) {
+                //Register success
+                document.registerForm.reset();
+                showRegisterMsg(true);
+            }
+            else {
+                //Register failed
+                showRegisterMsg(false);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+        hideLoading();
+        return false;
+    })
+    //Forms Validate
+    $loginForm.validate({
+        rules: {
+            username: {
+                required: true,
+            },
+            password: {
+                required: true
+            }
+        },
+        messages: {
+            username: {
+                required: "Username không được để trống",
+            },
+            password: {
+                required: "Mật khẩu không được để trống"
+            }
+        }
+    })
 
+    $registerForm.validate({
+        rules: {
+            username: {
+                required: true,
+            },
+            password: {
+                required: true
+            },
+            "re-password": {
+                equalTo: "#register_password"
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            phone: {
+                required: true,
+                number: true,
+                minlength: 10
+            }
+        },
+        messages: {
+            username: {
+                required: "Username không được để trống",
+            },
+            password: {
+                required: "Mật khẩu không được để trống"
+            },
+            "re-password": {
+                equalTo: "Xác nhận mật khẩu không trùng khớp"
+            },
+            email: {
+                required: "Email không được để trống",
+                email: "Email phải có dạng example@abc.com"
+            },
+            phone: {
+                required: "Số điện thoại phải có tối thiểu 10 số",
+                number: "Số điện thoại phải là số",
+                minlength: "Số điện thoại phải có tối thiểu 10 số"
+            }
+        }
+    })
+    //End Forms Validate
+
+    //Support functions
     function checkLogin(username, pass, rememberMe) {
         const input = {
             username: username,
@@ -98,7 +205,6 @@
             });
         })
     }
-
     function displayNav(isLoggingIn) {
         if (isLoggingIn) {
             $loginLink.hide();
@@ -106,12 +212,60 @@
             $profileDropdown.show();
             $sellLink.show();
 
-            $profileDropdown.find('span').text(gUser.firstName);
+            $profileDropdown.find('span').text(gUser.firstName || gUser.userName);
+
+            //If User is Admin
+            if (gUser.type == 1) {
+                $approveLink.show();
+            } else {
+                $approveLink.hide();
+            }
         } else {
             $loginLink.show();
             $registerLink.show();
             $profileDropdown.hide();
             $sellLink.hide();
         }
+    }
+    function showLoginErrorMsg() {
+        $loginErrMsg.show();
+        $loginErrMsg.css("display", "block");
+        $loginErrMsg.text("Tên đăng nhập hoặc mật khẩu chưa đúng !!!");
+    }
+    function hideLoginErrorMsg() {
+        $loginErrMsg.hide();
+    }
+    function register(username, pass, email, phone) {
+        const input = {
+            username: username,
+            password: pass,
+            email: email,
+            phone: phone
+        };
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: "/Account/Register",
+                type: "POST",
+                dataType: 'json',
+                data: input,
+            }).done((result) => {
+                resolve(result);
+            }).fail((err) => {
+                reject(err);
+            });
+        })
+    }
+    function showRegisterMsg(isSuccess) {
+        $registerMsg.show();
+        $registerMsg.css("display", "block");
+        if (isSuccess) {
+            $registerMsg.html("Tạo tài khoản <b>THÀNH CÔNG</b> !!!");
+        } else {
+            $registerMsg.html("Tên đăng nhập đã tồn tại !!!");
+        }
+            
+    }
+    function hideRegisterMsg() {
+        $registerMsg.hide();
     }
 });
