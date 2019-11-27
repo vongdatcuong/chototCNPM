@@ -108,17 +108,17 @@ namespace ChoTot.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public JsonResult Register(string username, string password, string email, string phone)
+        public JsonResult Register(User user)
         {
             Session.Clear();
             try
             {
                 storeName = string.Format("sp_register");
                 SqlParameter[] par = new SqlParameter[5];
-                par[0] = new SqlParameter("@userName", username);
-                par[1] = new SqlParameter("@password", endcode(password));
-                par[2] = new SqlParameter("@email", email);
-                par[3] = new SqlParameter("@phone", phone);
+                par[0] = new SqlParameter("@userName", user.userName);
+                par[1] = new SqlParameter("@password", endcode(user.password));
+                par[2] = new SqlParameter("@email", user.email);
+                par[3] = new SqlParameter("@phone", user.phone);
                 par[4] = new SqlParameter("@createdDate", DateTime.Now);
                 //Execute store
                 ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);

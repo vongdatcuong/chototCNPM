@@ -22,6 +22,8 @@
         gUser = JSON.parse(userJs).Table[0];
         displayNav(true);
     }
+    //Get Parameters in sessions
+    getParams();
     //End Sessions
 
     //Modal
@@ -267,5 +269,35 @@
     }
     function hideRegisterMsg() {
         $registerMsg.hide();
+    }
+    
+    //Parameters
+    function getParams() {
+        return new Promise((resolve, reject) => {
+            let allParams = sessionStorage.getItem("ChoTotAllParams")
+            if (allParams) {
+                const allParamsJs = JSON.parse(allParams);
+                gCity = allParamsJs.City;
+                gCategory = allParamsJs.Category;
+                gParam = allParamsJs.Parameter;
+            }
+            else {
+                $.ajax({
+                    url: "/Home/GetParams",
+                    type: "GET",
+                    dataType: 'json',
+                }).done((result) => {
+                    const allParamsJs = JSON.parse(result);
+                    gCity = allParamsJs.City;
+                    gCategory = allParamsJs.Category;
+                    gParam = allParamsJs.Parameter;
+
+                    sessionStorage.setItem("ChoTotAllParams", result);
+                }).fail((err) => {
+                    reject(err);
+                });
+            }
+            
+        })
     }
 });
