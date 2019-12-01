@@ -35,6 +35,7 @@ namespace ChoTot.Controllers
             else if (returnUrl != null)
             {
                 ViewBag.isLoggingIn = true;
+                ViewBag.returnUrl = returnUrl;
             }
             else
             {

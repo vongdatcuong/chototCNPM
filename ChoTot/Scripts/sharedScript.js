@@ -67,6 +67,10 @@
                 $loginModal.modal('hide');
                 document.loginForm.reset();
                 $loginErrMsg.hide();
+
+                //Navigate to url
+                let currentUrl = window.location.href;
+                window.location.href = currentUrl.slice(0, currentUrl.indexOf('/')) + returnUrl;
             }
             else {
                 //Login failed
@@ -300,4 +304,5 @@
             
         })
     }
+
 });

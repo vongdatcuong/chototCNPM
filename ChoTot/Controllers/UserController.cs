@@ -18,6 +18,7 @@ namespace ChoTot.Controllers
         private string jsonRs = string.Empty;
         private string storeName = string.Empty;
 
+        [Authorize]
         // GET: User
         public ActionResult Index()
         {

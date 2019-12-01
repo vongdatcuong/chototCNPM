@@ -6,6 +6,7 @@
     <script type="text/javascript">
         if ('@ViewBag.isLoggingIn') {
             isLoggingIn = ('@ViewBag.isLoggingIn'.toLowerCase() == 'true') ? true : false;
+            returnUrl = '@ViewBag.returnUrl';
         }
         userJs = '@Html.Raw(ViewBag.gUserStr)';
     </script>

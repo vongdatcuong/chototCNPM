@@ -36,7 +36,7 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="profileLink ">
-                                <a id="profileLink" class="dropdown-item">Hồ sơ <i class="fas fa-user-circle"></i></a>
+                                <a id="profileLink" href="/User" class="dropdown-item">Hồ sơ <i class="fas fa-user-circle"></i></a>
                                 <a id="approveLink" class="dropdown-item">Kiểm duyệt <i class="fas fa-clipboard-check"></i></a>
                                 <a id="logoutLink" class="dropdown-item">Đăng xuất <i class="fas fa-sign-out-alt"></i></a>
                             </div>
@@ -87,14 +87,13 @@
                                 <label><input type="checkbox" name="keepIn">Duy trì đăng nhập</label>
                             </div>
                         </div>
-                        <button type="submit" id="loginBtn" class="btn btn-default">ĐĂNG NHẬP</button>
+                        <button type="submit" id="loginBtn" class="btn btn-default modalBtn">ĐĂNG NHẬP</button>
                         <div class="form-group">
                             <a id="registerInLogin" href="#" data-toggle="modal" data-target="#registerModal">Đăng ký ngay</a>
                         </div>
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -125,18 +124,25 @@
                             <input type="tel" class="form-control" id="register_phone" name="phone" placeholder="Số điện thoai">
                             <label id="register_msg" class="error" style="text-align: center; display: none;"></label>
                         </div>
-                        <button type="submit" id="registerBtn" class="btn btn-default">ĐĂNG KÝ</button>
+                        <button type="submit" id="registerBtn" class="btn btn-default modalBtn">ĐĂNG KÝ</button>
                         <div class="form-group">
                             <a id="loginInRegister" href="#" data-toggle="modal" data-target="#loginModal">Đăng nhập</a>
                         </div>
                     </form>
                 </div>
             </div>
-
         </div>
-    </div>
-
+    </div>   
     <div class="container body-content">
+        <!-- Start BreadCrumb-->
+        <nav aria-label="breadcrumb" id="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="#">Frontend</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bootstrap</li>
+            </ul>
+        </nav>
+        <!-- End BreadCrumb-->
         @RenderBody()
     </div>
     <hr />
@@ -187,7 +193,7 @@
     <script type="text/javascript">
         //Global variables
         let gUser = {};
-        let isLoggingIn, userJs, gCategory, gCity, gParam;
+        let isLoggingIn, returnUrl, userJs, gCategory, gCity, gParam;
     </script>
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/sharedScripts")

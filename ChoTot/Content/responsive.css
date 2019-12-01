@@ -21,7 +21,7 @@
     }
 }
 /*Mobile*/
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 414px) {
     /*Header*/
     .navbar-search .input-group {
         padding: 10px 20px;
@@ -36,5 +36,17 @@
     .navbar-user .navbar-nav li a {
         padding-left: 8px;
         padding-right: 8px;
+    }
+
+    #editProfileModal .modal-content {
+        max-width: 100%;
+    }
+
+    /*User Page*/
+    #avatar-wrapper {
+        text-align: center;
+    }
+    #account_info {
+        padding: 10px 20px;
     }
 }

@@ -1,2 +1,72 @@
-﻿body {
+﻿.nav-tabs a.nav-link {
+    color: #ff9900;
+}
+    .nav-tabs a.nav-link.active {
+        background-color: #ff9900;
+    }
+#historyTabContent .table{
+    font-size: 0.7em;
+}
+#historyTabContent .table th {
+    background-color: #ff9900;
+    border: 1px solid #BBBBBB;
+}
+#historyTabContent .table td {
+    border: 1px solid #BBBBBB;
+}
+
+#userInfoTable td:first-child {
+    color: #ff6633;
+    font-weight: bold;
+    width: 30%;
+}
+#userInfoTable td:nth-child(2) {
+    width: 70%;
+}
+#userFuncGroup a {
+    color: #ff9900;
+    text-decoration: underline;
+    padding-left: 10px;
+}
+#userFuncGroup a:first-child {
+    padding-left: 10px;
+}
+#userFuncGroup a:hover {
+    cursor: pointer;
+}
+#avatar-wrapper {
+    margin-bottom: 25px;
+}
+.avatar {
+    width: 192px;
+    height: 192px;
+    max-width: 100%;
+    border-radius: 100%; 
+}
+.avatar:hover {
+    cursor: pointer;
+}
+#account_info {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 20px;
+}
+#account_info li {
+    padding: 5px 0;
+}
+/*Modal*/
+#editProfileModal .modal-content {
+    width: 600px;
+}
+#editProfileModal label {
+    font-weight: bold;
+    vertical-align: middle;
+    top: 2px;
+}
+
+#avatarModal .modal-content {
+    width: 600px;
+}
+#avatarModal .form-group {
+    float: right;
 }

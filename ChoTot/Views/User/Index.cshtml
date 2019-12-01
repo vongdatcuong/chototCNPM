@@ -1,9 +1,248 @@
 ﻿@{
-    ViewBag.Title = "User Pageeeeeeeee";
+    ViewBag.Title = "User Page";
 }
-<h1>@ViewBag.Title</h1>
-<button id="testClick">Click me</button>
+<div class="row">
+    <div class="col-md-7">
+        <div id="avatar-wrapper">
+            <img src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" data-toggle="modal" data-target="#avatarModal" />
+            <div id="account_info">
+                <ul>
+                    <li>Username</li>
+                    <li>UserId</li>
+                </ul>
+            </div>
+        </div>
+        <div id="history-wrapper">
+            <ul class="nav nav-tabs" id="historyTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="selling-tab" data-toggle="tab" href="#selling" role="tab" aria-controls="selling" aria-selected="true">Sản phẩm đang bán</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="sole-tab" data-toggle="tab" href="#sole" role="tab" aria-controls="sole" aria-selected="false">Sản phẩm đã bán</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="bought-tab" data-toggle="tab" href="#bought" role="tab" aria-controls="bought" aria-selected="false">Sản phẩm đã mua</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="historyTabContent">
+                <!--Selling History Table-->
+                <div class="tab-pane fade show active table-responsive" id="selling" role="tabpanel" aria-labelledby="selling-tab">
+                    <table id="sellingTable" class="table table-bordered table-responsive">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Giá (VNĐ)</th>
+                                <th scope="col">Loại mặt hàng</th>
+                                <th scope="col">Thời gian</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!--/.Selling History Table-->
+                <!--Sole History Table-->
+                <div class="tab-pane fade table-responsive" id="sole" role="tabpanel" aria-labelledby="sole-tab">
+                    <table id="soleTable" class="table table-bordered table-responsive">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Người mua</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Giá (VNĐ)</th>
+                                <th scope="col">Loại mặt hàng</th>
+                                <th scope="col">Thời gian</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!--/.Sole History Table-->
+                <!--Bought History Table-->
+                <div class="tab-pane fade table-responsive" id="bought" role="tabpanel" aria-labelledby="bought-tab">
+                    <table id="boughtTable" class="table table-bordered table-responsive">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Người bán</th>
+                                <th scope="col">Tên sản phẩm</th>
+                                <th scope="col">Giá (VNĐ)</th>
+                                <th scope="col">Loại mặt hàng</th>
+                                <th scope="col">Thời gian</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!--/.Bought History Table-->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 table-responsive">
+        <table id="userInfoTable" class="table">
+            <thead class="thead-light">
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Họ tên</td>
+                    <td class="fit">Nguyễn Văn A</td>
+                </tr>
+                <tr>
+                    <td>Giới tính</td>
+                    <td class="fit">Nam</td>
+                </tr>
+                <tr>
+                    <td>Ngày sinh</td>
+                    <td class="fit">1/1/2019</td>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td class="fit">123456789</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td class="fit">nva@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ</td>
+                    <td class="fit">A, phường B, quận CA, phường B, quận CA, phường B, quận CA, phường B, quận CA, phường B, quận CA, phường B, quận C</td>
+                </tr>
+                <tr>
+                    <td>Tỉnh thành</td>
+                    <td class="fit">Thành phố XYZ</td>
+                </tr>
+                <tr>
+                    <td>Ngày đăng ký</td>
+                    <td class="fit">30/2/2020</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="userFuncGroup">
+            <a id="editProfileLink" data-toggle="modal" data-target="#editProfileModal">Sửa thông tin</a>
+            <a id="changePasswordLink" data-toggle="modal" data-target="#changePasswordModal">Đổi mật khẩu</a>
+        </div>
+    </div>
+</div>
 
+<!--Change Avatar Modal-->
+<div id="avatarModal" class="modal fade myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ĐỔI ẢNH ĐẠI DIỆN</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" />
+                <form class="form-horizontal d-inline" name="changePasswordForm" method="post">
+                    <div class="form-group">
+                        <label for="avatar_file" class="font-weight-bold">File:</label>
+                        <input type="file" class="form-control" id="avatar_file" name="avatar_file" placeholder="Chọn Ảnh" />
+                    </div>
+                    <button type="submit" id="avatarBtn" class="btn btn-default modalBtn">ĐỔI ẢNH ĐẠI DIỆN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Profile Modal-->
+<div id="editProfileModal" class="modal fade myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">SỬA THÔNG TIN</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="editProfileForm" method="post">
+                    <div class="form-group row">
+                        <label for="edit_name" class="col-md-3">Họ tên:</label>
+                        <input type="text" class="form-control col-md-9" id="edit_name" name="name" placeholder="Họ tên">
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_gender" class="col-md-3">Giới tính:</label>
+                        <div class="form-check form-check-inline col-md-2">
+                            <input class="form-check-input" type="radio" name="gender" id="edit_male" value="male">
+                            <label class="form-check-label" for="edit_male">Nam</label>
+                        </div>
+                        <div class="form-check form-check-inline col-md-2">
+                            <input class="form-check-input" type="radio" name="gender" id="edit_female" value="female">
+                            <label class="form-check-label" for="edit_femail">Nữ</label>
+                        </div>
+                        <div class="form-check form-check-inline col-md-2">
+                            <input class="form-check-input" type="radio" name="gender" id="edit_other" value="other">
+                            <label class="form-check-label" for="edit_other">Khác</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_birthdate" class="col-md-3">Ngày sinh:</label>
+                        <input type="date" class="form-control col-md-9" id="edit_birthdate" name="birthdate">
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_phone" class="col-md-3">Số điện thoại:</label>
+                        <input type="tel" class="form-control col-md-9" id="edit_phone" name="phone" placeholder="Số điện thoại">
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_mail" class="col-md-3">Email:</label>
+                        <input type="email" class="form-control col-md-9" id="edit_email" name="email" placeholder="Email">
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_address" class="col-md-3">Địa chỉ:</label>
+                        <textarea type="text" class="form-control col-md-9" id="edit_address" name="address" placeholder="Địa chỉ"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_city" class="col-md-3">Tỉnh thành:</label>
+                        <select id="edit_city" name="city" class="form-control col-md-9">
+                            <option>TP HCM</option>
+                            <option>Hà Nội</option>
+                            <option>Đà Nẵng</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="editProfileBtn" class="btn btn-default modalBtn">SỬA THÔNG TIN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Change Password Modal-->
+<div id="changePasswordModal" class="modal fade myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">ĐỔI MẬT KHẨU</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="changePasswordForm" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="change_old_password" name="old_password" placeholder="Mật khẩu cũ" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="change_new_password" name="new_password" placeholder="Mật khẩu mới">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="change_new_repassword" name="new_repassword" placeholder="Xác nhận mật khẩu mới">
+                    </div>
+                    <button type="submit" id="changePasswordBtn" class="btn btn-default modalBtn">ĐỔI MẬT KHẨU</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts{
     <script type="text/javascript">
         userJs = '@Html.Raw(ViewBag.gUserStr)';

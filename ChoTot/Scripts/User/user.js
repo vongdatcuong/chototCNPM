@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
-    if (userJs) {
-        gUser = JSON.parse(userJs).Table[0];
-        displayNav(true);
-    }
+    const $avatar_file = $('#avatar_file');
+
+    $avatar_file.on('change', function (e) {
+        pickImage(this, document.querySelector("#avatarModal .avatar"));
+    })
 })

@@ -175,6 +175,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\default_avatar_male.jpg" />
     <Content Include="Images\favicon_logo.png" />
     <Content Include="Images\transparent_logo.png" />
     <Content Include="Scripts\Approve\approve.js" />
