@@ -175,6 +175,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\sweetalert2.css" />
+    <Content Include="Content\sweetalert2.min.css" />
     <Content Include="Images\default_avatar_male.jpg" />
     <Content Include="Images\favicon_logo.png" />
     <Content Include="Images\transparent_logo.png" />
@@ -222,6 +224,8 @@
     <Content Include="Scripts\PostItem\post-item.js" />
     <Content Include="Scripts\Service\Utils.js" />
     <Content Include="Scripts\sharedScript.js" />
+    <Content Include="Scripts\sweetalert2.js" />
+    <Content Include="Scripts\sweetalert2.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

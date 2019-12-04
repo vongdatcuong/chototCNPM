@@ -12,7 +12,7 @@ namespace ChoTot.Models
 	    public string description { get; set; }
 	    public string thumbnail { get; set; }
 	    public int price { get; set; }
-	    public int category { get; set; }
+	    public string category { get; set; }
         public string status { get; set; }
         public int city { get; set; }
         public bool canNegotiate { get; set; }

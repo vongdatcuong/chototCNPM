@@ -7,7 +7,7 @@
     <link rel="icon" href="~/Images/favicon_logo.png">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" type="text/css" />
 </head>
 <body>
     <nav class="my-navbar fixed-top">
@@ -132,7 +132,7 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
     <div class="container body-content">
         <!-- Start BreadCrumb-->
         <nav aria-label="breadcrumb" id="breadcrumb">
@@ -188,14 +188,16 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/library")
     @Scripts.Render("~/bundles/constants")
     @Scripts.Render("~/bundles/serviceScripts")
     <script type="text/javascript">
         //Global variables
         let gUser = {};
         let isLoggingIn, returnUrl, userJs, gCategory, gCity, gParam;
+        const Alert = new SweetAlert();
     </script>
-    @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/sharedScripts")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

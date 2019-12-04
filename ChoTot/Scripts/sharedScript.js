@@ -139,41 +139,61 @@
         rules: {
             username: {
                 required: true,
+                minlength: 3,
+                maxlength: 30
             },
             password: {
-                required: true
+                required: true,
+                minlength: 6,
+                maxlength: 40
             },
             "re-password": {
-                equalTo: "#register_password"
+                required: true,
+                equalTo: "#register_password",
+                minlength: 6,
+                maxlength: 40
             },
             email: {
                 required: true,
-                email: true
+                email: true,
+                minlength: 6,
+                maxlength: 40
             },
             phone: {
                 required: true,
                 number: true,
-                minlength: 10
+                minlength: 10,
+                maxlength: 15
             }
         },
         messages: {
             username: {
                 required: "Username không được để trống",
+                minlength: "Username phải có tối thiểu 3 ký tự",
+                maxlength: "Username chỉ được có tối đa 30 ký tự"
             },
             password: {
-                required: "Mật khẩu không được để trống"
+                required: "Mật khẩu không được để trống",
+                minlength: "Mật khẩu phải có tối thiểu 6 ký tự",
+                maxlength: "Mật khẩu chỉ được có tối đa 40 ký tự"
             },
             "re-password": {
-                equalTo: "Xác nhận mật khẩu không trùng khớp"
+                required: "Xác nhận mật khẩu không được để trống",
+                equalTo: "Xác nhận mật khẩu không trùng khớp",
+                minlength: "Mật khẩu phải có tối thiểu 6 ký tự",
+                maxlength: "Mật khẩu chỉ được có tối đa 40 ký tự"
             },
             email: {
                 required: "Email không được để trống",
-                email: "Email phải có dạng example@abc.com"
+                email: "Email phải có dạng example@abc.com",
+                minlength: "Emai phải có tối thiểu 6 ký tự",
+                maxlength: "Emai chỉ được có tối đa 40 ký tự"
             },
             phone: {
                 required: "Số điện thoại phải có tối thiểu 10 số",
                 number: "Số điện thoại phải là số",
-                minlength: "Số điện thoại phải có tối thiểu 10 số"
+                minlength: "Số điện thoại phải có tối thiểu 10 số",
+                maxlength: "Số điện thoại chỉ được có tối đa 15 số"
             }
         }
     })

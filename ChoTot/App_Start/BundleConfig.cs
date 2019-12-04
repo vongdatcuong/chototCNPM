@@ -24,6 +24,9 @@ namespace ChoTot
                       "~/Scripts/umd/popper.min.js",
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/library").Include(
+                     "~/Scripts/sweetalert2.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/constants").Include(
                       "~/Scripts/constant.js"));
 
@@ -35,7 +38,8 @@ namespace ChoTot
                       "~/Content/item.css",
                       "~/Content/post-item.css",
                       "~/Content/approve.css",
-                      "~/Content/responsive.css"));
+                      "~/Content/responsive.css",
+                      "~/Content/sweetalert2.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/sharedScripts").Include(
                       "~/Scripts/sharedScript.js"));
