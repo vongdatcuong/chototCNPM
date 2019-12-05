@@ -1,11 +1,18 @@
 ﻿const $loadingSpinner = $('#loadingSpinner');
-
 function showLoading() {
     $loadingSpinner.show();
 }
 
 function hideLoading() {
     $loadingSpinner.hide();
+}
+
+function showLoadingInner() {
+    $('#loadingInner').show();
+}
+
+function hideLoadingInner() {
+    $('#loadingInner').hide();
 }
 
 //Pick Image
@@ -69,10 +76,44 @@ function SweetAlert() {
 function parseDate(dateString, seperator) {
     seperator = seperator || '-';
     const date = new Date(dateString);
-    return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join(seperator);
+    return [("0" + date.getDate()).slice(-2), ("0" + (date.getMonth() + 1)).slice(-2), date.getFullYear()].join(seperator);
+}
+function parseDateInput(dateString, seperator) {
+    seperator = seperator || '-';
+    const date = new Date(dateString);
+    return [date.getFullYear(), ("0" + (date.getMonth() + 1)).slice(-2), ("0" + date.getDate()).slice(-2)].join(seperator);
 }
 function parseDateTime(dateString, dateSeperator) {
     dateSeperator = dateSeperator || '-';
     const date = new Date(dateString);
-    return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join(dateSperator) + ' ' + [date.getHours(), date.getMinutes()].join(':');
+    return [("0" + date.getDate()).slice(-2), ("0" + (date.getMonth() + 1)).slice(-2), date.getFullYear()].join(dateSeperator) + ' ' + [("0" + date.getHours()).slice(-2), ("0" + date.getMinutes()).slice(-2)].join(':');
 }
+
+//Jquery Validation rules
+jQuery.validator.addMethod("greaterThanNow",
+    function (value, element, params) {
+
+        if (!/Invalid|NaN/.test(new Date(value))) {
+            if (params)
+                return new Date(value) > Date.now()
+            else
+                return true;
+        }
+
+        return isNaN(value) && isNaN(params)
+            || (Number(value) > Number(params));
+    }, 'Must be greater than now.');
+
+jQuery.validator.addMethod("lessThanNow",
+    function (value, element, params) {
+
+        if (!/Invalid|NaN/.test(new Date(value))) {
+            if (params)
+                return new Date(value) < Date.now()
+            else
+                return true;
+        }
+
+        return isNaN(value) && isNaN(params)
+            || (Number(value) < Number(params));
+    }, 'Must be less than now.');

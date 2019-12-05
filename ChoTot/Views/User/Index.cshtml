@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "User Page";
+    ViewBag.Title = "User";
 }
 <div class="row">
     <div class="col-md-7">
@@ -7,8 +7,8 @@
             <img src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" data-toggle="modal" data-target="#avatarModal" />
             <div id="account_info">
                 <ul>
-                    <li>Username</li>
-                    <li>UserId</li>
+                    <li>Username: <span id="userInfoUsername"></span></li>
+                    <li>UserId: <span id="userInfoId"></span></li>
                 </ul>
             </div>
         </div>
@@ -85,40 +85,54 @@
         </div>
     </div>
     <div class="col-md-5 table-responsive">
-        <table id="userInfoTable" class="table">
+        <div id="loadingInner" class="sk-fading-circle" style="display: none;">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+        </div>
+        <table id="userInfoTable" class="table" style="display: none;">
             <thead class="thead-light">
             </thead>
             <tbody>
                 <tr>
                     <td>Họ tên</td>
-                    <td class="fit">Nguyễn Văn A</td>
+                    <td class="fit" id="userInfoName"></td>
                 </tr>
                 <tr>
                     <td>Giới tính</td>
-                    <td class="fit">Nam</td>
+                    <td class="fit" id="userInfoGender"></td>
                 </tr>
                 <tr>
                     <td>Ngày sinh</td>
-                    <td class="fit">1/1/2019</td>
+                    <td class="fit" id="userInfoBirthdate"></td>
                 <tr>
                     <td>Số điện thoại</td>
-                    <td class="fit">123456789</td>
+                    <td class="fit" id="userInfoPhone"></td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td class="fit">nva@gmail.com</td>
+                    <td class="fit" id="userInfoEmail"></td>
                 </tr>
                 <tr>
                     <td>Địa chỉ</td>
-                    <td class="fit">A, phường B, quận CA, phường B, quận CA, phường B, quận CA, phường B, quận CA, phường B, quận CA, phường B, quận C</td>
+                    <td class="fit" id="userInfoAddress"></td>
                 </tr>
                 <tr>
                     <td>Tỉnh thành</td>
-                    <td class="fit">Thành phố XYZ</td>
+                    <td class="fit" id="userInfoCity"></td>
                 </tr>
                 <tr>
                     <td>Ngày đăng ký</td>
-                    <td class="fit">30/2/2020</td>
+                    <td class="fit" id="userInfoCreatedDate"></td>
                 </tr>
             </tbody>
         </table>
@@ -142,7 +156,7 @@
             </div>
             <div class="modal-body">
                 <img src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" />
-                <form class="form-horizontal d-inline" name="changePasswordForm" method="post">
+                <form class="form-horizontal d-inline" name="changeAvatarForm" method="post">
                     <div class="form-group">
                         <label for="avatar_file" class="font-weight-bold">File:</label>
                         <input type="file" class="form-control" id="avatar_file" name="avatar_file" placeholder="Chọn Ảnh" />
@@ -166,27 +180,29 @@
             <div class="modal-body">
                 <form class="form-horizontal" name="editProfileForm" method="post">
                     <div class="form-group row">
-                        <label for="edit_name" class="col-md-3">Họ tên:</label>
-                        <input type="text" class="form-control col-md-9" id="edit_name" name="name" placeholder="Họ tên">
+                        <label for="edit_lastName" class="col-md-2">Họ:</label>
+                        <input type="text" class="form-control offset-md-1 col-md-3" id="edit_lastName" name="lastName" placeholder="Họ">
+                        <label for="edit_firstName" class="col-md-2">Tên:</label>
+                        <input type="text" class="form-control offset-md-1 col-md-3" id="edit_firstName" name="firstName" placeholder="Tên">
                     </div>
                     <div class="form-group row">
                         <label for="edit_gender" class="col-md-3">Giới tính:</label>
                         <div class="form-check form-check-inline col-md-2">
-                            <input class="form-check-input" type="radio" name="gender" id="edit_male" value="male">
+                            <input class="form-check-input" type="radio" name="gender" id="edit_male" value="Nam">
                             <label class="form-check-label" for="edit_male">Nam</label>
                         </div>
                         <div class="form-check form-check-inline col-md-2">
-                            <input class="form-check-input" type="radio" name="gender" id="edit_female" value="female">
+                            <input class="form-check-input" type="radio" name="gender" id="edit_female" value="Nữ">
                             <label class="form-check-label" for="edit_femail">Nữ</label>
                         </div>
                         <div class="form-check form-check-inline col-md-2">
-                            <input class="form-check-input" type="radio" name="gender" id="edit_other" value="other">
+                            <input class="form-check-input" type="radio" name="gender" id="edit_other" value="Khác">
                             <label class="form-check-label" for="edit_other">Khác</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="edit_birthdate" class="col-md-3">Ngày sinh:</label>
-                        <input type="date" class="form-control col-md-9" id="edit_birthdate" name="birthdate">
+                        <input type="date" class="form-control col-md-9" id="edit_birthdate" name="birthDate">
                     </div>
                     <div class="form-group row">
                         <label for="edit_phone" class="col-md-3">Số điện thoại:</label>
@@ -202,11 +218,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="edit_city" class="col-md-3">Tỉnh thành:</label>
-                        <select id="edit_city" name="city" class="form-control col-md-9">
-                            <option>TP HCM</option>
-                            <option>Hà Nội</option>
-                            <option>Đà Nẵng</option>
-                        </select>
+                        @Html.DropDownList("edit_city", (IEnumerable<SelectListItem>)ViewBag.selectListCity, new { @class = "form-control col-md-9" })
+
                     </div>
                     <button type="submit" id="editProfileBtn" class="btn btn-default modalBtn">SỬA THÔNG TIN</button>
                 </form>
@@ -229,13 +242,14 @@
             <div class="modal-body">
                 <form class="form-horizontal" name="changePasswordForm" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="change_old_password" name="old_password" placeholder="Mật khẩu cũ" />
+                        <input type="password" class="form-control" id="change_old_password" name="old_password" placeholder="Mật khẩu cũ" />
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="change_new_password" name="new_password" placeholder="Mật khẩu mới">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="change_new_repassword" name="new_repassword" placeholder="Xác nhận mật khẩu mới">
+                        <label id="changePassword_msg" class="error" style="text-align: center; display: none;"></label>
                     </div>
                     <button type="submit" id="changePasswordBtn" class="btn btn-default modalBtn">ĐỔI MẬT KHẨU</button>
                 </form>

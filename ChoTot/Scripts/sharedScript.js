@@ -70,7 +70,7 @@
 
                 //Navigate to url
                 let currentUrl = window.location.href;
-                window.location.href = currentUrl.slice(0, currentUrl.indexOf('/')) + returnUrl;
+                window.location.href = currentUrl.slice(0, currentUrl.lastIndexOf('/')) + returnUrl;
             }
             else {
                 //Login failed
@@ -88,6 +88,7 @@
             const result = await logout();
             displayNav(false);
             hideLoading();
+            window.location.href = window.location.href.slice(0, window.location.href.lastIndexOf('/'));
         } catch (e) {
             console.log(e);
         }
@@ -282,14 +283,13 @@
         })
     }
     function showRegisterMsg(isSuccess) {
-        $registerMsg.show();
-        $registerMsg.css("display", "block");
         if (isSuccess) {
-            $registerMsg.html("Tạo tài khoản <b>THÀNH CÔNG</b> !!!");
+            Alert.success("Tạo tài khoản <b>THÀNH CÔNG</b> !!!");
         } else {
+            $registerMsg.show();
+            $registerMsg.css("display", "block");
             $registerMsg.html("Tên đăng nhập đã tồn tại !!!");
-        }
-            
+        }   
     }
     function hideRegisterMsg() {
         $registerMsg.hide();
@@ -310,6 +310,7 @@
                     url: "/Home/GetParams",
                     type: "GET",
                     dataType: 'json',
+                    async: false
                 }).done((result) => {
                     const allParamsJs = JSON.parse(result);
                     gCity = allParamsJs.City;

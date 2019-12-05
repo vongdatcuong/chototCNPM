@@ -32,7 +32,7 @@ namespace ChoTot.Controllers
                 storeName = string.Format("sp_login");
                 SqlParameter[] par = new SqlParameter[2];
                 par[0] = new SqlParameter("@userName", username);
-                par[1] = new SqlParameter("@pass", endcode(password));
+                par[1] = new SqlParameter("@pass", encode(password));
 
                 //Execute store
                 ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
@@ -99,7 +99,7 @@ namespace ChoTot.Controllers
 
         #region end code PassWord with SHA1
 
-        public static string endcode(string str)
+        public static string encode(string str)
         {
             return FormsAuthentication.HashPasswordForStoringInConfigFile(str, "SHA1");
         }
@@ -116,7 +116,7 @@ namespace ChoTot.Controllers
                 storeName = string.Format("sp_register");
                 SqlParameter[] par = new SqlParameter[5];
                 par[0] = new SqlParameter("@userName", user.userName);
-                par[1] = new SqlParameter("@password", endcode(user.password));
+                par[1] = new SqlParameter("@password", encode(user.password));
                 par[2] = new SqlParameter("@email", user.email);
                 par[3] = new SqlParameter("@phone", user.phone);
                 par[4] = new SqlParameter("@createdDate", DateTime.Now);
@@ -137,5 +137,31 @@ namespace ChoTot.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult changeUserPassword(int userId, string oldPassword, string newPassword)
+        {
+            try
+            {
+                storeName = string.Format("sp_change_user_password");
+                SqlParameter[] par = new SqlParameter[3];
+                par[0] = new SqlParameter("@userId", userId);
+                par[1] = new SqlParameter("@oldPassword", encode(oldPassword));
+                par[2] = new SqlParameter("@newPassword", encode(newPassword));
+
+                //Execute store
+                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
     }
 }

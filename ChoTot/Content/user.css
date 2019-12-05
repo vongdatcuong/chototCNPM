@@ -53,12 +53,17 @@
 }
 #account_info li {
     padding: 5px 0;
+    color: #ff6633;
+    font-weight: bold;
+}
+#account_info li span{
+    font-weight: 400;
 }
 /*Modal*/
 #editProfileModal .modal-content {
     width: 600px;
 }
-#editProfileModal label {
+#editProfileModal label:not(.error) {
     font-weight: bold;
     vertical-align: middle;
     top: 2px;

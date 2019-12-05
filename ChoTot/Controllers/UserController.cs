@@ -1,13 +1,16 @@
-﻿using Microsoft.ApplicationBlocks.Data;
+﻿using ChoTot.Models;
+using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace ChoTot.Controllers
 {
@@ -34,6 +37,35 @@ namespace ChoTot.Controllers
                 Session["__USER__"] = cookie["__USER__"];
                 ViewBag.isLoggingIn = false;
             }
+
+            //Get all cities
+            try
+            {
+                storeName = string.Format("sp_get_all_city");
+                //Execute store
+                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+            List<City> lstCity = ds.Tables[0].AsEnumerable().Select(
+                            dataRow => new City
+                            {
+                                cityId = dataRow.Field<int>("cityId"),
+                                shortName = dataRow.Field<string>("shortName"),
+                                fullName = dataRow.Field<string>("fullName")
+                            }).ToList();
+            if (lstCity.Count > 0)
+            {
+                lstCity.RemoveAt(0);
+            }
+            ViewBag.selectListCity = new SelectList(lstCity, "cityId", "fullName");
             return View();
         }
 
@@ -81,6 +113,63 @@ namespace ChoTot.Controllers
                 throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
             }
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult setUserInfo(User user)
+        {
+            try
+            {
+                storeName = string.Format("sp_set_user_info");
+                SqlParameter[] par = new SqlParameter[9];
+                par[0] = new SqlParameter("@userId", user.userId);
+                par[1] = new SqlParameter("@firstName", user.firstName);
+                par[2] = new SqlParameter("@lastName", user.lastName);
+                par[3] = new SqlParameter("@gender", user.gender);
+                par[4] = new SqlParameter("@birthDate", DateTime.ParseExact(user.birthDate, "yyyy/MM/dd", CultureInfo.InvariantCulture));
+                par[5] = new SqlParameter("@phone", user.phone);
+                par[6] = new SqlParameter("@email", user.email);
+                par[7] = new SqlParameter("@address", user.address);
+                par[8] = new SqlParameter("@city", user.city);
+                
+                //Execute store
+                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataRow row = ds.Tables[0].Rows[0];
+                Session["__USER__"] = jsonRs;
+
+                //Save cookies
+                try
+                {
+                    FormsAuthentication.SetAuthCookie(user.userName, false);
+
+                    if (Request.Cookies["ChoTotUser"] != null)
+                    {
+                        HttpCookie userCookie = new HttpCookie("ChoTotUser");
+                        userCookie.Values["__USER__"] = jsonRs.ToString().Replace("\r\n", "");
+                        userCookie.Expires.AddDays(1);
+                        Response.Cookies.Add(userCookie);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+                }
+
+            }
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
     }
