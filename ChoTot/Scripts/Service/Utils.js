@@ -117,3 +117,26 @@ jQuery.validator.addMethod("lessThanNow",
         return isNaN(value) && isNaN(params)
             || (Number(value) < Number(params));
     }, 'Must be less than now.');
+
+jQuery.validator.addMethod("checkFileType",
+    function (value, element, params) {
+        let flag = true;
+        for (const file of element.files) {
+            if (!file.type.includes(params)) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }, 'Files must be images.');
+
+jQuery.validator.addMethod("checkFileSize",
+    function (value, element, params) {
+        let size = 0;
+        for (const file of element.files) {
+            if (!file.type.includes(params)) {
+                size += file.size;
+            }
+        }
+        return size <= parseInt(params);
+    }, 'Files oversize');

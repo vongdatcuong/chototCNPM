@@ -1,4 +1,5 @@
-﻿using Microsoft.ApplicationBlocks.Data;
+﻿using ChoTot.App_Code;
+using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace ChoTot.Controllers
 {
     public class HomeController : Controller
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["ChoTotDB"].ConnectionString;
+        private string connectionString = Constant.connectionStringDB;
         private DataSet ds = new DataSet();
         private string jsonRs = string.Empty;
         private string storeName = string.Empty;

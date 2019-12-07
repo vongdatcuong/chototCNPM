@@ -4,11 +4,12 @@
 <div class="row">
     <div class="col-md-7">
         <div id="avatar-wrapper">
-            <img src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" data-toggle="modal" data-target="#avatarModal" />
+            <img id="userInfoAvatar" src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" data-toggle="modal" data-target="#avatarModal" />
             <div id="account_info">
                 <ul>
                     <li>Username: <span id="userInfoUsername"></span></li>
                     <li>UserId: <span id="userInfoId"></span></li>
+                    <li>Loại tài khoản: <span id="userType"></span></li>
                 </ul>
             </div>
         </div>
@@ -155,11 +156,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" />
+                <img id="userInfoAvatarModal" src="~/Images/default_avatar_male.jpg" class="avatar img-fluid" alt="Avatar" />
                 <form class="form-horizontal d-inline" name="changeAvatarForm" method="post">
                     <div class="form-group">
                         <label for="avatar_file" class="font-weight-bold">File:</label>
-                        <input type="file" class="form-control" id="avatar_file" name="avatar_file" placeholder="Chọn Ảnh" />
+                        <input type="file" class="form-control" id="avatar_file" name="avatar_file" placeholder="Chọn Ảnh" />   
+                        <label id="changeAvatar_msg" class="error" style="text-align: center; display: none;"></label>
                     </div>
                     <button type="submit" id="avatarBtn" class="btn btn-default modalBtn">ĐỔI ẢNH ĐẠI DIỆN</button>
                 </form>

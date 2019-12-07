@@ -75,3 +75,6 @@
 #avatarModal .form-group {
     float: right;
 }
+#avatarModal .error {
+    display: block;
+}

@@ -11,12 +11,13 @@ using System.Configuration;
 using Newtonsoft.Json;
 using System.Web.Security;
 using ChoTot.Models;
+using ChoTot.App_Code;
 
 namespace ChoTot.Controllers
 {
     public class AccountController : Controller
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["ChoTotDB"].ConnectionString;
+        private string connectionString = Constant.connectionStringDB;
         private DataSet ds = new DataSet();
         private string jsonRs = string.Empty;
         private string storeName = string.Empty;

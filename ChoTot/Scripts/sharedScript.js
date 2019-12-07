@@ -70,7 +70,7 @@
 
                 //Navigate to url
                 let currentUrl = window.location.href;
-                window.location.href = currentUrl.slice(0, currentUrl.lastIndexOf('/')) + returnUrl;
+                window.location.href = currentUrl.slice(0, currentUrl.indexOf('/')) + returnUrl;
             }
             else {
                 //Login failed

@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
     showLoadingInner();
-    const $avatar_file = $('#avatar_file');
+    $('#userInfoUsername').text(gUser.userName);
+    $('#userInfoId').text(gUser.userId);
+    $('#userType').text(((gUser.type == 1) ? "Quản trị viên" : "Thành viên"));
     const $userInfoTable = $('#userInfoTable');
-    const $userInfoUsername = $('#userInfoUsername');
-    const $userInfoId = $('#userInfoId');
     const $userInfoName = $('#userInfoName');
     const $userInfoGender = $('#userInfoGender');
     const $userInfoBirthdate = $('#userInfoBirthdate');
@@ -28,9 +28,19 @@
     const $changePasswordForm = $(document.changePasswordForm);
     const $changeOldPassword = $('#change_old_password');
     const $changePasswordMsg = $('#changePassword_msg');
-    loadUserInfo();
 
     //Change avatar
+    const $avatarModal = $('#avatarModal');
+    const $changeAvatarForm = $(document.changeAvatarForm);
+    const avatarFile = document.changeAvatarForm.avatar_file;
+    const $changeAvatarMsg = $('#changeAvatar_msg');
+    const $userInfoAvatar = $('#userInfoAvatar');
+    const $userInfoAvatarModal = $('#userInfoAvatarModal');
+    const $avatar_file = $('#avatar_file');
+
+    loadUserAvatar();
+    loadUserInfo();
+
     $avatar_file.on('change', function (e) {
         pickImage(this, document.querySelector("#avatarModal .avatar"));
     });
@@ -73,6 +83,29 @@
         }
         return false;
     })
+
+    //Change avatar
+    $('#avatarBtn').on('click', async (e) => {
+        e.preventDefault();
+        if (!$changeAvatarForm.valid())
+            return;
+        try {
+            const result = await changeUserAvatarDB();
+            const resultJs = JSON.parse(result);
+            if (resultJs.Table && resultJs.Table.length > 0 && resultJs.Table[0].error) {
+                showChangeAvatarMsg(false, resultJs.Table[0].error);
+            } else {
+                showChangeAvatarMsg(true, "Thay đổi ảnh đại diện thành công");
+                gUser = resultJs.Table[0];
+                pickImage($avatar_file[0], document.querySelector(".avatar"));
+                $avatarModal.modal("hide");
+            }
+        } catch (err) {
+            Alert.error("Thay đổi ảnh đại diện thất bại !!!");
+        }
+        return false;
+    })
+
     //Modals
     $editProfileModal.on('shown.bs.modal', (e) => {
         loadUserEdit();
@@ -84,6 +117,10 @@
     $changePasswordModal.on('hide.bs.modal', (e) => {
         document.changePasswordForm.reset();
         $changePasswordMsg.hide();
+    })
+    $avatarModal.on('hide.bs.modal', (e) => {
+        document.changeAvatarForm.reset();
+        $changeAvatarMsg.hide();
     })
     //End Modals
 
@@ -207,13 +244,28 @@
             },
         }
     })
+
+    $changeAvatarForm.validate({
+        rules: {
+            avatar_file: {
+                required: true,
+                checkFileType: "image",
+                checkFileSize: 5 * 1024 * 1024
+            }
+        },
+        messages: {
+            avatar_file: {
+                required: "Chưa chọn file",
+                checkFileType: "Các file phải có dạng ảnh",
+                checkFileSize: "File không được quá 5MB"
+            }
+        }
+    })
     //End Forms Validate
 
     //Edit Profile
     function loadUserInfo() {
         if (gUser) {
-            $userInfoUsername.text(gUser.userName);
-            $userInfoId.text(gUser.userId);
             $userInfoName.text(gUser.lastName + ' ' + gUser.firstName);
             $userInfoGender.text(gUser.gender);
             $userInfoBirthdate.text(parseDate(gUser.birthDate, '/'));
@@ -308,4 +360,47 @@
 
     }
     //End Change password
+
+    //Change avatar
+    function changeUserAvatarDB() {
+        showLoading();
+        var data = new FormData();
+        data.append("userId", gUser.userId);
+        data.append("userName", gUser.userName);
+        data.append("image", avatarFile.files[0]);
+        return $.ajax({
+            url: "/User/changeUserAvatar",
+            type: "POST",
+            dataType: "json",
+            data: data,
+            contentType: false,
+            processData: false,
+
+        })
+            .done((result) => {
+                return result;
+            })
+            .fail((err) => {
+                return err;
+            })
+            .always(() => {
+                hideLoading();
+            })
+    }
+    function showChangeAvatarMsg(isSuccess, message) {
+        if (isSuccess) {
+            Alert.success(message);
+        } else {
+            $changeAvatarMsg.show();
+            $changeAvatarMsg.css("display", "block");
+            $changeAvatarMsg.html(message);
+        }
+
+    }
+    function loadUserAvatar() {
+        let url = (gUser.avatar) ? gUser.avatar : (gUser.gender === "Nam") ? "/Images/default_avatar_male.jpg" : "/Images/default_avatar_female.jpg";
+        $userInfoAvatar.attr('src', url);
+        $userInfoAvatarModal.attr('src', url);
+    }
+    //End Change avatar
 })

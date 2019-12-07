@@ -1,4 +1,5 @@
-﻿using ChoTot.Models;
+﻿using ChoTot.App_Code;
+using ChoTot.Models;
 using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
 using System;
@@ -7,7 +8,9 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -16,7 +19,7 @@ namespace ChoTot.Controllers
 {
     public class UserController : Controller
     {
-        private string connectionString = ConfigurationManager.ConnectionStrings["ChoTotDB"].ConnectionString;
+        private string connectionString = Constant.connectionStringDB;
         private DataSet ds = new DataSet();
         private string jsonRs = string.Empty;
         private string storeName = string.Empty;
@@ -169,6 +172,65 @@ namespace ChoTot.Controllers
                     throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
                 }
 
+            }
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> changeUserAvatar(string userName, string userId, HttpPostedFileBase image)
+        {
+            string imageName = string.Format(Constant.avatarNameFormat, userId, Path.GetExtension(image.FileName).ToLower());
+            string avatarUrl = await AzureBlobController.UploadImageAsync(image, imageName);
+            if (avatarUrl == null)
+            {
+                jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"error\": \"Upload hình ảnh thất bại\"}\r\n  ]\r\n}";
+            }
+            else
+            {
+                try
+                {
+                    storeName = string.Format("sp_set_user_avatar");
+                    SqlParameter[] par = new SqlParameter[2];
+                    par[0] = new SqlParameter("@userId", userId);
+                    par[1] = new SqlParameter("@avatar", avatarUrl);
+
+                    //Execute store
+                    ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+                }
+                catch (TimeoutException timeoutex)
+                {
+                    throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+                }
+                jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    DataRow row = ds.Tables[0].Rows[0];
+                    Session["__USER__"] = jsonRs;
+
+                    //Save cookies
+                    try
+                    {
+                        FormsAuthentication.SetAuthCookie(userName, false);
+
+                        if (Request.Cookies["ChoTotUser"] != null)
+                        {
+                            HttpCookie userCookie = new HttpCookie("ChoTotUser");
+                            userCookie.Values["__USER__"] = jsonRs.ToString().Replace("\r\n", "");
+                            userCookie.Expires.AddDays(1);
+                            Response.Cookies.Add(userCookie);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+                    }
+
+                }
             }
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
