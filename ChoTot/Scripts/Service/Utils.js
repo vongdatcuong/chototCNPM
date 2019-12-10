@@ -88,7 +88,9 @@ function parseDateTime(dateString, dateSeperator) {
     const date = new Date(dateString);
     return [("0" + date.getDate()).slice(-2), ("0" + (date.getMonth() + 1)).slice(-2), date.getFullYear()].join(dateSeperator) + ' ' + [("0" + date.getHours()).slice(-2), ("0" + date.getMinutes()).slice(-2)].join(':');
 }
-
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 //Jquery Validation rules
 jQuery.validator.addMethod("greaterThanNow",
     function (value, element, params) {

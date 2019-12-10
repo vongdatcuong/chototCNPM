@@ -234,5 +234,36 @@ namespace ChoTot.Controllers
             }
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult getUserHistory(int userId)
+        {
+            try
+            {
+                storeName = string.Format("sp_get_user_history");
+                SqlParameter[] par = new SqlParameter[1];
+                par[0] = new SqlParameter("@userId", userId);
+                //Execute store
+                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+                if (ds.Tables.Count > 1)
+                {
+                    ds.Tables[0].TableName = "Selling";
+                    ds.Tables[1].TableName = "Sold";
+                    ds.Tables[2].TableName = "Bought";
+                }
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
     }
 }

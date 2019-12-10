@@ -189,6 +189,15 @@ margin: 10px 0 5px 0;
     position: absolute;
     right: 10px;
 }
+a.chotot-link {
+    color: #ff9900;
+    background-color: #ffffff;
+    font-weight: 800;
+}
+
+    a.chotot-link:hover {
+        color: #ff6633;
+    }
 /*Footer*/
 footer {
     background-color: #FF9900;

@@ -59,10 +59,41 @@
 #account_info li span{
     font-weight: 400;
 }
-/*Modal*/
-#editProfileModal .modal-content {
-    width: 600px;
+.btn-chotot {
+    color: #ffffff;
+    background-color: #ff9900;
+    font-size: 0.73em;
+    padding: 3px;
+    margin-top: 2px;
 }
+    .btn-chotot:not(:last-child) {
+        margin-right: 2px;
+    }
+.btn-chotot:hover {
+    background-color: #ffffff;
+    color: #ff9900;
+}
+.sellingEditBtn {
+    padding: 0;
+}
+.btn-chotot a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    padding: 3px;
+    padding-top: 4px;
+    background-color: #ff9900;
+}
+.btn-chotot a:hover {
+    background-color: #ffffff;
+    color: #ff9900;
+    text-decoration: none;
+}
+    /*Modal*/
+    #editProfileModal .modal-content {
+        width: 600px;
+    }
 #editProfileModal label:not(.error) {
     font-weight: bold;
     vertical-align: middle;

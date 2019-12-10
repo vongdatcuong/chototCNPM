@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
     showLoadingInner();
+
+    const $loadingInnerTable = $('#loadingInnerTable');
+
     $('#userInfoUsername').text(gUser.userName);
     $('#userInfoId').text(gUser.userId);
     $('#userType').text(((gUser.type == 1) ? "Quản trị viên" : "Thành viên"));
@@ -37,6 +40,11 @@
     const $userInfoAvatar = $('#userInfoAvatar');
     const $userInfoAvatarModal = $('#userInfoAvatarModal');
     const $avatar_file = $('#avatar_file');
+
+    //Item History
+    const $sellingTable = $('#sellingTable');
+    const $soldTable = $('#soldTable');
+    const $boughtTable = $('#boughtTable');
 
     loadUserAvatar();
     loadUserInfo();
@@ -272,7 +280,7 @@
             $userInfoPhone.text(gUser.phone);
             $userInfoEmail.text(gUser.email);
             $userInfoAddress.text(gUser.address);
-            $userInfoCity.text(gCity[gUser.city].fullName);
+            $userInfoCity.text(gCity[gUser.city - 1].fullName);
             $userInfoCreatedDate.text(parseDateTime(gUser.createdDate, '/'));
             $userInfoTable.show();
             hideLoadingInner();
@@ -403,4 +411,236 @@
         $userInfoAvatarModal.attr('src', url);
     }
     //End Change avatar
+    loadUserHistory();
+    //History
+    async function loadUserHistory() {
+        try {
+            const result = await getUserHistoryDB();
+            const resultJs = JSON.parse(result);
+            loadSellingTable(resultJs.Selling, resultJs.Sold);
+            loadSoldTable(resultJs.Sold);
+            loadBoughtTable(resultJs.Bought);
+        } catch (err) {
+            Alert.error("Tải lịch sử thất bại !!!");
+        }
+    }
+    function loadSellingTable(data, soldData) {
+        const $tbody = $sellingTable.find('tbody');
+        if (data.length == 0) {
+            const $tr = $('<tr></tr>');
+            const msg = "Không tìm thấy sản phẩm nào !!!";
+            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
+            $tbody.append($tr);
+            return;
+        }
+        data.forEach((item, index) => {
+            const $tr = $('<tr></tr>');
+            const $stt = $(`<td>${index + 1}</td>`);
+            const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);
+            const $name = $(`<td>${item.name}</td>`);
+            const $price = $(`<td>${numberWithCommas(item.price)}</td>`);
+
+            const categoryStr = item.category.split(', ').map((cate) => gCategory[parseInt(cate) - 1].fullName).join(', ');
+            const $category = $(`<td>${categoryStr}</td>`);
+
+            const dateSeperator = '/';
+            const $date = $(`<td>${parseDateTime(item.createdDate, dateSeperator)}</td>`);
+
+            //Buttons
+            const $completeBtn = $(`<button class="sellingCompleteBtn btn btn-default btn-chotot" data-itemId="${item.itemId}" style="width:40px; height:22px;">Hoàn tất</button>`);
+            const $editBtn = $(`<button class="sellingEditBtn btn btn-default btn-chotot" style="width:22px; height:22px;"><a href="/PostItem/${item.itemId}">Sửa</a></button>`);
+            const $deleteBtn = $(`<button class="sellingDeleteBtn btn btn-default btn-chotot" data-itemId="${item.itemId}" style="width:22px; height:22px;">Xóa</button>`);
+
+            const $buttons = $('<td style="padding-left:2px; padding-right: 1px"></td>');
+            $buttons.append($completeBtn, $editBtn, $deleteBtn);
+
+            $tr.append($stt, $id, $name, $price, $category, $date, $buttons);
+            $tbody.append($tr);
+        });
+        //Events
+        $('.sellingDeleteBtn').on('click', async (e) => {
+            const $this = $(e.target);
+            const itemId = parseInt($this.attr('data-itemId'));
+            try {
+                const flag = await Alert.warning("Bạn có chắc muốn xóa bài đăng sản phẩm này !!!")
+                if (flag.value) {
+                    const result = await deleteItemDB(itemId);
+                    const resultJs = JSON.parse(result);
+                    if (resultJs.Table && resultJs.Table.length > 0 && resultJs.Table[0].error) {
+                        Alert.error(resultJs.Table[0].error);
+                    } else {
+                        Alert.success("Xóa bài đăng sản phẩm thành công");
+
+                        //
+                        $loadingInnerTable.show();
+                        $sellingTable.hide();
+                        $tbody.empty();
+                        data = data.filter((item) => item.itemId !== itemId);
+                        loadSellingTable(data, soldData);
+
+                        $sellingTable.show();
+                        $loadingInnerTable.hide();
+                    }
+                }
+            } catch (err) {
+                Alert.error("Xóa bài đăng sản phẩm thất bại !!!");
+            }
+        });
+
+        $('.sellingCompleteBtn').on('click', async (e) => {
+            const $this = $(e.target);
+            const itemId = parseInt($this.attr('data-itemId'));
+            try {
+                const flag = await Alert.warning("Bạn có chắc muốn hoàn tất đơn hàng này !!!")
+                if (flag.value) {
+                    const result = await completeItemDB(itemId);
+                    const resultJs = JSON.parse(result);
+                    if (resultJs.Table && resultJs.Table.length > 0 && resultJs.Table[0].error) {
+                        Alert.error(resultJs.Table[0].error);
+                    } else {
+                        Alert.success("Hoàn tất đơn hàng thành công");
+
+                        //
+                        $loadingInnerTable.show();
+                        $sellingTable.hide();
+                        $tbody.empty();
+                        $soldTable.find('tbody').empty();
+                        const item = data.find((item) => item.itemId == itemId);
+                        soldData.push(Object.assign({}, item));
+                        data = data.filter((item) => item.itemId !== itemId);
+
+                        loadSellingTable(data, soldData);
+                        loadSoldTable(soldData);
+
+                        $sellingTable.show();
+                        $loadingInnerTable.hide();
+                    }
+                }
+            } catch (err) {
+                Alert.error("Xóa bài đăng sản phẩm thất bại !!!");
+            }
+
+        });
+    }
+    function loadSoldTable(data) {
+        const $tbody = $soldTable.find('tbody');
+        if (data.length == 0) {
+            const $tr = $('<tr></tr>');
+            const msg = "Không tìm thấy sản phẩm nào !!!";
+            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
+            $tbody.append($tr);
+            return;
+        }
+        data.forEach((item, index) => {
+            const $tr = $('<tr></tr>');
+            const $stt = $(`<td>${index + 1}</td>`);
+            const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);
+
+            const buyer = (item.buyerId) ? item.buyerId : "???";
+            const $buyer = $(`<td>${buyer}</td>`);
+            const $name = $(`<td>${item.name}</td>`);
+            const $price = $(`<td>${numberWithCommas(item.price)}</td>`);
+
+            const categoryStr = item.category.split(', ').map((cate) => gCategory[parseInt(cate) - 1].fullName).join(', ');
+            const $category = $(`<td>${categoryStr}</td>`);
+
+            const dateSeperator = '/';
+            const $date = $(`<td>${parseDateTime(item.purchaseDate, dateSeperator)}</td>`);
+
+            $tr.append($stt, $id, $buyer, $name, $price, $category, $date);
+            $tbody.append($tr);
+        });
+        
+    }
+    function loadBoughtTable(data) {
+        const $tbody = $boughtTable.find('tbody');
+        if (data.length == 0) {
+            const $tr = $('<tr></tr>');
+            const msg = "Không tìm thấy sản phẩm nào !!!";
+            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
+            $tbody.append($tr);
+            return;
+        }
+        data.forEach((item, index) => {
+            const $tr = $('<tr></tr>');
+            const $stt = $(`<td>${index + 1}</td>`);
+            const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);
+            const $seller = $(`<td>${item.sellerId}</td>`);
+            const $name = $(`<td>${item.name}</td>`);
+            const $price = $(`<td>${numberWithCommas(item.price)}</td>`);
+
+            const categoryStr = item.category.split(', ').map((cate) => gCategory[parseInt(cate) - 1].fullName).join(', ');
+            const $category = $(`<td>${categoryStr}</td>`);
+
+            const dateSeperator = '/';
+            const $date = $(`<td>${parseDateTime(item.purchaseDate, dateSeperator)}</td>`);
+
+            $tr.append($stt, $seller, $id, $name, $price, $category, $date);
+            $tbody.append($tr);
+        });
+    }
+    function getUserHistoryDB() {
+        showLoading();
+        return $.ajax({
+            url: "/User/getUserHistory",
+            type: "GET",
+            dataType: "json",
+            data: {
+                userId: gUser.userId
+            }
+        })
+            .done((result) => {
+                return result;
+            })
+            .fail((err) => {
+                return err;
+            })
+            .always(() => {
+                hideLoading();
+            })
+    }
+    //End History
+
+    //Item
+    function deleteItemDB(itemId) {
+        showLoading();
+        return $.ajax({
+            url: "/PostItem/deleteItem",
+            type: "GET",
+            dataType: "json",
+            data: {
+                itemId: itemId
+            }
+        })
+            .done((result) => {
+                return result;
+            })
+            .fail((err) => {
+                return err;
+            })
+            .always(() => {
+                hideLoading();
+            })
+    }
+    function completeItemDB(itemId) {
+        showLoading();
+        return $.ajax({
+            url: "/PostItem/completeItem",
+            type: "POST",
+            dataType: "json",
+            data: {
+                itemId: itemId
+            }
+        })
+            .done((result) => {
+                return result;
+            })
+            .fail((err) => {
+                return err;
+            })
+            .always(() => {
+                hideLoading();
+            })
+    }
+    //End Item
 })
