@@ -91,9 +91,9 @@
     text-decoration: none;
 }
     /*Modal*/
-    #editProfileModal .modal-content {
-        width: 600px;
-    }
+#editProfileModal .modal-content, #reviewModal .modal-content {
+    width: 600px;
+}
 #editProfileModal label:not(.error) {
     font-weight: bold;
     vertical-align: middle;
@@ -108,4 +108,7 @@
 }
 #avatarModal .error {
     display: block;
+}
+#reviewModal .form-group span {
+    color: #333333;
 }

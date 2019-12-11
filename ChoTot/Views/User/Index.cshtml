@@ -65,10 +65,10 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">ID</th>
-                                <th scope="col">Người mua</th>
+                                <th scope="col">NMua</th>
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Giá (VNĐ)</th>
-                                <th scope="col">Loại mặt hàng</th>
+                                <th scope="col">Loại MH</th>
                                 <th scope="col">Thời gian</th>
                                 <th scope="col"></th>
                             </tr>
@@ -100,20 +100,20 @@
         </div>
     </div>
     <div class="col-md-5 table-responsive">
-            <div id="loadingInner" class="sk-fading-circle" style="display: none;">
-                <div class="sk-circle1 sk-circle"></div>
-                <div class="sk-circle2 sk-circle"></div>
-                <div class="sk-circle3 sk-circle"></div>
-                <div class="sk-circle4 sk-circle"></div>
-                <div class="sk-circle5 sk-circle"></div>
-                <div class="sk-circle6 sk-circle"></div>
-                <div class="sk-circle7 sk-circle"></div>
-                <div class="sk-circle8 sk-circle"></div>
-                <div class="sk-circle9 sk-circle"></div>
-                <div class="sk-circle10 sk-circle"></div>
-                <div class="sk-circle11 sk-circle"></div>
-                <div class="sk-circle12 sk-circle"></div>
-            </div>
+        <div id="loadingInner" class="sk-fading-circle" style="display: none;">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+        </div>
         <table id="userInfoTable" class="table" style="display: none;">
             <thead class="thead-light">
             </thead>
@@ -174,7 +174,7 @@
                 <form class="form-horizontal d-inline" name="changeAvatarForm" method="post">
                     <div class="form-group">
                         <label for="avatar_file" class="font-weight-bold">File:</label>
-                        <input type="file" class="form-control" id="avatar_file" name="avatar_file" placeholder="Chọn Ảnh" />   
+                        <input type="file" class="form-control" id="avatar_file" name="avatar_file" placeholder="Chọn Ảnh" />
                         <label id="changeAvatar_msg" class="error" style="text-align: center; display: none;"></label>
                     </div>
                     <button type="submit" id="avatarBtn" class="btn btn-default modalBtn">ĐỔI ẢNH ĐẠI DIỆN</button>
@@ -268,6 +268,66 @@
                         <label id="changePassword_msg" class="error" style="text-align: center; display: none;"></label>
                     </div>
                     <button type="submit" id="changePasswordBtn" class="btn btn-default modalBtn">ĐỔI MẬT KHẨU</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Review Modal-->
+<div id="reviewModal" class="modal fade myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">PHẢN HỒI</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="loadingReview" class="sk-fading-circle" style="display: none;">
+                    <div class="sk-circle1 sk-circle"></div>
+                    <div class="sk-circle2 sk-circle"></div>
+                    <div class="sk-circle3 sk-circle"></div>
+                    <div class="sk-circle4 sk-circle"></div>
+                    <div class="sk-circle5 sk-circle"></div>
+                    <div class="sk-circle6 sk-circle"></div>
+                    <div class="sk-circle7 sk-circle"></div>
+                    <div class="sk-circle8 sk-circle"></div>
+                    <div class="sk-circle9 sk-circle"></div>
+                    <div class="sk-circle10 sk-circle"></div>
+                    <div class="sk-circle11 sk-circle"></div>
+                    <div class="sk-circle12 sk-circle"></div>
+                </div>
+                <form class="form-horizontal" name="reviewForm" method="post">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="review_itemId" class="font-weight-bold">Id sản phẩm:</label>
+                            <span id="review_itemId"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="review_itemName" class="font-weight-bold">Tên sản phẩm:</label>
+                            <span id="review_itemName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="review_targetName" class="font-weight-bold">Người mua:</label>
+                            <span id="review_targetName"></span>
+                        </div>
+                        <label for="review_rating" class="font-weight-bold">Đánh giá:</label>
+                        <select class="form-control" id="review_rating" name="rating">
+                            @for (var i = ViewBag.ratingMin; i <= ViewBag.ratingMax; i += ViewBag.ratingStep)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="review_content" class="font-weight-bold">Nhận xét:</label>
+                        <textarea class="form-control" id="review_content" name="content" placeholder="Nhận xét" style="height: 120px;"></textarea>
+                        <label id="review_msg" class="error" style="text-align: center; display: none;"></label>
+                    </div>
+                    <button type="submit" id="reviewBtn" class="btn btn-default modalBtn">GỬI PHẢN HỒI</button>
                 </form>
             </div>
         </div>

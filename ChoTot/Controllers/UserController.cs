@@ -44,7 +44,7 @@ namespace ChoTot.Controllers
             //Get all cities
             try
             {
-                storeName = string.Format("sp_get_all_city");
+                storeName = string.Format("sp_get_all_parameters");
                 //Execute store
                 ds = SqlHelper.ExecuteDataset(connectionString, storeName);
 
@@ -69,6 +69,9 @@ namespace ChoTot.Controllers
                 lstCity.RemoveAt(0);
             }
             ViewBag.selectListCity = new SelectList(lstCity, "cityId", "fullName");
+            ViewBag.ratingMin = ds.Tables[2].Rows[0]["ratingMin"];
+            ViewBag.ratingMax = ds.Tables[2].Rows[0]["ratingMax"];
+            ViewBag.ratingStep = ds.Tables[2].Rows[0]["ratingStep"];
             return View();
         }
 

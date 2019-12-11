@@ -1,7 +1,12 @@
 ﻿$(document).ready(function () {
     showLoadingInner();
 
+    const buyerStr = "Người mua: ";
+    const sellerStr = "Người bán: ";
+    const reviewMsg = "Phản hồi ngay";
+    const reviewedMsg = "Xem phản hồi";
     const $loadingInnerTable = $('#loadingInnerTable');
+    const modalBtnDisplay = 'inline-block';
 
     $('#userInfoUsername').text(gUser.userName);
     $('#userInfoId').text(gUser.userId);
@@ -46,6 +51,18 @@
     const $soldTable = $('#soldTable');
     const $boughtTable = $('#boughtTable');
 
+    //Review
+    const $reviewModal = $('#reviewModal');
+    const $reviewForm = $(document.reviewForm);
+    const $reviewItemId = $("#review_itemId");
+    const $reviewItemName = $("#review_itemName");
+    const $reviewTargetName = $("#review_targetName");
+    const $reviewRating = $(document.reviewForm.rating);
+    const $reviewContent = $(document.reviewForm.content);
+    const $reviewBtn = $('#reviewBtn');
+    const $reviewMsg = $('#review_msg');
+    const $loadingReview = $('#loadingReview');
+    const $reviewTargetLabel = $('#reviewModal label[for="review_targetName"]');
     loadUserAvatar();
     loadUserInfo();
 
@@ -114,6 +131,87 @@
         return false;
     })
 
+    //Send review
+    //Selling
+    async function openReviewModalSelling(e, itemId, itemName, buyer, isReviewd) {
+        e.preventDefault();
+        $reviewTargetLabel.text(buyerStr);
+        $reviewModal.modal('show');
+        $reviewItemId.text(itemId);
+        $reviewItemName.text(itemName);
+        $reviewTargetName.text(buyer || "???");
+
+        if (isReviewd) {
+            $loadingReview.show();
+            const formDisplay = $reviewForm.css('display');
+            $reviewForm.hide();
+
+            const result = await getReview(itemId);
+            const resultJs = JSON.parse(result);
+            if (resultJs.Table && resultJs.Table.length > 0) {
+                $reviewRating.val(parseInt(resultJs.Table[0].rating));
+                $reviewContent.val(resultJs.Table[0].content);
+                setReviewModalState(false);
+            }
+            $loadingReview.hide();
+            $reviewForm.css('display', formDisplay);
+        } else {
+            setReviewModalState(true);
+        }
+        
+    }
+    //Bought
+    async function openReviewModalBought(e, itemId, itemName, seller, isReviewd) {
+        e.preventDefault();
+        $reviewTargetLabel.text(sellerStr);
+        $reviewModal.modal('show');
+        $reviewItemId.text(itemId);
+        $reviewItemName.text(itemName);
+        $reviewTargetName.text(seller || "???");
+
+        if (isReviewd) {
+            $loadingReview.show();
+            const formDisplay = $reviewForm.css('display');
+            $reviewForm.hide();
+
+            const result = await getReview(itemId);
+            const resultJs = JSON.parse(result);
+            if (resultJs.Table && resultJs.Table.length > 0) {
+                $reviewRating.val(parseInt(resultJs.Table[0].rating));
+                $reviewContent.val(resultJs.Table[0].content);
+                setReviewModalState(false);
+            }
+            $loadingReview.hide();
+            $reviewForm.css('display', formDisplay);
+        } else {
+            document.reviewForm.reset();
+            setReviewModalState(true);
+        }
+
+    }
+
+    $reviewBtn.on('click', async (e) => {
+        e.preventDefault();
+        if (!$reviewForm.valid())
+            return;
+        try {
+            const itemId = parseInt($reviewItemId.text());
+            const result = await addReviewDB(itemId);
+            const resultJs = JSON.parse(result);
+            if (resultJs.Table && resultJs.Table.length > 0 && resultJs.Table[0].error) {
+                showReviewMsg(false, resultJs.Table[0].error);
+            } else {
+                showReviewMsg(true, "Gửi phản hồi thành công");
+                $reviewModal.modal("hide");
+                $(`.isReviewd_msg[data-itemId=${itemId}]`).text(reviewedMsg);
+                $(`.isReviewd[data-itemId=${itemId}]`).val(1);
+                setReviewModalState(false);
+            }
+        } catch (err) {
+            Alert.error("Gửi phản hồi thất bại !!!");
+        }
+        return false;
+    })
     //Modals
     $editProfileModal.on('shown.bs.modal', (e) => {
         loadUserEdit();
@@ -266,6 +364,21 @@
                 required: "Chưa chọn file",
                 checkFileType: "Các file phải có dạng ảnh",
                 checkFileSize: "File không được quá 5MB"
+            }
+        }
+    })
+
+    $reviewForm.validate({
+        rules: {
+            content: {
+                required: true,
+                maxlength: 500
+            }
+        },
+        messages: {
+            content: {
+                required: "Chưa nhập nhận xét",
+                maxlength: "Nhận xét chỉ được tối đa 500 chữ"
             }
         }
     })
@@ -536,8 +649,7 @@
             const $stt = $(`<td>${index + 1}</td>`);
             const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);
 
-            const buyer = (item.buyerId) ? item.buyerId : "???";
-            const $buyer = $(`<td>${buyer}</td>`);
+            const $buyer = (item.buyerId) ? $(`<td><a class="chotot-link" href="/User/${item.buyerId}">${item.buyerName || item.buyerId}</a></td>`) : $(`<td>???</td>`);
             const $name = $(`<td>${item.name}</td>`);
             const $price = $(`<td>${numberWithCommas(item.price)}</td>`);
 
@@ -547,7 +659,13 @@
             const dateSeperator = '/';
             const $date = $(`<td>${parseDateTime(item.purchaseDate, dateSeperator)}</td>`);
 
-            $tr.append($stt, $id, $buyer, $name, $price, $category, $date);
+            const msg = (item.isReviewd) ? reviewedMsg : reviewMsg;
+            const $review = $(`<td><a data-itemId=${item.itemId} class="chotot-link isReviewd_msg" href="">${msg}</a></td>`);
+            const $isReview = $(`<input type="hidden" class="isReviewd" data-itemId="${item.itemId}" value=${item.isReviewd} />`);
+            $review.on('click', (e) => {
+                openReviewModalSelling(e, item.itemId, item.name, item.buyerName, parseInt($isReview.val()));
+            })
+            $tr.append($stt, $id, $buyer, $name, $price, $category, $date, $review, $isReview);
             $tbody.append($tr);
         });
         
@@ -565,7 +683,8 @@
             const $tr = $('<tr></tr>');
             const $stt = $(`<td>${index + 1}</td>`);
             const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);
-            const $seller = $(`<td>${item.sellerId}</td>`);
+
+            const $seller = (item.sellerId) ? $(`<td><a class="chotot-link" href="/User/${item.sellerId}">${item.sellerName || item.sellerId}</a></td>`) : $(`<td>???</td>`);
             const $name = $(`<td>${item.name}</td>`);
             const $price = $(`<td>${numberWithCommas(item.price)}</td>`);
 
@@ -575,7 +694,14 @@
             const dateSeperator = '/';
             const $date = $(`<td>${parseDateTime(item.purchaseDate, dateSeperator)}</td>`);
 
-            $tr.append($stt, $seller, $id, $name, $price, $category, $date);
+            const msg = (item.isReviewd) ? reviewedMsg : reviewMsg;
+            const $review = $(`<td><a data-itemId=${item.itemId} class="chotot-link isReviewd_msg" href="">${msg}</a></td>`);
+            const $isReview = $(`<input type="hidden" class="isReviewd" data-itemId="${item.itemId}" value=${item.isReviewd} />`);
+            $review.on('click', (e) => {
+                openReviewModalBought(e, item.itemId, item.name, item.sellerName, parseInt($isReview.val()));
+            })
+
+            $tr.append($stt, $id, $seller, $name, $price, $category, $date, $review, $isReview);
             $tbody.append($tr);
         });
     }
@@ -643,4 +769,72 @@
             })
     }
     //End Item
+
+    //Review
+    function getReview(itemIdd) {
+        showLoading();
+        return $.ajax({
+            url: "/Review/getReview",
+            type: "GET",
+            dataType: "json",
+            data: {
+                userId: gUser.userId,
+                itemId: itemIdd,
+            }
+        })
+            .done((result) => {
+                return result;
+            })
+            .fail((err) => {
+                return err;
+            })
+            .always(() => {
+                hideLoading();
+            })
+    }
+    function addReviewDB(itemId) {
+        showLoading();
+        return $.ajax({
+            url: "/Review/addReview",
+            type: "POST",
+            dataType: "json",
+            data: {
+                userId: gUser.userId,
+                itemId: itemId,
+                rating: $reviewRating.val(),
+                content: $reviewContent.val()
+            }
+        })
+            .done((result) => {
+                return result;
+            })
+            .fail((err) => {
+                return err;
+            })
+            .always(() => {
+                hideLoading();
+            })
+    }
+    function setReviewModalState(canSend) {
+        if (canSend) {
+            $reviewContent.attr("disabled", false);
+            $reviewRating.attr("disabled", false);
+            $reviewBtn.css("display", modalBtnDisplay);
+        } else {
+            $reviewContent.attr("disabled", true);
+            $reviewRating.attr("disabled", true);
+            $reviewBtn.hide();
+        }
+    }
+    function showReviewMsg(isSuccess, message) {
+        if (isSuccess) {
+            Alert.success(message);
+        } else {
+            $reviewMsg.show();
+            $reviewMsg.css("display", "block");
+            $reviewMsg.html(message);
+        }
+
+    }
+    //End Review
 })
