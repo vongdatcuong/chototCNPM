@@ -66,6 +66,7 @@
     const $reviewTargetLabel = $('#reviewModal label[for="review_targetName"]');
     loadUserAvatar();
     loadUserInfo();
+    loadUserHistory();
 
     $avatar_file.on('change', function (e) {
         pickImage(this, document.querySelector("#avatarModal .avatar"));
@@ -525,7 +526,6 @@
         $userInfoAvatarModal.attr('src', url);
     }
     //End Change avatar
-    loadUserHistory();
     //History
     async function loadUserHistory() {
         try {

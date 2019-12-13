@@ -240,6 +240,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\User\otherUser.js" />
     <Content Include="Scripts\User\user.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -270,6 +271,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\User\OtherUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

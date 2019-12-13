@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,6 +56,27 @@ namespace ChoTot.Controllers
             return View();
         }
 
+        // GET: User
+        [HttpGet]
+        public ActionResult GetOtherUser(int id)
+        {
+            HttpCookie cookie = Request.Cookies.Get("ChoTotUser");
+            if (Session["__USER__"] != null && !Session["__USER__"].Equals(""))
+            {
+                ViewBag.gUserStr = Session["__USER__"].ToString().Replace("\r\n", "");
+                ViewBag.isLoggingIn = false;
+            }
+            else if (cookie != null)
+            {
+                ViewBag.gUserStr = cookie["__USER__"].ToString().Replace("\r\n", "");
+                Session["__USER__"] = cookie["__USER__"];
+                ViewBag.isLoggingIn = false;
+            }
+            ds = ChoTot.Models.User.getUser(id);
+            ViewBag.userStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
+            return View("OtherUser");
+        }
+
         [HttpGet]
         //[ValidateAntiForgeryToken]
         public JsonResult getAllUser()
@@ -97,7 +119,7 @@ namespace ChoTot.Controllers
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+                    throw new Exception("(Error - Auth Cookie:  )Exception: ", ex);
                 }
 
             }
@@ -137,7 +159,7 @@ namespace ChoTot.Controllers
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+                        throw new Exception("(Error - AuthCookie) Exception: ", ex);
                     }
 
                 }

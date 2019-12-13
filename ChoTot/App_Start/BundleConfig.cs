@@ -50,6 +50,9 @@ namespace ChoTot
             bundles.Add(new ScriptBundle("~/bundles/userScripts").Include(
                       "~/Scripts/User/user.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/otherUserScripts").Include(
+                      "~/Scripts/User/otherUser.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/itemScripts").Include(
                       "~/Scripts/Item/item.js"));
 

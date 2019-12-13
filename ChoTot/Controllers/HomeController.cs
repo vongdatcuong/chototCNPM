@@ -46,6 +46,9 @@ namespace ChoTot.Controllers
         {
             Session.Clear();
             ds = Utils.getAllParameters();
+            ds.Tables[0].TableName = "City";
+            ds.Tables[1].TableName = "Category";
+            ds.Tables[2].TableName = "Parameter";
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
 

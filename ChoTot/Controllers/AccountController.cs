@@ -26,7 +26,7 @@ namespace ChoTot.Controllers
         public JsonResult Login(string username, string password, bool rememberMe)
         {
             Session.Clear();
-            ds = ChoTot.Models.User.login(username, password);
+            ds = ChoTot.Models.User.login(username, encode(password));
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             if (ds.Tables.Count > 0)
             {
