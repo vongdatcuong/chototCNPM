@@ -284,7 +284,7 @@
     }
     function showRegisterMsg(isSuccess) {
         if (isSuccess) {
-            Alert.success("Tạo tài khoản <b>THÀNH CÔNG</b> !!!");
+            Alert.success("Tạo tài khoản THÀNH CÔNG !!!");
         } else {
             $registerMsg.show();
             $registerMsg.css("display", "block");

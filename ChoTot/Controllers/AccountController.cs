@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
 using System.Data;
-using System.Data.SqlClient;
-using Microsoft.ApplicationBlocks.Data;
 using System.Configuration;
 using Newtonsoft.Json;
 using System.Web.Security;
@@ -28,25 +26,7 @@ namespace ChoTot.Controllers
         public JsonResult Login(string username, string password, bool rememberMe)
         {
             Session.Clear();
-            try
-            {
-                storeName = string.Format("sp_login");
-                SqlParameter[] par = new SqlParameter[2];
-                par[0] = new SqlParameter("@userName", username);
-                par[1] = new SqlParameter("@pass", encode(password));
-
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = ChoTot.Models.User.login(username, password);
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             if (ds.Tables.Count > 0)
             {
@@ -112,27 +92,8 @@ namespace ChoTot.Controllers
         public JsonResult Register(User user)
         {
             Session.Clear();
-            try
-            {
-                storeName = string.Format("sp_register");
-                SqlParameter[] par = new SqlParameter[5];
-                par[0] = new SqlParameter("@userName", user.userName);
-                par[1] = new SqlParameter("@password", encode(user.password));
-                par[2] = new SqlParameter("@email", user.email);
-                par[3] = new SqlParameter("@phone", user.phone);
-                par[4] = new SqlParameter("@createdDate", DateTime.Now);
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            user.password = encode(user.password);
+            ds = user.register();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
 
@@ -141,26 +102,7 @@ namespace ChoTot.Controllers
         [HttpPost]
         public JsonResult changeUserPassword(int userId, string oldPassword, string newPassword)
         {
-            try
-            {
-                storeName = string.Format("sp_change_user_password");
-                SqlParameter[] par = new SqlParameter[3];
-                par[0] = new SqlParameter("@userId", userId);
-                par[1] = new SqlParameter("@oldPassword", encode(oldPassword));
-                par[2] = new SqlParameter("@newPassword", encode(newPassword));
-
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = ChoTot.Models.User.changeUserPassword(userId, encode(oldPassword), encode(newPassword));
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

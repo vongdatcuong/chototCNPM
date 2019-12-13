@@ -1,11 +1,9 @@
 ﻿using ChoTot.App_Code;
-using Microsoft.ApplicationBlocks.Data;
+using ChoTot.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,21 +39,7 @@ namespace ChoTot.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult getAllItem()
         {
-            try
-            {
-                storeName = string.Format("sp_get_all_item");
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = Item.getAllItem();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
@@ -63,23 +47,7 @@ namespace ChoTot.Controllers
         [HttpGet]
         public JsonResult getItem(int itemId)
         {
-            try
-            {
-                storeName = string.Format("sp_get_item");
-                SqlParameter[] par = new SqlParameter[1];
-                par[0] = new SqlParameter("@itemId", itemId);
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = Item.getItem(itemId);
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

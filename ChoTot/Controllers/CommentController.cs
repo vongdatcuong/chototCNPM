@@ -1,13 +1,12 @@
 ﻿using ChoTot.App_Code;
-using Microsoft.ApplicationBlocks.Data;
+using ChoTot.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace ChoTot.Controllers
 {
@@ -22,21 +21,7 @@ namespace ChoTot.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult getAllComment()
         {
-            try
-            {
-                storeName = string.Format("sp_get_all_comment");
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = Comment.getAllComment();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

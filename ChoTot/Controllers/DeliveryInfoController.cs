@@ -1,9 +1,8 @@
 ﻿using ChoTot.App_Code;
-using Microsoft.ApplicationBlocks.Data;
+using ChoTot.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -22,21 +21,7 @@ namespace ChoTot.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult getAllDeliveryInfo()
         {
-            try
-            {
-                storeName = string.Format("sp_get_all_deliveryInfo");
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = DeliveryInfo.getAllDeliveryInfo();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

@@ -5,6 +5,7 @@
     const sellerStr = "Người bán: ";
     const reviewMsg = "Phản hồi ngay";
     const reviewedMsg = "Xem phản hồi";
+    const unknownStr = "...";
     const $loadingInnerTable = $('#loadingInnerTable');
     const modalBtnDisplay = 'inline-block';
 
@@ -387,14 +388,14 @@
     //Edit Profile
     function loadUserInfo() {
         if (gUser) {
-            $userInfoName.text(gUser.lastName + ' ' + gUser.firstName);
-            $userInfoGender.text(gUser.gender);
-            $userInfoBirthdate.text(parseDate(gUser.birthDate, '/'));
-            $userInfoPhone.text(gUser.phone);
-            $userInfoEmail.text(gUser.email);
-            $userInfoAddress.text(gUser.address);
-            $userInfoCity.text(gCity[gUser.city - 1].fullName);
-            $userInfoCreatedDate.text(parseDateTime(gUser.createdDate, '/'));
+            $userInfoName.text((gUser.lastName && gUser.firstName) ? gUser.lastName + ' ' + gUser.firstName : unknownStr);
+            $userInfoGender.text(gUser.gender || unknownStr);
+            $userInfoBirthdate.text((gUser.birthDate) ? parseDate(gUser.birthDate, '/') : unknownStr);
+            $userInfoPhone.text(gUser.phone || unknownStr);
+            $userInfoEmail.text(gUser.email || unknownStr);
+            $userInfoAddress.text(gUser.address || unknownStr);
+            $userInfoCity.text((gUser.city) ? gCity[gUser.city - 1].fullName : unknownStr);
+            $userInfoCreatedDate.text((gUser.createdDate) ? parseDateTime(gUser.createdDate, '/') : unknownStr);
             $userInfoTable.show();
             hideLoadingInner();
         }
@@ -405,7 +406,7 @@
             $editFirstName.val(gUser.firstName);
             $editLastName.val(gUser.lastName);
             editGender.value = gUser.gender;
-            $editBirthDate.val(parseDateInput(gUser.birthDate));
+            $editBirthDate.val((gUser.birthDate) ? parseDateInput(gUser.birthDate) : unknownStr);
             $editPhone.val(gUser.phone);
             $editEmail.val(gUser.email);
             $editAddress.val(gUser.address);

@@ -1,13 +1,9 @@
 ﻿using ChoTot.App_Code;
 using ChoTot.Models;
-using Microsoft.ApplicationBlocks.Data;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,10 +15,8 @@ namespace ChoTot.Controllers
 {
     public class UserController : Controller
     {
-        private string connectionString = Constant.connectionStringDB;
         private DataSet ds = new DataSet();
         private string jsonRs = string.Empty;
-        private string storeName = string.Empty;
 
         [Authorize]
         // GET: User
@@ -42,21 +36,7 @@ namespace ChoTot.Controllers
             }
 
             //Get all cities
-            try
-            {
-                storeName = string.Format("sp_get_all_parameters");
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = Utils.getAllParameters();
             List<City> lstCity = ds.Tables[0].AsEnumerable().Select(
                             dataRow => new City
                             {
@@ -79,21 +59,7 @@ namespace ChoTot.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult getAllUser()
         {
-            try
-            {
-                storeName = string.Format("sp_get_all_user");
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = ChoTot.Models.User.getAllUser();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
@@ -101,23 +67,7 @@ namespace ChoTot.Controllers
         [HttpGet]
         public JsonResult getUser(int userId)
         {
-            try
-            {
-                storeName = string.Format("sp_get_user");
-                SqlParameter[] par = new SqlParameter[1];
-                par[0] = new SqlParameter("@userId", userId);
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = ChoTot.Models.User.getUser(userId);
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
@@ -125,32 +75,7 @@ namespace ChoTot.Controllers
         [HttpPost]
         public JsonResult setUserInfo(User user)
         {
-            try
-            {
-                storeName = string.Format("sp_set_user_info");
-                SqlParameter[] par = new SqlParameter[9];
-                par[0] = new SqlParameter("@userId", user.userId);
-                par[1] = new SqlParameter("@firstName", user.firstName);
-                par[2] = new SqlParameter("@lastName", user.lastName);
-                par[3] = new SqlParameter("@gender", user.gender);
-                par[4] = new SqlParameter("@birthDate", DateTime.ParseExact(user.birthDate, "yyyy/MM/dd", CultureInfo.InvariantCulture));
-                par[5] = new SqlParameter("@phone", user.phone);
-                par[6] = new SqlParameter("@email", user.email);
-                par[7] = new SqlParameter("@address", user.address);
-                par[8] = new SqlParameter("@city", user.city);
-                
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = user.setUserInfo();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -190,25 +115,7 @@ namespace ChoTot.Controllers
             }
             else
             {
-                try
-                {
-                    storeName = string.Format("sp_set_user_avatar");
-                    SqlParameter[] par = new SqlParameter[2];
-                    par[0] = new SqlParameter("@userId", userId);
-                    par[1] = new SqlParameter("@avatar", avatarUrl);
-
-                    //Execute store
-                    ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-                }
-                catch (TimeoutException timeoutex)
-                {
-                    throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-                }
+                ds = ChoTot.Models.User.setUserAvatar(avatarUrl, userName, userId, image);
                 jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
                 if (ds.Tables[0].Rows.Count > 0)
                 {
@@ -241,30 +148,7 @@ namespace ChoTot.Controllers
         [HttpGet]
         public JsonResult getUserHistory(int userId)
         {
-            try
-            {
-                storeName = string.Format("sp_get_user_history");
-                SqlParameter[] par = new SqlParameter[1];
-                par[0] = new SqlParameter("@userId", userId);
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName, par);
-
-                if (ds.Tables.Count > 1)
-                {
-                    ds.Tables[0].TableName = "Selling";
-                    ds.Tables[1].TableName = "Sold";
-                    ds.Tables[2].TableName = "Bought";
-                }
-
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = ChoTot.Models.User.getUserHistory(userId);
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

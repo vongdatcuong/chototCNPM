@@ -1,23 +1,18 @@
-﻿using ChoTot.App_Code;
-using Microsoft.ApplicationBlocks.Data;
+﻿using ChoTot.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace ChoTot.Controllers
 {
     public class HomeController : Controller
     {
-        private string connectionString = Constant.connectionStringDB;
         private DataSet ds = new DataSet();
         private string jsonRs = string.Empty;
-        private string storeName = string.Empty;
 
         public ActionResult Index(string returnUrl)
         {
@@ -50,26 +45,7 @@ namespace ChoTot.Controllers
         public JsonResult GetParams()
         {
             Session.Clear();
-            try
-            {
-                storeName = string.Format("sp_get_all_parameters");
-                //Execute store
-                ds = SqlHelper.ExecuteDataset(connectionString, storeName);
-                if (ds.Tables.Count > 0)
-                {
-                    ds.Tables[0].TableName = "City";
-                    ds.Tables[1].TableName = "Category";
-                    ds.Tables[2].TableName = "Parameter";
-                }
-            }
-            catch (TimeoutException timeoutex)
-            {
-                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
-            }
+            ds = Utils.getAllParameters();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
 

@@ -8,23 +8,18 @@ using System.Web;
 
 namespace ChoTot.Models
 {
-    public class Comment
+    public class Utils
     {
-        public int userId { get; set; }
-        public int itemId { get; set; }
-        public string content { get; set; }
-        public DateTime date { get; set; }
-
         private static string connectionString = Constant.connectionStringDB;
         private static string storeName = string.Empty;
 
-        public static DataSet getAllComment()
+        public static DataSet getAllParameters()
         {
             try
             {
-                storeName = string.Format("sp_get_all_comment");
+                storeName = string.Format("sp_get_all_parameters");
                 //Execute store
-               return SqlHelper.ExecuteDataset(connectionString, storeName);
+                return SqlHelper.ExecuteDataset(connectionString, storeName);
 
             }
             catch (TimeoutException timeoutex)
