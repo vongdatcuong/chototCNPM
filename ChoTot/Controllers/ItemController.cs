@@ -18,7 +18,7 @@ namespace ChoTot.Controllers
         private string storeName = string.Empty;
 
         // GET: Item
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             HttpCookie cookie = Request.Cookies.Get("ChoTotUser");
             if (Session["__USER__"] != null && !Session["__USER__"].Equals(""))
@@ -32,7 +32,23 @@ namespace ChoTot.Controllers
                 Session["__USER__"] = cookie["__USER__"];
                 ViewBag.isLoggingIn = false;
             }
-            return View();
+            if (id == null)
+            {
+                ViewBag.errorMsg = "Không tìm thấy sản phẩm !!!";
+                return View("~/Views/Shared/Error.cshtml");
+            }
+
+            ds = Item.getItemAndSeller(id);
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                ViewBag.errorMsg = "Không tìm thấy sản phẩm !!!";
+                return View("~/Views/Shared/Error.cshtml");
+            } else
+            {
+                ViewBag.itemStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
+                return View();
+            }
+           
         }
 
         [HttpGet]

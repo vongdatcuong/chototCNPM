@@ -91,6 +91,23 @@ function parseDateTime(dateString, dateSeperator) {
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+//Hide information
+function HideInfo() {
+    const hideSymbol = 'x';
+    this.hidePhoneNumber = (phone, numsToHide) => {
+        numsToHide = numsToHide || 5;
+        return phone.slice(0, phone.length - 1 - numsToHide) + hideSymbol.repeat(numsToHide);
+    }
+    this.hideEmail = (email) => {
+        const idx = email.indexOf('@');
+        return hideSymbol.repeat(idx) + email.slice(idx);
+    }
+    this.hideAddress = (address, numsToRemain) => {
+        numsToRemain = numsToRemain || 5;
+        return hideSymbol.repeat(address.length - numsToRemain) + address.slice(address.length - 1 - numsToRemain);
+    }
+}
 //Jquery Validation rules
 jQuery.validator.addMethod("greaterThanNow",
     function (value, element, params) {

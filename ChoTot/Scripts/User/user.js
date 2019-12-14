@@ -12,6 +12,7 @@
     $('#userInfoUsername').text(gUser.userName);
     $('#userInfoId').text(gUser.userId);
     $('#userType').text(((gUser.type == 1) ? "Quản trị viên" : "Thành viên"));
+    $('#userRating').text(gUser.rating);
     const $userInfoTable = $('#userInfoTable');
     const $userInfoName = $('#userInfoName');
     const $userInfoGender = $('#userInfoGender');

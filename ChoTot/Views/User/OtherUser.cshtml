@@ -10,6 +10,7 @@
                     <li>Username: <span id="userInfoUsername"></span></li>
                     <li>UserId: <span id="userInfoId"></span></li>
                     <li>Loại tài khoản: <span id="userType"></span></li>
+                    <li>Rating: <span id="userRating"></span></li>
                 </ul>
             </div>
         </div>
@@ -20,9 +21,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="sole-tab" data-toggle="tab" href="#sole" role="tab" aria-controls="sole" aria-selected="false">Sản phẩm đã bán</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="bought-tab" data-toggle="tab" href="#bought" role="tab" aria-controls="bought" aria-selected="false">Sản phẩm đã mua</a>
                 </li>
             </ul>
             <div class="tab-content" id="historyTabContent">
@@ -75,24 +73,6 @@
                     </table>
                 </div>
                 <!--/.Sole History Table-->
-                <!--Bought History Table-->
-                <div class="tab-pane fade table-responsive" id="bought" role="tabpanel" aria-labelledby="bought-tab">
-                    <table id="boughtTable" class="table table-bordered table-responsive">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">ID</th>
-                                <th scope="col">Người bán</th>
-                                <th scope="col">Tên sản phẩm</th>
-                                <th scope="col">Giá (VNĐ)</th>
-                                <th scope="col">Loại mặt hàng</th>
-                                <th scope="col">Thời gian</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <!--/.Bought History Table-->
             </div>
         </div>
     </div>

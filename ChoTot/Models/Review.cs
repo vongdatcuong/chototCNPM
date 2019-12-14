@@ -13,7 +13,7 @@ namespace ChoTot.Models
     {
         public int userId { get; set; }
         public int itemId { get; set; }
-        public int rating { get; set; }
+        public float rating { get; set; }
         public string content { get; set; }
         public DateTime date { get; set; }
 

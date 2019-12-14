@@ -46,11 +46,32 @@ namespace ChoTot.Models
             }
         }
 
-        public static DataSet getItem(int itemId)
+        public static DataSet getItem(int? itemId)
         {
             try
             {
                 storeName = string.Format("sp_get_item");
+                SqlParameter[] par = new SqlParameter[1];
+                par[0] = new SqlParameter("@itemId", itemId);
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
+
+        public static DataSet getItemAndSeller(int? itemId)
+        {
+            try
+            {
+                storeName = string.Format("sp_get_item_and_seller");
                 SqlParameter[] par = new SqlParameter[1];
                 par[0] = new SqlParameter("@itemId", itemId);
                 //Execute store

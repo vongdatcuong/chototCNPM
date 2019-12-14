@@ -21,7 +21,6 @@
     //Item History
     const $sellingTable = $('#sellingTable');
     const $soldTable = $('#soldTable');
-    const $boughtTable = $('#boughtTable');
 
     if (userStr) {
         user = JSON.parse(userStr).Table[0];
@@ -32,6 +31,7 @@
         $('#userInfoUsername').text(user.userName);
         $('#userInfoId').text(user.userId);
         $('#userType').text(((user.type == 1) ? "Quản trị viên" : "Thành viên"));
+        $('#userRating').text(user.rating);
     }
 
     //Edit Profile
@@ -39,10 +39,10 @@
         if (user) {
             $userInfoName.text((user.lastName && user.firstName) ? user.lastName + ' ' + user.firstName : unknownStr);
             $userInfoGender.text(user.gender || unknownStr);
-            $userInfoBirthdate.text((user.birthDate) ? parseDate(user.birthDate, '/') : unknownStr);
-            $userInfoPhone.text(user.phone || unknownStr);
-            $userInfoEmail.text(user.email || unknownStr);
-            $userInfoAddress.text(user.address || unknownStr);
+            $userInfoBirthdate.text(unknownStr);
+            $userInfoPhone.text((user.phone) ? Hide.hidePhoneNumber(user.phone) : unknownStr);
+            $userInfoEmail.text((user.email) ? Hide.hideEmail(user.email) : unknownStr);
+            $userInfoAddress.text((user.address) ? Hide.hideAddress(user.address) : unknownStr);
             $userInfoCity.text((user.city) ? gCity[user.city - 1].fullName : unknownStr);
             $userInfoCreatedDate.text((user.createdDate) ? parseDateTime(user.createdDate, '/') : unknownStr);
             $userInfoTable.show();
@@ -63,7 +63,6 @@
             const resultJs = JSON.parse(result);
             loadSellingTable(resultJs.Selling, resultJs.Sold);
             loadSoldTable(resultJs.Sold);
-            loadBoughtTable(resultJs.Bought);
         } catch (err) {
             Alert.error("Tải lịch sử thất bại !!!");
         }
@@ -123,34 +122,6 @@
             $tbody.append($tr);
         });
 
-    }
-    function loadBoughtTable(data) {
-        const $tbody = $boughtTable.find('tbody');
-        if (data.length == 0) {
-            const $tr = $('<tr></tr>');
-            const msg = "Không tìm thấy sản phẩm nào !!!";
-            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
-            $tbody.append($tr);
-            return;
-        }
-        data.forEach((item, index) => {
-            const $tr = $('<tr></tr>');
-            const $stt = $(`<td>${index + 1}</td>`);
-            const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);
-
-            const $seller = (item.sellerId) ? $(`<td><a class="chotot-link" href="/User/${item.sellerId}">${item.sellerName || item.sellerId}</a></td>`) : $(`<td>???</td>`);
-            const $name = $(`<td>${item.name}</td>`);
-            const $price = $(`<td>${numberWithCommas(item.price)}</td>`);
-
-            const categoryStr = item.category.split(', ').map((cate) => gCategory[parseInt(cate) - 1].fullName).join(', ');
-            const $category = $(`<td>${categoryStr}</td>`);
-
-            const dateSeperator = '/';
-            const $date = $(`<td>${parseDateTime(item.purchaseDate, dateSeperator)}</td>`);
-
-            $tr.append($stt, $id, $seller, $name, $price, $category, $date);
-            $tbody.append($tr);
-        });
     }
     function getUserHistoryDB() {
         showLoading();

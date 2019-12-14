@@ -198,6 +198,16 @@ a.chotot-link {
         color: #ff6633;
         cursor: pointer;
     }
+
+button.chotot-btn {
+    color: #ffffff;
+    background-color: #ff9900;
+    font-weight: 600;
+}
+button.chotot-btn:hover {
+    color: #ff9900;
+    background-color: #ffffff;
+}
 /*Footer*/
 footer {
     background-color: #FF9900;
@@ -465,4 +475,16 @@ footer p {
 }
 .breadcrumb-item + .breadcrumb-item::before {
     content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0yLjUgMEwxIDEuNSAzLjUgNCAxIDYuNSAyLjUgOGw0LTQtNC00eiIgZmlsbD0iY3VycmVudENvbG9yIi8+PC9zdmc+) !important;
+}
+
+/*Badges*/
+.badges-bar .badge {
+    color: #ff6633;
+    background-color: #ffffff;
+    border: 1px solid #ff6633;
+    padding: 10px 15px;
+    margin: 5px;
+}
+.badges-bar .badge:nth-child(2) {
+    margin-left: 3px;
 }

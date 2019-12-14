@@ -1,12 +1,63 @@
 ﻿@{
-    ViewBag.Title = "Item Pageeeeeeeee";
+    ViewBag.Title = "Item Page";
 }
-<h1>@ViewBag.Title</h1>
-<button id="testClick">Click me</button>
+<input type="hidden" class="rating" id="starRating" />
+<div class="row">
+    <div id="image-wrapper" class="col-md-6">
+        <ul id="imageGallery">
+        </ul>
+    </div>
+    <div id="item-info" class="col-md-6">
+        <h2 id="item-name"></h2>
+        <div class="badges-bar">
+            <img src="~/Images/marker.svg" />
+        </div>
+        <div id="price-wrapper">
+            <span id="price"></span>
+            <span>VNĐ</span>
+        </div>
+        <div id="contact-btn-wrapper">
+            <button type="button" id="contact-btn" class="btn btn-default chotot-btn"><i class="fas fa-phone"></i> <span>LIÊN HỆ</span></button>
+            <button type="button" id="send-info-btn" class="btn btn-default chotot-btn"><i class="fas fa-share"></i> GỬI THÔNG TIN</button>
+        </div>
+        <div id="seller-panel">
+            <div class="row">
+                <div class="col-md-4">
+                    <img id="seller-avatar" class="avatar" src="" />
+                </div>
+                <div class="col-md-8">
+                    <h5 id="seller-name"></h5>
+                    <table class="table">
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td>Ngày tham gia: </td>
+                                <td id="seller-createdDate">1/1/1</td>
+                            </tr>
+                            <tr>
+                                <td>Số sản phẩm đã bán: </td>
+                                <td id="seller-product-sold">69</td>
+                            </tr>
+                            <tr>
+                                <td>Độ uy tín: </td>
+                                <td id="seller-rating">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="item-description">
+    <h2>Mô tả sản phẩm</h2>
+    <div></div>
+</section>
 
 @section Scripts{
     <script type="text/javascript">
         userJs = '@Html.Raw(ViewBag.gUserStr)';
+        itemStr = '@Html.Raw(ViewBag.itemStr)';
     </script>
     @Scripts.Render("~/bundles/itemScripts")
 }

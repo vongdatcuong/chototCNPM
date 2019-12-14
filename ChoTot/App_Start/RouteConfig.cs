@@ -27,6 +27,13 @@ namespace ChoTot
             );
 
             routes.MapRoute(
+                name: "Item",
+                url: "Item/{id}",
+                defaults: new { controller = "Item", action = "Index", id = UrlParameter.Optional },
+                constraints: new { id = @"\d+" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

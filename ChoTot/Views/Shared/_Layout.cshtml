@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     <link rel="icon" href="~/Images/favicon_logo.png">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="navbar-header col-md-2">
                     <div class="logo-wrapper">
-                        <a href="/Home/Index"><img class="logo img-responsive" src="~/Images/transparent_logo.png" /></a>
+                        <a href="/"><img class="logo img-responsive" src="~/Images/transparent_logo.png" /></a>
                     </div>
                 </div>
                 <div class="navbar-search col-md-5">
@@ -169,7 +169,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="logo-wrapper">
-                        <a href="/Home/Index"></a><img class="logo img-responsive" src="~/Images/transparent_logo.png" /></a>
+                        <a href="/"></a><img class="logo img-responsive" src="~/Images/transparent_logo.png" /></a>
                     </div>
                 </div>
             </div>
@@ -196,6 +196,7 @@
         let gUser = {};
         let isLoggingIn, returnUrl, userJs, gCategory, gCity, gParam;
         const Alert = new SweetAlert();
+        const Hide = new HideInfo();
     </script>
     @Scripts.Render("~/bundles/sharedScripts")
     @RenderSection("scripts", required: false)

@@ -73,8 +73,16 @@ namespace ChoTot.Controllers
                 ViewBag.isLoggingIn = false;
             }
             ds = ChoTot.Models.User.getUser(id);
-            ViewBag.userStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
-            return View("OtherUser");
+            if (ds.Tables[0].Rows.Count == 0)
+            {
+                ViewBag.errorMsg = "Không tìm thấy người dùng !!!";
+                return View("~/Views/Shared/Error.cshtml");
+            } else
+            {
+                ViewBag.userStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
+                return View("OtherUser");
+            }
+            
         }
 
         [HttpGet]

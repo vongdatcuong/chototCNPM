@@ -1,13 +1,10 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿<hgroup>
+    <h1>Lỗi</h1>
+    <h2>@ViewBag.errorMsg.</h2>
+</hgroup>
+
+@section Scripts {
+    <script type="text/javascript">
+        userJs = '@Html.Raw(ViewBag.gUserStr)';
+    </script>
+}
