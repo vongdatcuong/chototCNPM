@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-    $('#starRating').rating();
     if (!itemStr) {
         return;
     }
