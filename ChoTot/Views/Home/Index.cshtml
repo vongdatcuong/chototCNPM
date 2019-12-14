@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Flash Buy";
 }
-<h1>Hello</h1>
+
 @section Scripts{
     <script type="text/javascript">
         if ('@ViewBag.isLoggingIn') {
@@ -12,3 +12,87 @@
     </script>
     @Scripts.Render("~/bundles/homeScripts")
 }
+
+
+
+<ul class="nav nav-pills mb-3 bg-orange row" style="background-color:#ff9900;font-size:18px" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link  border border-dark  active" style="border-radius: 0rem; padding:30px ;" data-toggle="pill">Tất cả</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link border border-dark " style="border-radius: 0rem; padding:30px;" data-toggle="pill">Đồ điện tử</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link border border-dark " style="border-radius: 0rem; padding:30px;" data-toggle="pill">Xe</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link border border-dark" style="border-radius: 0rem; padding:30px;" data-toggle="pill">Nội thất</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link border border-dark" style="border-radius: 0rem; padding:30px;" data-toggle="pill">Thời trang</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link border border-dark" style="border-radius: 0rem; padding:30px;" data-toggle="pill">Đồng hồ</a>
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-4 float-right">
+        <did style="color:#ff9900"> Lọc xem theo</did>
+        <div class="btn-group">
+            <button type="button" class="btn border border-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Bài mới nhất
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Bài mới nhất</a>
+                <a class="dropdown-item" href="#">Mức giá tăng dần</a>
+                <a class="dropdown-item" href="#">Mức giá giảm dần</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-4 float-right">
+        <did style="color:#ff9900"> Khu vực</did>
+        <div class="btn-group">
+            <button type="button" class="btn border border-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Toàn quốc
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Bài mới nhất</a>
+                <a class="dropdown-item" href="#">Mức giá tăng dần</a>
+                <a class="dropdown-item" href="#">Mức giá giảm dần</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card shadow mb-4">
+    <h4 class="card-header">
+        Products
+    </h4>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3 mb-3">
+                <div class="card h-100">
+                    <img  class="mt-2" src="~/Images/transparent_logo.png" style="width:180px;height:180px; align-self:center;" />
+                    <div class="card-body">
+                        <h4 class="card-title text-center" style="color:#ff9900">Xiaomi Note 8</h4>
+                        <h5 class="card-title text-center" style="color:#333333">800000</h5>
+                        
+                        <h6 class=" text-center  ">Ngày đăng :11/10/2018</h6>
+                    </div>
+                    <div class="row mt-2 mylast-row-item">
+                        <h6>Người bán :<a href=""> A</a></h6>
+                        <h6><i class="fa fa-map-marker" aria-hidden="true"></i>TP.HCM</h6>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
