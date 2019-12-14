@@ -1,1 +1,7 @@
-﻿
+﻿.mylast-row-item {
+    font-size: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    align-items: flex-end
+}
