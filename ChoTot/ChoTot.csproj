@@ -184,6 +184,10 @@
     <Content Include="Content\lightslider.min.css" />
     <Content Include="Content\post-item.css" />
     <Content Include="Content\responsive.css" />
+    <Content Include="Content\star-rating.css" />
+    <Content Include="Content\star-rating.min.css" />
+    <Content Include="Content\themes\star-rating-theme-fas.css" />
+    <Content Include="Content\themes\star-rating-theme-fas.min.css" />
     <Content Include="Content\user.css" />
     <Content Include="favicon.ico" />
     <Content Include="Fonts\lg.svg" />
@@ -249,8 +253,12 @@
     <Content Include="Scripts\PostItem\post-item.js" />
     <Content Include="Scripts\Service\Utils.js" />
     <Content Include="Scripts\sharedScript.js" />
+    <Content Include="Scripts\star-rating.js" />
+    <Content Include="Scripts\star-rating.min.js" />
     <Content Include="Scripts\sweetalert2.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
+    <Content Include="Scripts\themes\star-rating-theme-fas.js" />
+    <Content Include="Scripts\themes\star-rating-theme-fas.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

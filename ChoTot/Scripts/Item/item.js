@@ -46,7 +46,7 @@
 
         $('#seller-createdDate').text(parseDate(item.sellerCreatedDate, '/'));
         $('#seller-product-sold').text(parseInt(item.sellerProductSold));
-        $('#seller-rating').text(item.sellerRating);
+        $('#seller-rating').rating('update', item.sellerRating);
 
         $('#item-description div').text(decodeURI(item.description));
     }

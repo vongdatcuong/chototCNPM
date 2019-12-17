@@ -326,4 +326,15 @@
         })
     }
 
+    $("input.starRating").rating({
+        hoverOnClear: false,
+        theme: 'krajee-fas',
+        containerClass: 'star-rating-container',
+        showCaption: false,
+        showClear: false,
+        hoverEnabled: false,
+        min: gParam.ratingMin,
+        max: gParam.ratingMax,
+        step: gParam.ratingStep
+    });
 });

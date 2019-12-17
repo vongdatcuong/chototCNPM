@@ -31,7 +31,7 @@
         $('#userInfoUsername').text(user.userName);
         $('#userInfoId').text(user.userId);
         $('#userType').text(((user.type == 1) ? "Quản trị viên" : "Thành viên"));
-        $('#userRating').text(user.rating);
+        $('#userRating').rating('update', user.rating);
     }
 
     //Edit Profile

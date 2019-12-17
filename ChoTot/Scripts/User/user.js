@@ -12,7 +12,7 @@
     $('#userInfoUsername').text(gUser.userName);
     $('#userInfoId').text(gUser.userId);
     $('#userType').text(((gUser.type == 1) ? "Quản trị viên" : "Thành viên"));
-    $('#userRating').text(gUser.rating);
+    $('#userRating').rating('update', gUser.rating);
     const $userInfoTable = $('#userInfoTable');
     const $userInfoName = $('#userInfoName');
     const $userInfoGender = $('#userInfoGender');
@@ -152,7 +152,7 @@
             const result = await getReview(itemId);
             const resultJs = JSON.parse(result);
             if (resultJs.Table && resultJs.Table.length > 0) {
-                $reviewRating.val(parseInt(resultJs.Table[0].rating));
+                $reviewRating.rating('update', parseInt(resultJs.Table[0].rating));
                 $reviewContent.val(resultJs.Table[0].content);
                 setReviewModalState(false);
             }
@@ -180,7 +180,7 @@
             const result = await getReview(itemId);
             const resultJs = JSON.parse(result);
             if (resultJs.Table && resultJs.Table.length > 0) {
-                $reviewRating.val(parseInt(resultJs.Table[0].rating));
+                $reviewRating.rating('update', parseInt(resultJs.Table[0].rating));
                 $reviewContent.val(resultJs.Table[0].content);
                 setReviewModalState(false);
             }
@@ -820,11 +820,15 @@
     function setReviewModalState(canSend) {
         if (canSend) {
             $reviewContent.attr("disabled", false);
-            $reviewRating.attr("disabled", false);
+            $reviewRating.rating("refresh", {
+                disabled: false
+            });
             $reviewBtn.css("display", modalBtnDisplay);
         } else {
             $reviewContent.attr("disabled", true);
-            $reviewRating.attr("disabled", true);
+            $reviewRating.rating("refresh", {
+                disabled: true
+            });
             $reviewBtn.hide();
         }
     }

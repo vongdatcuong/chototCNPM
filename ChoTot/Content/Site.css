@@ -208,6 +208,13 @@ button.chotot-btn:hover {
     color: #ff9900;
     background-color: #ffffff;
 }
+.star-rating-container {
+    display: inline;
+}
+.star-rating-container span.star {
+    display: inline;
+    color: #ffd700 !important;
+}
 /*Footer*/
 footer {
     background-color: #FF9900;

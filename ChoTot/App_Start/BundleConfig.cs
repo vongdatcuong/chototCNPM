@@ -22,7 +22,8 @@ namespace ChoTot
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/umd/popper-utils.min.js",
                       "~/Scripts/umd/popper.min.js",
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/star-rating.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/library").Include(
                      "~/Scripts/sweetalert2.min.js",
@@ -32,8 +33,12 @@ namespace ChoTot
             bundles.Add(new ScriptBundle("~/bundles/constants").Include(
                       "~/Scripts/constant.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/themesJs").Include(
+                      "~/Scripts/themes/star-rating-theme-fas.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/star-rating.css",
                       "~/Content/site.css",
                       "~/Content/home.css",
                       "~/Content/user.css",
@@ -44,6 +49,9 @@ namespace ChoTot
                       "~/Content/sweetalert2.min.css",
                       "~/Content/lightslider.min.css",
                       "~/Content/lightgallery.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/themesCss").Include(
+                      "~/Content/themes/star-rating-theme-fas.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/sharedScripts").Include(
                       "~/Scripts/sharedScript.js"));
