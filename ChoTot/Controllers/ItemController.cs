@@ -67,5 +67,13 @@ namespace ChoTot.Controllers
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult getAllPendingItem()
+        {
+            ds = Item.getAllPendingItem();
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
     }
 }

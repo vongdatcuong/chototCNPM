@@ -46,6 +46,25 @@ namespace ChoTot.Models
             }
         }
 
+        public static DataSet getAllPendingItem()
+        {
+            try
+            {
+                storeName = string.Format("sp_get_all_pending_item");
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
+
         public static DataSet getItem(int? itemId)
         {
             try
