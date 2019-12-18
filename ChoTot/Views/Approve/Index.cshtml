@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Approve Pageeeeeeeee";
+    ViewBag.Title = "Approve Page";
 }
+
 <h1>@ViewBag.Title</h1>
 @section Scripts {
     <script type="text/javascript">
@@ -8,3 +9,73 @@
     </script>
     @Scripts.Render("~/bundles/approveScripts")
 }
+
+<p>
+    <button class="approve_bt">Chọn tất cả</button>
+    <button class="approve_bt">Ok</button>
+    <button class="approve_bt">Hủy</button>
+</p>
+
+<table id="approve-table" class="table">
+    <thead>
+        <tr style="background-color:#f49235;">
+            <th style="width: 4%;">Chọn </th>
+            <th style="width: 5%;">ID</th>
+            <th style="width: 7%;">Người bán</th>
+            <th style="width: 13%;">Tên SP</th>
+            <th style="width: 15%;">Ảnh</th>
+            <th style="width: 10%;">Giá(VNĐ)</th>
+            <th style="width: 10%;">Loại mặt hàng</th>
+            <th style="width: 7%;">Thời gian</th>
+            <th style="width: 25%;">Mô tả</th>
+            <th style="width: 4%;">Thương lượng</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+
+            <td>
+                <form>
+                    <input type="checkbox" name="ô" value="">
+                </form>
+            </td>
+            <td>123</td>
+            <td>Faker</td>
+            <td>Iphone 11 Pro Max</td>
+            <td> <img src=" " alt="Ảnh minh họa"> </td>
+            <td>35.000.000</td>
+            <td>
+                <select>
+                    <option value="Đồ_điện_tử">Đồ điện tử</option>
+                </select>
+            </td>
+            <td>15/10/2019</td>
+            <td>Iphone rẻ như cho</td>
+            <td>Có</td>
+        </tr>
+
+        <tr>
+            <td>
+                <form>
+                    <input type="checkbox" name="ô" value="">
+                </form>
+            </td>
+            <td>1234</td>
+            <td>Test</td>
+            <td>Samsung fold</td>
+            <td> <img src=" " alt="Ảnh minh họa"> </td>
+            <td>35.000.000</td>
+            <td>
+                <select>
+                    <option value="Đồ_điện_tử">Đồ điện tử</option>
+                </select>
+            </td>
+            <td>08/12/2019</td>
+            <td>ảMô tả mô tảMô tả mô tảMô tả mô tảMô tả mô tả</td>
+            <td>Không</td>
+        </tr>
+    </tbody>
+    
+    
+</table>

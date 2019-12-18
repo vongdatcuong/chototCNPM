@@ -1,3 +1,46 @@
 ﻿body {
     
 }
+
+button.approve_bt {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #f49235;
+    border-radius: 16px;
+}
+
+table, td, th {
+    border: 1px solid black;
+    text-align: center;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+tr {
+    style = "background-color:#f49235"
+}
+
+​
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+​
+td {
+    height: 50px;
+    vertical-align: bottom;
+}
