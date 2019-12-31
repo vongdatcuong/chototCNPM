@@ -9,7 +9,7 @@
         const resultJs = JSON.parse(result);
         if (resultJs.Table && resultJs.Table.length > 0) {
             
-            resultJs.Table.forEach((item, index) => {x
+            resultJs.Table.forEach((item, index) => {
                 let idRow = '#row' + parseInt(count / 4).toString();         
                 const $row = $(`<div id="row${parseInt(count/4)}" class="row"><div>`);
                 const $col = $(`<div class="col-sm-3 mb-3"><div>`);

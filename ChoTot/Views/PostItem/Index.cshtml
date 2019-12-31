@@ -1,8 +1,69 @@
 ﻿@{
-    ViewBag.Title = "Post Item Pageeeeeeeee";
+    ViewBag.Title = "Đăng bán sản phẩm";
 }
-<h1>@ViewBag.Title</h1>
-<button id="testClick">Click me</button>
+
+<div class="row">
+    <div id="image-upload-wrapper" class="col-md-6">
+        <form method="post" class="dropzone" id="image-upload" enctype="multipart/form-data"></form>
+        <label id="image-upload-error" class="error" for="image-upload" style="">Chưa chọn hình ảnh</label>
+    </div>
+    <div id="edit-item-info" class="col-md-6">
+        <form name="editItemForm">
+            <div class="form-group row">
+                <label for="edit_item_name" class="col-md-3 col-form-label">Tên mặt hàng: </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="edit_item_name" name="name" value="" placeholder="Tên mặt hàng">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit_item_price" class="col-md-3 col-form-label">Giá: </label>
+                <div class="col-md-9">
+                    <input type="number" class="form-control" id="edit_item_price" name="price" value="" min="0" placeholder="Giá">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit_item_description" class="col-md-3 col-form-label">Mô tả mặt hàng: </label>
+                <div class="col-md-9">
+                    <textarea id="edit_item_description" class="form-control" rows="5" name="description" placeholder="Mô tả mặt hàng"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit_item_category" class="col-md-3 col-form-label">Loại hàng: </label>
+                <div class="col-md-9">
+                    @Html.DropDownList("edit_item_category", (IEnumerable<SelectListItem>)ViewBag.selectListCategory, new { @class = "form-control"})
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit_item_canNegotiate" class="col-md-3 col-form-label">Thương lượng: </label>
+                <div class="col-md-9 edit_item_canNegotiate_wrapper">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="canNegotiate">Có</label>
+                        <input id="canNegotiate" class="form-check-input" type="radio" name="canNegotiate" value="1">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="cantNegotiate">Không</label>
+                        <input id="cantNegotiate" class="form-check-input" type="radio" name="canNegotiate" value="0" checked>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit_item_address" class="col-md-3 col-form-label">Địa chỉ: </label>
+                <div class="col-md-9">
+                    <textarea id="edit_item_address" class="form-control" rows="1" name="address" placeholder="Địa chỉ"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edit_item_city" class="col-md-3 col-form-label">Tỉnh thành: </label>
+                <div class="col-md-9">
+                    @Html.DropDownList("edit_item_city", (IEnumerable<SelectListItem>)ViewBag.selectListCity, new { @class = "form-control" })
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <button type="button" id="post-btn" class="btn btn-chotot">Đăng bán</button>
+</div>
 
 @section Scripts {
     <script type="text/javascript">

@@ -1,2 +1,34 @@
-﻿body {
+﻿#post-btn {
+    display: block;
+    font-size: 1.1em;
+    padding: 5px 30px;
+    margin: 10px auto;
+}
+#image-upload {
+    height: 70%;
+}
+#image-upload-error {
+    display: none;
+    color: #ff6633;
+    font-weight: 700;
+    margin: 0 auto;
+    text-align: center;
+}
+#edit-item-info {
+    padding: 0 10px;
+}
+#edit-item-info input, #edit-item-info select, #edit-item-info textarea {
+    max-width: 100%;
+}
+#edit-item-info label{
+    color: #ff6633;
+    font-weight: 700;
+}
+.edit_item_canNegotiate_wrapper {
+    padding: 7px;
+}
+#edit-item-info .edit_item_canNegotiate_wrapper label {
+    margin: 0 10px;
+    color: #333333;
+    font-weight: 400;
 }

@@ -26,6 +26,7 @@ namespace ChoTot.Models
         public string phone { get; set; }
         public string avatar { get; set; }
         public float rating { get; set; }
+        public int reviewCount { get; set; }
         public DateTime createdDate { get; set; }
 
         private static string connectionString = Constant.connectionStringDB;

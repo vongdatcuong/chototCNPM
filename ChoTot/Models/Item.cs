@@ -18,11 +18,13 @@ namespace ChoTot.Models
 	    public int price { get; set; }
 	    public string category { get; set; }
         public string status { get; set; }
+        public string address { get; set; }
         public int city { get; set; }
         public bool canNegotiate { get; set; }
         public DateTime createdDate { get; set; }
         public int sellerId { get; set; }
         public int buyerId { get; set; }
+        public DateTime purchaseDate { get; set; }
 
         private static string connectionString = Constant.connectionStringDB;
         private static string storeName = string.Empty;
@@ -136,6 +138,58 @@ namespace ChoTot.Models
                 SqlParameter[] par = new SqlParameter[2];
                 par[0] = new SqlParameter("@itemId", itemId);
                 par[1] = new SqlParameter("@purchaseDate", DateTime.Now);
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
+
+        public DataSet addItem()
+        {
+            try
+            {
+                storeName = string.Format("sp_add_item");
+                SqlParameter[] par = new SqlParameter[9];
+                par[0] = new SqlParameter("@name", this.name);
+                par[1] = new SqlParameter("@description", this.description);
+                par[2] = new SqlParameter("@price", this.price);
+                par[3] = new SqlParameter("@category", this.category);
+                par[4] = new SqlParameter("@address", this.address);
+                par[5] = new SqlParameter("@city", this.city);
+                par[6] = new SqlParameter("@canNegotiate", this.canNegotiate);
+                par[7] = new SqlParameter("@createdDate", DateTime.Now);
+                par[8] = new SqlParameter("@sellerId", this.sellerId);
+
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
+
+        public static DataSet setItemThumbnail(int itemId, string thumbnail)
+        {
+            try
+            {
+                storeName = string.Format("sp_set_item_thumbnail");
+                SqlParameter[] par = new SqlParameter[2];
+                par[0] = new SqlParameter("@itemId", itemId);
+                par[1] = new SqlParameter("@thumbnail", thumbnail);
                 //Execute store
                 return SqlHelper.ExecuteDataset(connectionString, storeName, par);
 

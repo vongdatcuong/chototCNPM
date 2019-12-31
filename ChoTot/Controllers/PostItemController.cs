@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -32,6 +34,33 @@ namespace ChoTot.Controllers
                 Session["__USER__"] = cookie["__USER__"];
                 ViewBag.isLoggingIn = false;
             }
+            //Get all categories
+            ds = Utils.getAllParameters();
+            List<City> lstCity = ds.Tables[0].AsEnumerable().Select(
+                            dataRow => new City
+                            {
+                                cityId = dataRow.Field<int>("cityId"),
+                                shortName = dataRow.Field<string>("shortName"),
+                                fullName = dataRow.Field<string>("fullName")
+                            }).ToList();
+            if (lstCity.Count > 0)
+            {
+                lstCity.RemoveAt(0);
+            }
+            ViewBag.selectListCity = new SelectList(lstCity, "cityId", "fullName");
+
+            List<Category> lstCategory = ds.Tables[1].AsEnumerable().Select(
+                            dataRow => new Category
+                            {
+                                categoryId = dataRow.Field<int>("categoryId"),
+                                shortName = dataRow.Field<string>("shortName"),
+                                fullName = dataRow.Field<string>("fullName")
+                            }).ToList();
+            if (lstCategory.Count > 0)
+            {
+                lstCategory.RemoveAt(0);
+            }
+            ViewBag.selectListCategory = new SelectList(lstCategory, "categoryId", "fullName");
             return View();
         }
 
@@ -51,6 +80,64 @@ namespace ChoTot.Controllers
             ds = Item.completeItem(itemId);
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
+
+        //Post Upload
+        [HttpPost]
+        public async Task<JsonResult> addItem(Item item, HttpPostedFileBase[] images)
+        {
+            ds = item.addItem();
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            int itemId = (int)ds.Tables[0].Rows[0]["itemId"];
+            if (itemId > 0)
+            {
+                string errorImg = "";
+                string thumbnail = "";
+                for (int i = 0; i < images.Length; i++)
+                {
+                    try
+                    {
+                        string extension = Path.GetExtension(images[i].FileName);
+                        string imageName = string.Format(Constant.itemImageNameFormat, itemId, i + 1, extension);
+                        string avatarUrl = await AzureBlobController.UploadImageAsync(images[0], imageName);
+                        if (avatarUrl != null)
+                        {
+                            thumbnail += avatarUrl;
+                            if (i != images.Length)
+                                thumbnail += ", ";
+                        }
+                        else
+                        {
+                            errorImg += i.ToString() + ", ";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+                    }
+                }
+                if (errorImg.Length >= 2)
+                {
+                    errorImg = errorImg.Substring(0, errorImg.Length - 2);
+                }
+                if (thumbnail.Length > 0)
+                {
+                    thumbnail = thumbnail.Substring(0, thumbnail.Length - 2);
+                    ds = Item.setItemThumbnail(itemId, thumbnail);
+                    jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+                    return Json(jsonRs, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"error\": \"Upload hình ảnh thất bại ở vị trí" + errorImg + "\"}\r\n  ]\r\n}";
+                    return Json(jsonRs, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"error\": \"Upload hình ảnh thất bại ở vị trí }\r\n  ]\r\n}";
+                return Json(jsonRs, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

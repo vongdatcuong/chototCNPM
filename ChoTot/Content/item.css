@@ -37,8 +37,16 @@
 #item-info h2 {
     margin: 0 0 10px 5px;
 }
+#item-info label {
+    color: #ff6633;
+    font-weight: 700;
+}
 .badges-bar {
     margin: 3px 0 6px 0;
+}
+#item-info #item-address {
+    font-weight: 600;
+    font-style: italic;
 }
 #item-createdDate {
     color: #ff9900;

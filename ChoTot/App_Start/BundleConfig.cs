@@ -28,7 +28,8 @@ namespace ChoTot
             bundles.Add(new ScriptBundle("~/bundles/library").Include(
                      "~/Scripts/sweetalert2.min.js",
                      "~/Scripts/lightslider.min.js",
-                     "~/Scripts/lightgallery.min.js"));
+                     "~/Scripts/lightgallery.min.js",
+                     "~/Scripts/dropzone.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/constants").Include(
                       "~/Scripts/constant.js"));
@@ -48,7 +49,8 @@ namespace ChoTot
                       "~/Content/responsive.css",
                       "~/Content/sweetalert2.min.css",
                       "~/Content/lightslider.min.css",
-                      "~/Content/lightgallery.min.css"));
+                      "~/Content/lightgallery.min.css",
+                       "~/Content/dropzone.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/themesCss").Include(
                       "~/Content/themes/star-rating-theme-fas.min.css"));

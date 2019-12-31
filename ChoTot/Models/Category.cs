@@ -7,7 +7,7 @@ namespace ChoTot.Models
 {
     public class Category
     {
-        public int categoryId { get; set; }
+        public int? categoryId { get; set; }
         public string shortName { get; set; }
         public string fullName { get; set; }
     }

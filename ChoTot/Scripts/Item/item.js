@@ -39,6 +39,7 @@
             $badgesBar.append($(`<span id="item-createdDate" class="badge-chotot">${parseDateTime(item.createdDate, "/")}</span>`));
         }
         $('#price').text(numberWithCommas(parseInt(item.price)));
+        $('#item-address').text(item.address);
 
         const sellerAvatar = (item.sellerAvatar) ? item.sellerAvatar : (item.sellerGender === 'Nữ') ? "~/Images/default_avatar_female.jpg" : "~/Images/default_avatar_male.jpg";
         $('#seller-avatar').attr('src', sellerAvatar);
