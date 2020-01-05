@@ -165,10 +165,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ChoTot.mdf" />
-    <Content Include="App_Data\ChoTot_log.ldf">
-      <DependentUpon>ChoTot.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\approve.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -201,6 +197,7 @@
     <Content Include="Images\default_avatar_female.jpg" />
     <Content Include="Images\default_avatar_male.jpg" />
     <Content Include="Images\favicon_logo.png" />
+    <Content Include="Images\item_error.jpg" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\marker.svg" />
     <Content Include="Images\transparent_logo.png" />
@@ -301,6 +298,7 @@
     <Content Include="Views\User\OtherUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

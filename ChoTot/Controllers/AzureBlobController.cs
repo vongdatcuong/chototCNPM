@@ -16,7 +16,7 @@ namespace ChoTot.Controllers
         public static CloudStorageAccount connectionStringStorage = CloudStorageAccount.Parse(Constant.connectionStringStorage);
         public static string containerName = Constant.blobContainerName;
 
-        // Post Upload
+        // Post Upload Async
         [HttpPost]
         public static async Task<string> UploadImageAsync(HttpPostedFileBase imageToUpload, string imageName)
         {
@@ -44,6 +44,45 @@ namespace ChoTot.Controllers
                 CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(imageName);
                 cloudBlockBlob.Properties.ContentType = imageToUpload.ContentType;
                 await cloudBlockBlob.UploadFromStreamAsync(imageToUpload.InputStream);
+
+                imageFullPath = cloudBlockBlob.Uri.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return null;
+            }
+            return imageFullPath;
+        }
+
+        // Post Upload
+        [HttpPost]
+        public static string UploadImage(HttpPostedFileBase imageToUpload, string imageName)
+        {
+            string imageFullPath = null;
+            if (imageToUpload == null || imageToUpload.ContentLength == 0)
+            {
+                return null;
+            }
+            try
+            {
+                CloudStorageAccount cloudStorageAccount = connectionStringStorage;
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("chotot");
+
+                if (cloudBlobContainer.CreateIfNotExists())
+                {
+                    cloudBlobContainer.SetPermissions(
+                        new BlobContainerPermissions
+                        {
+                            PublicAccess = BlobContainerPublicAccessType.Blob
+                        }
+                        );
+                }
+
+                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(imageName);
+                cloudBlockBlob.Properties.ContentType = imageToUpload.ContentType;
+                cloudBlockBlob.UploadFromStream(imageToUpload.InputStream);
 
                 imageFullPath = cloudBlockBlob.Uri.ToString();
             }

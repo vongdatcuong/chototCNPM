@@ -15,7 +15,7 @@ namespace ChoTot.Models
         public string name { get; set; }
 	    public string description { get; set; }
 	    public string thumbnail { get; set; }
-	    public int price { get; set; }
+	    public long price { get; set; }
 	    public string category { get; set; }
         public string status { get; set; }
         public string address { get; set; }

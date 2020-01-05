@@ -1,5 +1,4 @@
 ﻿Dropzone.autoDiscover = false;
-$(document).ready(function () {
     const $imageUpload = $('#image-upload');
     const $imageUploadError = $('#image-upload-error');
     const $editItemForm = $(document.editItemForm);
@@ -12,6 +11,7 @@ $(document).ready(function () {
             },
             price: {
                 required: true,
+                number: true,
                 min: 0
             },
             description: {
@@ -40,6 +40,7 @@ $(document).ready(function () {
             },
             price: {
                 required: "Giá sản phẩm không được phép để trống",
+                number: "Giá phải là số",
                 min: "Giá sản phẩm phải lớn hơn 0"
             },
             description: {
@@ -66,7 +67,7 @@ $(document).ready(function () {
     $imageUpload.dropzone({
         url: "/PostItem/addItem",
         method: "POST",
-        timeout: 5 * 60,
+        timeout: 5 * 60 * 1000,
         uploadMultiple: true,
         paramName: "images",
         dictDefaultMessage: "Kéo ảnh sản phẩm vào",
@@ -75,15 +76,23 @@ $(document).ready(function () {
         dictRemoveFile: "Xóa",
         autoProcessQueue: false,
         success: function (file, response) {
-            console.log(response);
+            const resultJs = JSON.parse(response);
+            if (resultJs.Table && resultJs.Table.length > 0 && resultJs.Table[0].itemId) {
+                window.location.href = "/Item/" + resultJs.Table[0].itemId;
+            } else {
+                Alert.error("Đăng sản phẩm thất bại !!!");
+            }
+        },
+        error: function (file, response) {
+            Alert.error("Đăng sản phẩm thất bại !!!");
         },
         sending: (file, xhr, formData) => {
             if (!isSent) {
                 formData.append("name", $(document.editItemForm.name).val() || "");
-                formData.append("price", parseInt($(document.editItemForm.price).val()) || 0);
-                formData.append("description", $(document.editItemForm.description).val() || "");
+                formData.append("price", Number($(document.editItemForm.price).val()) || 0);
+                formData.append("description", encodeURI($(document.editItemForm.description).val()) || "");
                 formData.append("category", $(document.editItemForm.edit_item_category).val() || "");
-                formData.append("canNegotiate", parseInt($(document.editItemForm.canNegotiate).val()) || "");
+                formData.append("canNegotiate", parseInt($editItemForm.find("input[name=canNegotiate]:checked").val()) === 1|| false);
                 formData.append("address", $(document.editItemForm.address).val() || "");
                 formData.append("city", parseInt($(document.editItemForm.edit_item_city).val()) || "");
                 formData.append("sellerId", gUser.userId || 1);
@@ -91,7 +100,6 @@ $(document).ready(function () {
             }
         }
     })
-
     $('#post-btn').on('click', (e) => {
         e.preventDefault();
         let flag1 = false;
@@ -115,4 +123,3 @@ $(document).ready(function () {
             $imageUploadError.hide();
         }
     }
-})

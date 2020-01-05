@@ -68,9 +68,11 @@
                 document.loginForm.reset();
                 $loginErrMsg.hide();
 
-                //Navigate to url
-                let currentUrl = window.location.href;
-                window.location.href = currentUrl.slice(0, currentUrl.indexOf('/')) + returnUrl;
+                if (returnUrl) {
+                    //Navigate to url
+                    let currentUrl = window.location.href;
+                    window.location.href = returnUrl;
+                }
             }
             else {
                 //Login failed
@@ -88,7 +90,7 @@
             const result = await logout();
             displayNav(false);
             hideLoading();
-            window.location.href = window.location.href.slice(0, window.location.href.lastIndexOf('/'));
+            window.location.href = "/";
         } catch (e) {
             console.log(e);
         }

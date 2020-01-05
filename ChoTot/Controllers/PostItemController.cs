@@ -81,7 +81,6 @@ namespace ChoTot.Controllers
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
-
         //Post Upload
         [HttpPost]
         public async Task<JsonResult> addItem(Item item, HttpPostedFileBase[] images)
@@ -99,7 +98,7 @@ namespace ChoTot.Controllers
                     {
                         string extension = Path.GetExtension(images[i].FileName);
                         string imageName = string.Format(Constant.itemImageNameFormat, itemId, i + 1, extension);
-                        string avatarUrl = await AzureBlobController.UploadImageAsync(images[0], imageName);
+                        string avatarUrl = await AzureBlobController.UploadImageAsync(images[i], imageName);
                         if (avatarUrl != null)
                         {
                             thumbnail += avatarUrl;
@@ -124,20 +123,19 @@ namespace ChoTot.Controllers
                 {
                     thumbnail = thumbnail.Substring(0, thumbnail.Length - 2);
                     ds = Item.setItemThumbnail(itemId, thumbnail);
-                    jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
-                    return Json(jsonRs, JsonRequestBehavior.AllowGet);
+                    jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"itemId\": " + itemId + "}\r\n  ]\r\n}";
                 }
                 else
                 {
                     jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"error\": \"Upload hình ảnh thất bại ở vị trí" + errorImg + "\"}\r\n  ]\r\n}";
-                    return Json(jsonRs, JsonRequestBehavior.AllowGet);
+
                 }
             }
             else
             {
-                jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"error\": \"Upload hình ảnh thất bại ở vị trí }\r\n  ]\r\n}";
-                return Json(jsonRs, JsonRequestBehavior.AllowGet);
+                jsonRs = "{\r\n  \"Table\": [\r\n      {\r\n      \"error\": \"Thêm sản phẩm thất bại }\r\n  ]\r\n}";
             }
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }
     }
 }
