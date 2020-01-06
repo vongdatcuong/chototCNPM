@@ -561,15 +561,23 @@
             const dateSeperator = '/';
             const $date = $(`<td>${parseDateTime(item.createdDate, dateSeperator)}</td>`);
 
-            //Buttons
-            const $completeBtn = $(`<button class="sellingCompleteBtn btn btn-default btn-chotot" data-itemId="${item.itemId}" style="width:40px; height:22px;">Hoàn tất</button>`);
-            const $editBtn = $(`<button class="sellingEditBtn btn btn-default btn-chotot" style="width:22px; height:22px;"><a href="/PostItem/${item.itemId}">Sửa</a></button>`);
-            const $deleteBtn = $(`<button class="sellingDeleteBtn btn btn-default btn-chotot" data-itemId="${item.itemId}" style="width:22px; height:22px;">Xóa</button>`);
-
-            const $buttons = $('<td style="padding-left:2px; padding-right: 1px"></td>');
-            $buttons.append($completeBtn, $editBtn, $deleteBtn);
-
-            $tr.append($stt, $id, $name, $price, $category, $date, $buttons);
+            let $lastCol = $('<td style="padding-left:2px; padding-right: 1px; font-weight: 800;"></td>');
+            switch (item.status) {
+                case "waiting":
+                    $lastCol.append($('<span class="text-warning" style="font-size: 1.1em;">Chờ duyệt</span>'));
+                    break;
+                case "rejected":
+                    $lastCol.append($('<span class="text-danger" style="font-size: 1.1em;">Từ chối</span>'));
+                    break;
+                case "accepted":
+                    //Buttons
+                    const $completeBtn = $(`<button class="sellingCompleteBtn btn btn-default btn-chotot" data-itemId="${item.itemId}" style="width:40px; height:22px;">Hoàn tất</button>`);
+                    const $editBtn = $(`<button class="sellingEditBtn btn btn-default btn-chotot" style="width:22px; height:22px;"><a href="/PostItem/${item.itemId}">Sửa</a></button>`);
+                    const $deleteBtn = $(`<button class="sellingDeleteBtn btn btn-default btn-chotot" data-itemId="${item.itemId}" style="width:22px; height:22px;">Xóa</button>`);
+                    $lastCol.append($completeBtn, $editBtn, $deleteBtn);
+                    break;
+            }
+            $tr.append($stt, $id, $name, $price, $category, $date, $lastCol);
             $tbody.append($tr);
         });
         //Events

@@ -13,7 +13,7 @@
 <body>
     <nav class="my-navbar fixed-top">
         <div class="container">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="navbar-header col-md-2">
                     <div class="logo-wrapper">
                         <a href="/"><img class="logo img-responsive" src="~/Images/transparent_logo.png" /></a>
@@ -21,7 +21,9 @@
                 </div>
                 <div class="navbar-search col-md-5">
                     <div class="input-group">
-                        <input type="text" class="form-control search" name="search" placeholder="Tìm kiếm sản phẩm">
+                        <form id="search-form" action="/search" method="get">
+                            <input type="text" class="form-control search" name="keyword" placeholder="Nhập tên sản phẩm">
+                        </form>
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                         </div>
@@ -38,7 +40,7 @@
 
                             <div class="dropdown-menu" aria-labelledby="profileLink ">
                                 <a id="profileLink" href="/User" class="dropdown-item">Hồ sơ <i class="fas fa-user-circle"></i></a>
-                                <a id="approveLink" class="dropdown-item">Kiểm duyệt <i class="fas fa-clipboard-check"></i></a>
+                                <a id="approveLink" href="/Approve" class="dropdown-item">Kiểm duyệt <i class="fas fa-clipboard-check"></i></a>
                                 <a id="logoutLink" class="dropdown-item">Đăng xuất <i class="fas fa-sign-out-alt"></i></a>
                             </div>
                         </li>
@@ -46,6 +48,7 @@
                     </ul>
                 </div>
             </div>
+            <!--
             <div class="row">
                 <div class="col-md-2 form-group">
                     <select class="form-control">
@@ -61,6 +64,7 @@
                     </div>
                 </div>
             </div>
+            -->
         </div>
     </nav>
     <!--Login Modal-->
@@ -135,15 +139,6 @@
         </div>
     </div>
     <div class="container body-content">
-        <!-- Start BreadCrumb-->
-        <nav aria-label="breadcrumb" id="breadcrumb">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="#">Frontend</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Bootstrap</li>
-            </ul>
-        </nav>
-        <!-- End BreadCrumb-->
         @RenderBody()
     </div>
     <hr />

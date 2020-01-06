@@ -34,7 +34,7 @@ function SweetAlert() {
         return Swal.fire({
             title: "<span style='color: #ff6600;'>Thông báo</span>",
             icon: "warning",
-            text: message + "!",
+            html: message + "!",
             timer: timer,
             showCloseButton: true,
             confirmButtonText: "Đồng ý",
@@ -49,7 +49,7 @@ function SweetAlert() {
         return Swal.fire({
             title: "<span style='color: #00c300;'>Thông báo</span>",
             icon: "success",
-            text: message + "!",
+            html: message + "!",
             timer: timer,
             showCloseButton: true,
             confirmButtonText: "Đồng ý",
@@ -61,7 +61,7 @@ function SweetAlert() {
         return Swal.fire({
             title: "<span style='color: #ea4335;'>Thông báo</span>",
             icon: "error",
-            text: message + "!",
+            html: message + "!",
             timer: timer,
             showCloseButton: true,
             showConfirmButton: false,

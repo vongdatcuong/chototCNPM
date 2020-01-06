@@ -54,10 +54,6 @@ namespace ChoTot.Controllers
                 {
                     ViewBag.errorMsg = "Quản trị viên đã từ chối phê duyệt sản phẩm !!!";
                     return View("~/Views/Shared/Error.cshtml");
-                } else if (status.Equals("complete"))
-                {
-                    ViewBag.errorMsg = "Sản phẩm đã có người mua !!!";
-                    return View("~/Views/Shared/Error.cshtml");
                 }
                 ViewBag.itemStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
                 return View();

@@ -1,8 +1,4 @@
-﻿body {
-    
-}
-
-button.approve_bt {
+﻿button.approve_bt {
     border: none;
     color: white;
     padding: 10px 20px;
@@ -21,6 +17,7 @@ button.approve_bt {
     text-align: center;
     padding-left: 6px;
     padding-right: 6px;
+    vertical-align: middle;
 }
 
 #approve-table th {
@@ -33,15 +30,21 @@ button.approve_bt {
     background-color: #ff9900;
     border-radius: 5px 5px 0 0;
 }
-
 ​
 #approve-table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-​
 #approve-table td {
     height: 50px;
-    vertical-align: bottom;
+}
+
+#approve-table td img {
+    max-width: 55%;
+}
+
+#approve-table input[name=appr_selected] {
+    width: 28px;
+    height: 28px;
 }

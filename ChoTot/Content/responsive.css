@@ -1,6 +1,9 @@
 ﻿/*Tablet*/
 @media screen and (max-width: 768px) {
     /*Header*/
+    #search-form {
+        width: 70%;
+    }
     .navbar-search .input-group {
         padding: 10px 20px;
     }

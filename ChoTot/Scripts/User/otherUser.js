@@ -77,6 +77,9 @@
             return;
         }
         data.forEach((item, index) => {
+            if (item.status !== "accepted"){
+                return;
+            }
             const $tr = $('<tr></tr>');
             const $stt = $(`<td>${index + 1}</td>`);
             const $id = $(`<td><a class="chotot-link" href="/Item/${item.itemId}">${item.itemId}</a></td>`);

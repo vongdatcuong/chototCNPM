@@ -31,6 +31,10 @@ ul {
     list-style-type: none;
     padding-left: 0;
 }
+h1 {
+    color: #ff6633;
+    margin: 0 0 25px 0;
+}
 /*Header*/
 .my-navbar {
     background-color: #FF9900;
@@ -48,6 +52,10 @@ ul {
 }
 .logo-wrapper a:hover {
     cursor: pointer;
+}
+#search-form {
+    width: 80%;
+    max-width: 100%;
 }
 .navbar-search {
 }
@@ -241,6 +249,19 @@ footer p {
 }
 #breadcrumb {
     margin: 10px 0 40px 0;
+}
+.bought-message {
+    color: #ff6633;
+    font-size: 30px;
+}
+.card-item-name {
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.card-item-price {
+    color: #d44638;
 }
 /* Loading */
 .spinner {

@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Flash Buy";
+}
+<h1>Tìm kiếm từ khóa: @ViewBag.keyword</h1>
+<div class="card shadow mb-4">
+    <div id="searchItemResult" class="card-body">
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        if ('@ViewBag.isLoggingIn') {
+            isLoggingIn = ('@ViewBag.isLoggingIn'.toLowerCase() == 'true') ? true : false;
+            returnUrl = '@ViewBag.returnUrl';
+        }
+        userJs = '@Html.Raw(ViewBag.gUserStr)';
+        let searchResultStr = '@Html.Raw(ViewBag.searchResultStr)';
+    </script>
+    @Scripts.Render("~/bundles/searchScripts")
+}
+
+

@@ -50,6 +50,11 @@
         $('#seller-rating').rating('update', item.sellerRating);
 
         $('#item-description div').text(decodeURI(item.description));
+
+        if (item.status === 'complete' && item.purchaseDate) {
+            $('#contact-btn-wrapper').text("");
+            $('#price-wrapper').html("<b class='bought-message'>Sản phẩm đã có người mua</b>");
+        }
     }
 
     $('#contact-btn').on('click', (e) => {

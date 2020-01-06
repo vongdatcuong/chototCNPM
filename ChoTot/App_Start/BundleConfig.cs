@@ -61,6 +61,9 @@ namespace ChoTot
             bundles.Add(new ScriptBundle("~/bundles/homeScripts").Include(
                       "~/Scripts/Home/home.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/searchScripts").Include(
+                      "~/Scripts/Search/search.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/userScripts").Include(
                       "~/Scripts/User/user.js"));
 

@@ -203,5 +203,70 @@ namespace ChoTot.Models
                 throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
             }
         }
+
+        public static DataSet setItemStatus(int itemId, string status)
+        {
+            try
+            {
+                storeName = string.Format("sp_change_item_status");
+                SqlParameter[] par = new SqlParameter[2];
+                par[0] = new SqlParameter("@itemId", itemId);
+                par[1] = new SqlParameter("@status", status);
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
+
+        public static DataSet approveItem(int itemId, int category)
+        {
+            try
+            {
+                storeName = string.Format("sp_approve_item");
+                SqlParameter[] par = new SqlParameter[2];
+                par[0] = new SqlParameter("@itemId", itemId);
+                par[1] = new SqlParameter("@category", category);
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
+
+        public static DataSet searchItem(string keyword)
+        {
+            try
+            {
+                storeName = string.Format("sp_search_item");
+                SqlParameter[] par = new SqlParameter[1];
+                par[0] = new SqlParameter("@keyword", keyword);
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
     }
 }
