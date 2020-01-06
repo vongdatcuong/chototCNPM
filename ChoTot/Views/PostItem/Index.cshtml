@@ -11,25 +11,25 @@
     <div id="edit-item-info" class="col-md-6">
         <form name="editItemForm">
             <div class="form-group row">
-                <label for="edit_item_name" class="col-md-3 col-form-label">Tên mặt hàng: </label>
+                <label for="edit_item_name" class="col-md-3 col-form-label">Tên mặt hàng: </label> @*chỉnh sửa tên sản phẩm*@
                 <div class="col-md-9">
                     <input type="text" class="form-control" id="edit_item_name" name="name" value="" placeholder="Tên mặt hàng">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="edit_item_price" class="col-md-3 col-form-label">Giá: </label>
+                <label for="edit_item_price" class="col-md-3 col-form-label">Giá: </label>   @*chỉnh sửa giá sản phẩm*@
                 <div class="col-md-9">
                     <input type="number" class="form-control" id="edit_item_price" name="price" value="" min="0" placeholder="Giá">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="edit_item_description" class="col-md-3 col-form-label">Mô tả mặt hàng: </label>
+                <label for="edit_item_description" class="col-md-3 col-form-label">Mô tả mặt hàng: </label>  @*chỉnh sửa mô tả sản phẩm*@
                 <div class="col-md-9">
                     <textarea id="edit_item_description" class="form-control" rows="5" name="description" placeholder="Mô tả mặt hàng"></textarea>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="edit_item_category" class="col-md-3 col-form-label">Loại hàng: </label>
+                <label for="edit_item_category" class="col-md-3 col-form-label">Loại hàng: </label> @*chỉnh sửa loại hàng*@
                 <div class="col-md-9">
                     @Html.DropDownList("edit_item_category", (IEnumerable<SelectListItem>)ViewBag.selectListCategory, new { @class = "form-control"})
                 </div>
@@ -38,23 +38,23 @@
                 <label for="edit_item_canNegotiate" class="col-md-3 col-form-label">Thương lượng: </label>
                 <div class="col-md-9 edit_item_canNegotiate_wrapper">
                     <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="canNegotiate">Có</label>
+                        <label class="form-check-label" for="canNegotiate">Có</label> @*thương lượng sản phẩm "có"*@
                         <input id="canNegotiate" class="form-check-input" type="radio" name="canNegotiate" value="1">
                     </div>
                     <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="cantNegotiate">Không</label>
+                        <label class="form-check-label" for="cantNegotiate">Không</label> @*thương lượng sản phẩm "không"*@
                         <input id="cantNegotiate" class="form-check-input" type="radio" name="canNegotiate" value="0" checked>
                     </div>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="edit_item_address" class="col-md-3 col-form-label">Địa chỉ: </label>
+                <label for="edit_item_address" class="col-md-3 col-form-label">Địa chỉ: </label> @*chỉnh sửa địa chỉ*@ 
                 <div class="col-md-9">
                     <textarea id="edit_item_address" class="form-control" rows="1" name="address" placeholder="Địa chỉ"></textarea>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="edit_item_city" class="col-md-3 col-form-label">Tỉnh thành: </label>
+                <label for="edit_item_city" class="col-md-3 col-form-label">Tỉnh thành: </label> @*chỉnh sửa địa chỉ sản phẩm*@
                 <div class="col-md-9">
                     @Html.DropDownList("edit_item_city", (IEnumerable<SelectListItem>)ViewBag.selectListCity, new { @class = "form-control" })
                 </div>
@@ -63,7 +63,7 @@
     </div>
 </div>
 <div class="row">
-    <button type="button" id="post-btn" class="btn btn-chotot">Đăng bán</button>
+    <button type="button" id="post-btn" class="btn btn-chotot">Đăng bán</button>  @*đăng bán sản phẩm*@
 </div>
 
 @section Scripts {
