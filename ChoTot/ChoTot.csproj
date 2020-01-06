@@ -194,6 +194,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\sweetalert2.css" />
     <Content Include="Content\sweetalert2.min.css" />
+    <Content Include="Images\Banner_Home.png" />
+    <Content Include="Images\Banner_Home1.png" />
+    <Content Include="Images\Banner_Home2.jpg" />
+    <Content Include="Images\Banner_Home3.png" />
     <Content Include="Images\controls.png" />
     <Content Include="Images\default_avatar_female.jpg" />
     <Content Include="Images\default_avatar_male.jpg" />
