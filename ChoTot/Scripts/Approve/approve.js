@@ -53,7 +53,7 @@
             else {
                 const $tr = $('<tr></tr>');
                 const msg = "Không có sản phẩm đang chờ duyệt !!!";
-                $tr.append($(`<td colspan="100%" style="color: #ff6633; font-weight: 600;">${msg}</td>`));
+                $tr.append($(`<td colspan="100%" class="not-found-msg">${msg}</td>`));
                 $tbody.append($tr);
                 return;
             }

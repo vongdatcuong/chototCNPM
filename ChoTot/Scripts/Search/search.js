@@ -6,8 +6,8 @@
     async  function loadAllItem() {
         if (searchResultJs.Table && searchResultJs.Table.length > 0) {
             searchResultJs.Table.forEach((item, index) => {
-                let idRow = '#row' + parseInt(count / 4).toString();         
-                const $row = $(`<div id="row${parseInt(count/4)}" class="row"><div>`);
+                let idRow = '#row' + parseInt(count / 4).toString();
+                const $row = $(`<div id="row${parseInt(count / 4)}" class="row"><div>`);
                 const $col = $(`<div class="col-sm-3 mb-3"><div>`);
                 const $card = $(` <div class="card h-100"><div>`);
                 const firstImageUrl = item.thumbnail.split(", ")[0];
@@ -41,6 +41,8 @@
                 }
                 count++;
             })
+        } else {
+            $searchItemResult.append($(`<div class="not-found-msg">Không tìm thấy sản phẩm nào !!!</div>`))
         }
     }
 });

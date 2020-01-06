@@ -544,7 +544,7 @@
         if (data.length == 0) {
             const $tr = $('<tr></tr>');
             const msg = "Không tìm thấy sản phẩm nào !!!";
-            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
+            $tr.append($(`<td colspan="100%" class="not-found-msg">${msg}</td>`));
             $tbody.append($tr);
             return;
         }
@@ -650,7 +650,7 @@
         if (data.length == 0) {
             const $tr = $('<tr></tr>');
             const msg = "Không tìm thấy sản phẩm nào !!!";
-            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
+            $tr.append($(`<td colspan="100%" class="not-found-msg">${msg}</td>`));
             $tbody.append($tr);
             return;
         }
@@ -685,7 +685,7 @@
         if (data.length == 0) {
             const $tr = $('<tr></tr>');
             const msg = "Không tìm thấy sản phẩm nào !!!";
-            $tr.append($(`<td colspan="100%" style="color: #ff6633;">${msg}</td>`));
+            $tr.append($(`<td colspan="100%" class="not-found-msg">${msg}</td>`));
             $tbody.append($tr);
             return;
         }

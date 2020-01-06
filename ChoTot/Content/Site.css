@@ -263,6 +263,10 @@ footer p {
 .card-item-price {
     color: #d44638;
 }
+.not-found-msg {
+    color: #ff6633;
+    font-weight: 600;
+}
 /* Loading */
 .spinner {
     display: block;
