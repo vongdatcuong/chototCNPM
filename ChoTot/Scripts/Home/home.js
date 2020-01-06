@@ -64,7 +64,7 @@
     function showAllItems() {
         //showLoading();
         return $.ajax({
-            url: "/Item/getAllItem",
+            url: "/Home/getAllItem_home",
             type: "GET",
             dataType: "json",
             

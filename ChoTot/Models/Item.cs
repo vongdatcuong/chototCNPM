@@ -203,5 +203,23 @@ namespace ChoTot.Models
                 throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
             }
         }
+        public static DataSet getAllItem_home()
+        {
+            try
+            {
+                storeName = string.Format("sp_get_all_item_details");
+                //Execute store
+                return SqlHelper.ExecuteDataset(connectionString, storeName);
+
+            }
+            catch (TimeoutException timeoutex)
+            {
+                throw new TimeoutException("(Error - store: " + storeName + ") TimeoutException: ", timeoutex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("(Error - store:  " + storeName + ")Exception: ", ex);
+            }
+        }
     }
 }
