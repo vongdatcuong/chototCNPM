@@ -268,13 +268,23 @@ namespace ChoTot.Models
             }
         }
 
-        public static DataSet getAllItem_home()
+        public static DataSet getAllItem_home(string priceOrder, int? category, int? city)
+
         {
             try
             {
-                storeName = string.Format("sp_get_all_item_details");
+                storeName = string.Format("sp_get_filtered_item");
+                SqlParameter[] par = new SqlParameter[3];
+                par[0] = new SqlParameter("@priceOrder", priceOrder);
+                par[1] = new SqlParameter("@category", category);
+                par[2] = new SqlParameter("@city", city);
                 //Execute store
-                return SqlHelper.ExecuteDataset(connectionString, storeName);
+
+                return SqlHelper.ExecuteDataset(connectionString, storeName, par);
+
+
+
+
             }
             catch (TimeoutException timeoutex)
             {

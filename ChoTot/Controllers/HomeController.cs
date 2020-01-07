@@ -14,7 +14,7 @@ namespace ChoTot.Controllers
         private DataSet ds = new DataSet();
         private string jsonRs = string.Empty;
 
-        public ActionResult Index(string returnUrl)
+        public ActionResult Index(string returnUrl, string priceOrder, int? category, int? city)
         {
             HttpCookie cookie = Request.Cookies.Get("ChoTotUser");
             if (Session["__USER__"] != null && !Session["__USER__"].Equals(""))
@@ -37,6 +37,12 @@ namespace ChoTot.Controllers
             {
                 ViewBag.isLoggingIn = false;
             }
+            priceOrder = (priceOrder != null) ? priceOrder : "";
+            category = (category != null) ? category : 1;
+            city = (city != null) ? city : 1;
+            ds = Item.getAllItem_home(priceOrder, category, city);
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            ViewBag.listItemStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
             return View();
         }
 
@@ -75,7 +81,7 @@ namespace ChoTot.Controllers
         }
         public JsonResult getAllItem_home()
         {
-            ds = Item.getAllItem_home();
+            //ds = Item.getAllItem_home();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

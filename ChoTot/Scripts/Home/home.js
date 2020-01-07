@@ -1,28 +1,29 @@
 ﻿$(document).ready(function () {
     let count = 0;
     const $listItem = $('#listItem');
+    const resultJs = (listItemStr) ? JSON.parse(listItemStr) : {};
 
     loadAllItem();
     async  function loadAllItem() {
 
-        const result = await showAllItems();
-        const resultJs = JSON.parse(result);
         if (resultJs.Table && resultJs.Table.length > 0) {
-            
             resultJs.Table.forEach((item, index) => {
-                let idRow = '#row' + parseInt(count / 4).toString();         
-                const $row = $(`<div id="row${parseInt(count/4)}" class="row"><div>`);
+                let idRow = '#row' + parseInt(count / 4).toString();
+                const $row = $(`<div id="row${parseInt(count / 4)}" class="row"><div>`);
                 const $col = $(`<div class="col-sm-3 mb-3"><div>`);
                 const $card = $(` <div class="card h-100"><div>`);
-                const $Image = $(`<img  class="mt-2" src="~/Images/transparent_logo.png" style="width:180px;height:180px; align-self:center;" />`);
+                const firstImageUrl = item.thumbnail.split(", ")[0];
+                const $Image = $(`<img  class="mt-2" src="${firstImageUrl}" style="width:180px;height:180px; align-self:center;" />`);
                 const $body1 = $(`<div class="card-body"><div>`);
-                const $nameItem = $(`<h4 class="card-title text-center" style="color:#ff9900">${item.name}</h4>`);
-                const $priceItem = $(` <h5  class="card-title text-center" style="color:#333333">${item.price}</h5>`);
-                const $createdDate = $(` <h6  class=" text-center  ">Ngày đăng :${item.createdDate}</h6>`)
+                const $nameItem = $(`<h5 class="card-title text-center card-item-name" style="color:#ff9900"><a href="/Item/${item.itemId}" class="chotot-link" style="font-weight: 600;">${item.name}&nbsp;</a></h5>`);
+                const $priceItem = $(` <h5  class="card-title text-center card-item-price">${numberWithCommas(item.price)} VND</h5>`);
+                const createdDateStr = parseDateTime(item.createdDate, "/");
+                const $createdDate = $(` <h6  class=" text-center font-italic ">${createdDateStr}</h6>`)
 
                 const $body2 = $(`<div class="row mt-2 mylast-row-item"><div>`);
-                const $seller = $(` <h6>Người bán :<a href=""> A</a></h6>`);
-                const $city = $(`<h6 ><i class="fa fa-map-marker" aria-hidden="true"></i>TP.HCM</h6>`);
+                const $seller = $(` <h6>Người bán :<a href="/User/${item.sellerId}" class="chotot-link" style="font-weight: 600;"> ${item.sellerFirstName}</a></h6>`);
+                const cityStr = gCity[item.city - 1].fullName;
+                const $city = $(`<h6 ><i class="fa fa-map-marker" aria-hidden="true"></i>${cityStr}</h6>`);
                 if (count % 4 == 0) {
                     $body1.append($nameItem, $priceItem, $createdDate);
                     $body2.append($seller, $city);
