@@ -128,8 +128,12 @@
     });
 
     async function getAllItemAndSellerDB() {
-        showLoading();
+        showLoading();       
         const result = await fetch("/Item/getAllPendingItem");
+        //const stat_result = await fetch("/Item/getItemsStatistics");
+        //const statData = JSON.parse(stat_result);
+        //console.log(statData)
+
         hideLoading();
         return result.json();
     }

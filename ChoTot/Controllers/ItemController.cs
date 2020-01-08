@@ -37,7 +37,6 @@ namespace ChoTot.Controllers
                 ViewBag.errorMsg = "Không tìm thấy sản phẩm !!!";
                 return View("~/Views/Shared/Error.cshtml");
             }
-
             ds = Item.getItemAndSeller(id);
             if (ds.Tables[0].Rows.Count == 0)
             {
@@ -82,6 +81,14 @@ namespace ChoTot.Controllers
         public JsonResult getAllPendingItem()
         {
             ds = Item.getAllPendingItem();
+            jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
+            return Json(jsonRs, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getItemsStatistics()
+        {
+            ds = Item.getItemsStatistics();
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             return Json(jsonRs, JsonRequestBehavior.AllowGet);
         }

@@ -10,6 +10,23 @@
     @Scripts.Render("~/bundles/approveScripts")
 }
 
+
+<table id="approve-stat" class="table">
+    <tr>
+        <td>Sản phẩm đang chờ: </td>
+        <td>@ViewBag.waiting</td>
+        <td>Sản phẩm đã hoàn thành: </td>
+        <td>@ViewBag.complete</td>
+    </tr>
+
+    <tr>
+        <td>Sản phẩm đã duyệt: </td>
+        <td>@ViewBag.accepted</td>
+        <td>Sản phẩm đã từ chối: </td>
+        <td>@ViewBag.rejected</td>
+    </tr>
+</table>
+
 <p>
     <button id="approve_select_all" class="approve_bt">Chọn tất cả</button>
     <button id="approve_unselect_all" class="approve_bt">Hủy chọn tất cả</button>

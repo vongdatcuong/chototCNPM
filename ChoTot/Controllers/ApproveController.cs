@@ -32,6 +32,11 @@ namespace ChoTot.Controllers
                 Session["__USER__"] = cookie["__USER__"];
                 ViewBag.isLoggingIn = false;
             }
+            ds = Item.getItemsStatistics();
+            ViewBag.accepted = ds.Tables[0].Rows[0]["count"];
+            ViewBag.complete = ds.Tables[0].Rows[1]["count"];
+            ViewBag.rejected = ds.Tables[0].Rows[2]["count"];
+            ViewBag.waiting = ds.Tables[0].Rows[3]["count"];
             return View();
         }
 
