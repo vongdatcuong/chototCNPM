@@ -45,6 +45,7 @@ namespace ChoTot
                       "~/Content/user.css",
                       "~/Content/item.css",
                       "~/Content/post-item.css",
+                      "~/Content/edit-item.css",
                       "~/Content/approve.css",
                       "~/Content/responsive.css",
                       "~/Content/sweetalert2.min.css",
@@ -75,6 +76,9 @@ namespace ChoTot
 
             bundles.Add(new ScriptBundle("~/bundles/postItemScripts").Include(
                       "~/Scripts/PostItem/post-item.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/postItemScripts").Include(
+                      "~/Scripts/EditItem/edit-item.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/approveScripts").Include(
                       "~/Scripts/Approve/approve.js"));
