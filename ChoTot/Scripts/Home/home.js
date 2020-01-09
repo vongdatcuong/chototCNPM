@@ -2,9 +2,28 @@
     let count = 0;
     const $listItem = $('#listItem');
     const resultJs = (listItemStr) ? JSON.parse(listItemStr) : {};
+    const $city = $('#city');
+    const $category = $('#category');
+    const $input1 = $('#input1');
+    const $input2 = $('#input2');
+    const $input3 = $('#input3');
+    let _count = 9;
 
     loadAllItem();
-    async  function loadAllItem() {
+    async function loadAllItem() {
+        gCity.forEach((_city) => {
+            let $r = $(`<a class="dropdown-item" >${_city.fullName}</a>`);
+            $city.append($r); 
+        })
+        gCategory.forEach((_category) => {
+            if (_count != 0) {
+                let $r = $(`<li class="nav-item"><a class="nav-link border border-dark " style="border-radius: 0rem; padding:30px;" data-toggle="pill">${_category.fullName}</a></li>`);
+                $category.append($r);
+            }
+            _count--;
+        })
+
+
 
         if (resultJs.Table && resultJs.Table.length > 0) {
             resultJs.Table.forEach((item, index) => {
@@ -46,29 +65,13 @@
         }
     }
 
-    //<div class="col-sm-3 mb-3">
-    //    <div class="card h-100">
-    //        <img id="Image" class="mt-2" src="~/Images/transparent_logo.png" style="width:180px;height:180px; align-self:center;" />
-    //        <div class="card-body">
-    //            <h4 id="nameItem" class="card-title text-center" style="color:#ff9900">Xiaomi Note 8</h4>
-    //            <h5 id="priceItem" class="card-title text-center" style="color:#333333">800000</h5>
-
-    //            <h6 id="createdDate" class=" text-center  ">Ngày đăng :11/10/2018</h6>
-    //        </div>
-    //        <div class="row mt-2 mylast-row-item">
-    //            <h6>Người bán :<a href=""> A</a></h6>
-    //            <h6 id="cityItem"><i class="fa fa-map-marker" aria-hidden="true"></i>TP.HCM</h6>
-    //        </div>
-
-    //    </div>
-    //</div>
     function showAllItems() {
         //showLoading();
         return $.ajax({
             url: "/Home/getAllItem_home",
             type: "GET",
             dataType: "json",
-            
+
         })
             .done((result) => {
                 return result;
@@ -80,6 +83,46 @@
                 hideLoading();
             })
     }
+    $("#category li").click(function () {
+        $(this).parents(".nav-item").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+        $(this).parents(".nav-item").find('.btn').val($(this).data('value'));
+        gCategory.forEach((_category)=>
+        {
+            if ($(this).text() == _category.fullName)
+                $('#input1').val(_category.categoryId);
+        }); 
+        
+    });
+    $(".row2 a").click(function () {
+        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+        $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+        $('#arrange').val($(this).text());
+           if ($(this).text() == 'Bài mới nhất')
+            $('#input2').val(null);  
+        if ($(this).text() == 'Mức giá tăng dần')
+            $('#input2').val("desc");  
+        if ($(this).text() == 'Mức giá giảm dần')
+            $('#input2').val("asc");  
+                // sap xep
+    });
+    $(".row1 a").click(function () {
+        $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+        $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+     
+        // city
+        gCity.forEach((_city) => {
+            if ($(this).text() == _city.fullName)
+                $('#input3').val(_city.cityId);
+        });
+    });
+    //$("#submit").click(function () {
+
+    //    let _par1 = $("#input1").val();
+    //    let _par2 = $("#input2").val();
+    //    let _par3 = $("#input3").val();
+    //    window.location = 'http://localhost:49831/?category=' + _par1 + '&city=' + _par2 + '&priceOrder' + _par3;
+    //});
+
     
 });
 
