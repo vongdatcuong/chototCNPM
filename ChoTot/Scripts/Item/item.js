@@ -57,8 +57,8 @@
         }
     }
 
-    $('#contact-btn').on('click', (e) => {
-        $(e.target).find('span').text(item.sellerPhone);
+    $('#contact-btn').on('click', function (e) {
+        $(this).find('span').text(item.sellerPhone);
     });
     $('#imageGallery').lightSlider({
         gallery: true,

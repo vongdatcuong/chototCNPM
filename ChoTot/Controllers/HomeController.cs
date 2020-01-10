@@ -43,6 +43,9 @@ namespace ChoTot.Controllers
             ds = Item.getAllItem_home(priceOrder, category, city);
             jsonRs = JsonConvert.SerializeObject(ds, Formatting.Indented);
             ViewBag.listItemStr = JsonConvert.SerializeObject(ds, Formatting.Indented).ToString().Replace("\r\n", "");
+            ViewBag.priceOrder = priceOrder;
+            ViewBag.category = category;
+            ViewBag.city = city;
             return View();
         }
 

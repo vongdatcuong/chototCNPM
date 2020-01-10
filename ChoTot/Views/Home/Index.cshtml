@@ -29,20 +29,20 @@
 </div>
 
 
-<ul id="category" class="nav nav-pills mb-3 bg-orange row" style="background-color:#ff9900;font-size:18px" role="tablist">
+<ul id="category" class="nav nav-pills mb-3 bg-orange row" style="background-color:#ff9900;font-size:16.5px" role="tablist">
 </ul>
 
 <div class="row">
     <div class="col-4 float-right">
         <did style="color:#ff9900"> Lọc xem theo</did>
         <div class="btn-group dropdown">
-            <button id="arrange" type="button" class="btn border border-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id="arrange" type="button" class="btn border border-danger dropdown-toggle" style="padding: 5px 35px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Bài mới nhất
             </button>
             <div class="dropdown-menu row2">
-                <a class="dropdown-item">Bài mới nhất</a>
-                <a class="dropdown-item">Mức giá tăng dần</a>
-                <a class="dropdown-item">Mức giá giảm dần</a>
+                <a class="dropdown-item" data-sortType="">Bài mới nhất</a>
+                <a class="dropdown-item" data-sortType="asc">Mức giá tăng dần</a>
+                <a class="dropdown-item" data-sortType="desc">Mức giá giảm dần</a>
 
             </div>
         </div>
@@ -50,7 +50,7 @@
     <div class="col-4 float-right">
         <did style="color:#ff9900"> Khu vực</did>
         <div class="btn-group dropdown">
-            <button id="cityname" type="button" class="btn border border-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id="cityname" type="button" class="btn border border-danger dropdown-toggle" style="padding: 5px 35px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Toàn quốc
             </button>
             <div class="dropdown-menu row1" id="city">
@@ -59,21 +59,18 @@
             </div>
         </div>
     </div>
-    <form action="/?category=&city=&priceOrder=">
-        <input id="input1" class="form-control form-control-lg border-right-0 border"  type="text" name="category"  hidden/>
-        <input id="input3" class="form-control form-control-lg border-right-0 border" type="text" name="city"  hidden/>
-        <input id="input2" class="form-control form-control-lg border-right-0 border"  type="text" name="priceOrder" hidden/>
+    <form action="/">
+        <input id="input1" class="form-control form-control-lg border-right-0 border"  type="text" name="category" value="@ViewBag.category" hidden/>
+        <input id="input3" class="form-control form-control-lg border-right-0 border" type="text" name="city"  value="@ViewBag.city" hidden/>
+        <input id="input2" class="form-control form-control-lg border-right-0 border"  type="text" name="priceOrder" value="@ViewBag.priceOrder" hidden/>
         
-        <button id ="submit"class="btn btn-info btn-lg btn-block" style="background-color:#ff9900; width:100px ;height:40px; border-color:black; text-align:center" type="submit">Tìm</button>
+        <button id ="submitFilter"class="btn btn-info btn-lg btn-block btn-chotot" style="padding: 10px 40px;" type="submit">ÁP DỤNG</button>
     </form>
 </div>
 
 <br />
 
 <div class="card shadow mb-4">
-    <h4 class="card-header">
-        Products
-    </h4>
     <div id="listItem" class="card-body">
         @*<div class="row">
                 <div class="col-sm-3 mb-3">

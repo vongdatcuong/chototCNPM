@@ -5,3 +5,17 @@
     justify-content: space-around;
     align-items: flex-end
 }
+#category {
+    border-radius: 5px;
+    margin: 20px 0;
+    color: #ffffff;
+    font-weight: 500;
+    border: 1px solid #8b0000;
+}
+    #category li {
+        border: 1px solid #c60000;
+        margin: 0;
+    }
+#category li:hover {
+    cursor: pointer;
+}

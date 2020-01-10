@@ -21,8 +21,13 @@
 
                     $tr.append(`<td><input type="checkbox" name="appr_selected" data-itemId="${item.itemId}"></td >`);
 
-                    $tr.append(`<td>${item.itemId}</td>`);               
-                    $tr.append(`<td><a href="/User/${item.sellerId}" class="chotot-link">${item.sellerLastName} ${item.sellerFirstName}</a></td>`);
+                    $tr.append(`<td>${item.itemId}</td>`);
+                    if (item.sellerFirstName && item.sellerLastName) {
+                        $tr.append(`<td><a href="/User/${item.sellerId}" class="chotot-link">${item.sellerLastName} ${item.sellerFirstName}</a></td>`);
+                    }
+                    else {
+                        $tr.append(`<td><a href="/User/${item.sellerId}" class="chotot-link">${item.sellerUserName}</a></td>`);
+                    }
                     $tr.append(`<td>${item.name}</td>`);
                     
                     imgscr = item.thumbnail.split(",");

@@ -267,6 +267,9 @@ footer p {
     color: #ff6633;
     font-weight: 600;
 }
+.dropdown-menu a:hover {
+    cursor: pointer;
+}
 /* Loading */
 .spinner {
     display: block;

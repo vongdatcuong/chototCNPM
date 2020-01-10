@@ -7,17 +7,18 @@
     const $input1 = $('#input1');
     const $input2 = $('#input2');
     const $input3 = $('#input3');
+    const $submitFilter = $('#submitFilter');
     let _count = 9;
 
     loadAllItem();
     async function loadAllItem() {
         gCity.forEach((_city) => {
-            let $r = $(`<a class="dropdown-item" >${_city.fullName}</a>`);
+            let $r = $(`<a class="dropdown-item" data-cityType="${_city.cityId}" >${_city.fullName}</a>`);
             $city.append($r); 
         })
         gCategory.forEach((_category) => {
             if (_count != 0) {
-                let $r = $(`<li class="nav-item"><a class="nav-link border border-dark " style="border-radius: 0rem; padding:30px;" data-toggle="pill">${_category.fullName}</a></li>`);
+                let $r = $(`<li class="nav-item"><a class="nav-link" style="border-radius: 0rem; padding:30px;" data-toggle="pill" data-categoryType="${_category.categoryId}">${_category.fullName}</a></li>`);
                 $category.append($r);
             }
             _count--;
@@ -40,9 +41,15 @@
                 const $createdDate = $(` <h6  class=" text-center font-italic ">${createdDateStr}</h6>`)
 
                 const $body2 = $(`<div class="row mt-2 mylast-row-item"><div>`);
-                const $seller = $(` <h6>Người bán :<a href="/User/${item.sellerId}" class="chotot-link" style="font-weight: 600;"> ${item.sellerFirstName}</a></h6>`);
+                let $seller;
+                if (item.sellerFirstName && item.sellerLastName) {
+                    $seller = $(` <h6>Người bán :<a href="/User/${item.sellerId}" class="chotot-link" style="font-weight: 600;"> ${item.sellerFirstName}</a></h6>`);
+                }
+                else {
+                    $seller = $(` <h6>Người bán :<a href="/User/${item.sellerId}" class="chotot-link" style="font-weight: 600;"> ${item.sellerUserName}</a></h6>`);
+                }
                 const cityStr = gCity[item.city - 1].fullName;
-                const $city = $(`<h6 ><i class="fa fa-map-marker" aria-hidden="true"></i>${cityStr}</h6>`);
+                const $city = $(`<h6 ><i class="fa fa-map-marker" style="color: red;" aria-hidden="true"></i>${cityStr}</h6>`);
                 if (count % 4 == 0) {
                     $body1.append($nameItem, $priceItem, $createdDate);
                     $body2.append($seller, $city);
@@ -83,25 +90,38 @@
                 hideLoading();
             })
     }
+    const category = $('#input1').val() || 1;
+    const city = $('#input3').val() || 1;
+    const priceOrder = $('#input2').val() || "";
+    if (category !== 1) {
+        $(`#category li a[data-categoryType=${category}]`).addClass("active");
+    }
+    if (city !== 1) {
+        $('#cityname').text($(`.row1 a[data-cityType=${city}]`).text());
+    }
+    if (priceOrder) {
+        $('#arrange').text($(`.row2 a[data-sortType=${priceOrder}]`).text());
+    }
     $("#category li").click(function () {
+        $(`#category li a`).remove("active");
         $(this).parents(".nav-item").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".nav-item").find('.btn').val($(this).data('value'));
         gCategory.forEach((_category)=>
         {
-            if ($(this).text() == _category.fullName)
+            if ($(this).text() === _category.fullName)
                 $('#input1').val(_category.categoryId);
         }); 
-        
+        $submitFilter.click();
     });
     $(".row2 a").click(function () {
         $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
         $('#arrange').val($(this).text());
-           if ($(this).text() == 'Bài mới nhất')
-            $('#input2').val(null);  
-        if ($(this).text() == 'Mức giá tăng dần')
+           if ($(this).text() === 'Bài mới nhất')
+            $('#input2').val("");  
+        if ($(this).text() === 'Mức giá giảm dần')
             $('#input2').val("desc");  
-        if ($(this).text() == 'Mức giá giảm dần')
+        if ($(this).text() === 'Mức giá tăng dần')
             $('#input2').val("asc");  
                 // sap xep
     });

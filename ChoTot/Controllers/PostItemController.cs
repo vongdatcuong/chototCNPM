@@ -20,6 +20,7 @@ namespace ChoTot.Controllers
         private string storeName = string.Empty;
 
         // GET: PostItem
+        [Authorize]
         public ActionResult Index()
         {
             HttpCookie cookie = Request.Cookies.Get("ChoTotUser");
@@ -45,7 +46,7 @@ namespace ChoTot.Controllers
                             }).ToList();
             if (lstCity.Count > 0)
             {
-                lstCity.RemoveAt(0);
+                //lstCity.RemoveAt(0);
             }
             ViewBag.selectListCity = new SelectList(lstCity, "cityId", "fullName");
 

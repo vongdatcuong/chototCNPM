@@ -239,6 +239,7 @@
     <Content Include="Fonts\lg.eot" />
     <Content Include="Fonts\lg.ttf" />
     <Content Include="Fonts\lg.woff" />
+    <None Include="Properties\PublishProfiles\ChoTott - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Constant.js" />
     <Content Include="Scripts\Home\home.js" />

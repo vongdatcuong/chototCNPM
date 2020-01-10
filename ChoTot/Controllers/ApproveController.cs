@@ -18,6 +18,7 @@ namespace ChoTot.Controllers
         private string storeName = string.Empty;
 
         // GET: Approve
+        [Authorize]
         public ActionResult Index()
         {
             HttpCookie cookie = Request.Cookies.Get("ChoTotUser");
@@ -32,12 +33,24 @@ namespace ChoTot.Controllers
                 Session["__USER__"] = cookie["__USER__"];
                 ViewBag.isLoggingIn = false;
             }
-            ds = Item.getItemsStatistics();
-            ViewBag.accepted = ds.Tables[0].Rows[0]["count"];
-            ViewBag.complete = ds.Tables[0].Rows[1]["count"];
-            ViewBag.rejected = ds.Tables[0].Rows[2]["count"];
-            ViewBag.waiting = ds.Tables[0].Rows[3]["count"];
-            return View();
+            if (ViewBag.gUserStr != null && (bool)ViewBag.gUserStr.Contains("\"type\": 1"))
+            {
+                ds = Item.getItemsStatistics();
+                ViewBag.accepted = 0;
+                ViewBag.complete = 0;
+                ViewBag.rejected = 0;
+                ViewBag.waiting = 0;
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    ViewData[(string)ds.Tables[0].Rows[i]["status"]] = ds.Tables[0].Rows[i]["count"];
+                }
+                return View();
+            } else
+            {
+                ViewBag.errorMsg = "Bạn không có quyền truy cập trang này !!!";
+                return View("~/Views/Shared/Error.cshtml");
+            }
+           
         }
 
         [HttpPost]

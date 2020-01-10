@@ -8,6 +8,7 @@ namespace ChoTot
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = false;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -77,8 +78,6 @@ namespace ChoTot
             bundles.Add(new ScriptBundle("~/bundles/postItemScripts").Include(
                       "~/Scripts/PostItem/post-item.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/postItemScripts").Include(
-                      "~/Scripts/EditItem/edit-item.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/approveScripts").Include(
                       "~/Scripts/Approve/approve.js"));
